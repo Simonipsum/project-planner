@@ -36,4 +36,4 @@ Environment, tested on Windows and Linux.
 Just take it w/e brooo..
 
 # comment
-changed a lot af stuff during the development, so the code quality is kinda trashy... but anyways its not the live version, but if it will help you out just take it.
+changed a lot of stuff during the development, so the code quality is kinda trashy... but anyways if it will help you out just take it.
