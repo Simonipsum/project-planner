@@ -6,7 +6,7 @@ This is a shitty planner made in 02161 Software Engineering 1 @ DTU 2020
 
 
 # Authors 
-
+4 guys in a classroom...
 
 # Automatic testing
 
