@@ -5,6 +5,19 @@ Exam project for Software Engineering at DTU
 This is a shitty planner made in 02161 Software Engineering 1 @ DTU 2020
 
 
+# Authors 
+
+
+# Automatic testing
+
+The code is tested upon each push to out git repository and then Travis CI have checked everything automatically as a quality control. Code coverage is only tested manually on the development teams computers.
+
+
+# Pre requirements
+Environment, tested on Windows and Linux.
+
+* Java 8 update 202, 64-bit JDK or later updates.
+
 ## Week 6 + 7: Report 1
 - Requirements: Glossary, use case diagrams, detailed use cases.
 - Draft design: Class & sequence diagrams
@@ -18,3 +31,9 @@ This is a shitty planner made in 02161 Software Engineering 1 @ DTU 2020
 
 ## Week 13: Report 2, Source code
 - 10 min demonstrations of the tests for TA's. 
+
+# Licence 
+Just take it w/e brooo..
+
+# comment
+changed a lot af stuff during the development, so the code quality is kinda trashy... but anyways its not the live version, but if it will help you out just take it.
