@@ -1,4 +1,4 @@
-# shitty-planner
+# project-planner
 Exam project for Software Engineering at DTU
 
 
