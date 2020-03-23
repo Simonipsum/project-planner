@@ -32,6 +32,20 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
+  <component name="RunManager">
+    <configuration name="ProjectApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ProjectApp" />
+      <module name="project-planner" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ProjectApp" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -42,7 +56,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584970269419</updated>
-      <workItem from="1584970271088" duration="95000" />
+      <workItem from="1584970271088" duration="4707000" />
     </task>
     <servers />
   </component>
@@ -54,6 +68,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1395" y="363" key="#Project_Structure/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1584970298767" />
+    <state width="1234" height="388" key="GridCell.Tab.0.bottom" timestamp="1584978644750">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="388" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1584978644750" />
+    <state width="1234" height="388" key="GridCell.Tab.0.center" timestamp="1584978644750">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="388" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1584978644750" />
+    <state width="1234" height="388" key="GridCell.Tab.0.left" timestamp="1584978644750">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="388" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1584978644750" />
+    <state width="1234" height="388" key="GridCell.Tab.0.right" timestamp="1584978644750">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1234" height="388" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1584978644750" />
     <state x="1304" y="347" key="SettingsEditor" timestamp="1584970292772">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
