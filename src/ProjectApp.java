@@ -1,134 +1,122 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class ProjectApp {
-    static Scanner consoleIn = new Scanner(System.in);
-
     static List<Employee> employees = new ArrayList<Employee>();
-    static String CEO = "marc";
+    static List<Project> projects = new ArrayList<Project>();
+    static String ceo = "marc";
     static String user = "NONE";
 
-    static String[] mainMenuOptions = {
-        // Normal employee options
-       "1. Add/edit work time of activity\n" +
-       "2. Register absence\n" +
-       "3. List activities worked on\n" +
-       "4. Get assistance on activity\n" +
-       "5. Logout\n",
-
-        // PM options
-        "6. Edit project\n",
-        // CEO options
-        "6. Edit project\n" +
-        "7. Register new employee\n" +
-        "8. Add new project\n",
-    };
-    static String[] projectMenuOptions = {
-        // PM options
-        "1. Add employee\n" +
-        "2. Edit activities\n" +
-        "3. Check availability\n" +
-        "4. See timetable of project\n",
-        // CEO options
-        "1. Set PM\n",
-    };
-    static String[] activityMenuOptions = {
-        // PM
-        "1. Add new activity\n" +
-        "2. Edit start/end date\n" +
-        "3. Change estimated work time\n",
-    };
-
-
     public static void main(String[] args) {
-        int option;
-        employees.add(new Employee(CEO)); // Set CEO as an employee
+        // Set CEO as an employee
+        employees.add(new Employee(ceo));
 
+        // Run program
         while(true) {
-            if (user.equals("NONE")) {
-                userLogin();
-            } else {
-                System.out.printf("Logged in as '%s'\n", user);
-            }
-            mainMenu();
+            userLogin();
+            mainMenu(); // This menu goes to other menus...
         }
     }
 
     private static void mainMenu() {
-        int pick, maxPick = 5;
-        String outStr = "";
-        outStr += "Available options for '" + user + "' are:\n";
-        outStr += mainMenuOptions[0];
+        int pick, maxPick;
 
-        // if is pm outStr += mainMenu[1], maxPick += 1
         if (isCEO()) {
-            outStr += mainMenuOptions[2];
-            maxPick += 3;
+            maxPick = display.mainCEO(user);
+        } else {
+            maxPick = display.mainEmployee(user);
         }
-        System.out.print(outStr);
+        // maxPick = displayMenu.mainPM(user);
 
-        pick = getInputInt();
-        while (pick < 1 || pick > maxPick) {
-            System.out.println("Please pick one of the listed options.");
-            pick = getInputInt();
-        }
+        pick = controller.pickItem(maxPick);
 
         // Go to next menu
         switch(pick) {
-            case 1:
-                break;
-            case 5:
-                userLogout();
-                break;
+            case 1: activityMenu();                 break;
+            case 5: userLogout();                   break;
+            case 8: addProject();                   break;
+            case 9: display.listProjects(projects); break;
             default:
                 break;
         }
     }
 
-    private static void userLogout() {
-        user = "NONE";
-        System.out.println("User has been logged out.");
+    private static void activityMenu() {
+        int maxPick, pick;
+
+        if (isCEO()) {
+            maxPick = display.activityEmployee();
+        } else {
+            maxPick = display.activityEmployee();
+        }
+        //maxPick = display.activityPM();
+
+        pick = controller.pickItem(maxPick);
+
+        switch(pick) {
+            case 1:
+                break;
+        }
+
+
     }
 
-    private static int getInputInt() {
-        System.out.println("Input integer: ");
-        while (!consoleIn.hasNextInt()) {
-            consoleIn.next();
-            System.out.print("Input must be an integer. Enter new integer:");
+    private static int calculateID(int year) {
+        int count = 1;
+
+        for (Project p : projects) {
+            if (p.getStartYear() == year) {
+                count += 1;
+            }
         }
-        return consoleIn.nextInt();
+        year %= 100;
+
+        return year*10000 + count;
+    }
+
+    private static void addProject() {
+        int id, year;
+        String name;
+
+        System.out.print("Enter year of project start: ");
+        year = controller.getInputInt();
+
+        System.out.print("Enter name of project (type no if not named yet): ");
+        name = controller.getString();
+
+        id = calculateID(year);
+
+        if (name.equals("no")) {
+            projects.add(new Project(id, year));
+        } else {
+            projects.add(new Project(id, year, name));
+        }
+    }
+
+    private static void userLogout() {
+        user = "NONE";
+        System.out.println("User has been logged out.\n");
     }
 
     private static void userLogin() {
-        String input = "";
-        boolean getInput = true;
-
-        while (getInput) {
-            System.out.print("Please input initials to login: ");
-            input = consoleIn.next().toLowerCase();
-
-            if (input.length() > 4) {
-                System.out.println("Please enter a maximum of four initials.");
-            } else {
-                if (isEmployee(input)) {
-                    getInput = false;
-                } else {
-                    System.out.printf("'%s' is not a registered employee.\n", input);
-                }
+        if (user.equals("NONE")) {
+            user = controller.getInitials(4);
+            while (!isEmployee(user)) {
+                System.out.println("Input is not an employee, please enter new:");
+                user = controller.getInitials(4);
             }
+            System.out.println("");
         }
-        user = input;
     }
 
     // Check if there is an employee with "initials"
     private static boolean isEmployee(String initials) {
         for (Employee e : employees) {
-            if (e.getInitials().equals(initials)) {return true; }
+            if (e.getInitials().equals(initials)) { return true; }
         }
         return false;
     }
 
     // Check if user is CEO
-    private static boolean isCEO() {
-        return user.equals(CEO); // also add stuff after employee class is implemented
-    }
+    private static boolean isCEO() { return user.equals(ceo); }
 }
