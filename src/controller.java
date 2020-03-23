@@ -27,7 +27,6 @@ public class controller {
         boolean getInput = true;
 
         while (getInput) {
-            System.out.print("Please input initials to login: ");
             input = consoleIn.next().toLowerCase();
 
             if (input.length() > maxLength) {

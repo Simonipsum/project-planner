@@ -14,51 +14,79 @@ public class ProjectApp {
         // Run program
         while(true) {
             userLogin();
-            mainMenu(); // This menu goes to other menus...
+            mainMenu(); // This menu goes to other menus.
         }
     }
 
     private static void mainMenu() {
         int pick, maxPick;
 
-        if (isCEO()) {
-            maxPick = display.mainCEO(user);
-        } else {
-            maxPick = display.mainEmployee(user);
-        }
-        // maxPick = displayMenu.mainPM(user);
+        // do some pm stuff..
 
+        maxPick = display.mainMenu(user, isCEO(), false);
         pick = controller.pickItem(maxPick);
+        pick += isCEO() & (pick) >= 5 ? 2 : 0; // skip PM options in switch if CEO
 
-        // Go to next menu
+        // Go to next menu / display
         switch(pick) {
-            case 1: activityMenu();                 break;
-            case 5: userLogout();                   break;
-            case 8: addProject();                   break;
-            case 9: display.listProjects(projects); break;
-            default:
-                break;
+            case 1:  workTime();                                break;
+            case 2:  registerAbsence();                         break;
+            case 3:  display.listActivities(getEmployee(user)); break;
+            case 4:  getAssistance();                           break;
+            case 5:  userLogout();                              break;
+
+            // PM
+            case 6:  projectMenu();                             break;
+            case 7:  checkAvailability();                       break;
+
+            // CEO
+            case 8:  setPM();                                   break;
+            case 9:  addEmployee();                             break;
+            case 10: addProject();                              break;
+            case 11: display.listProjects(projects);            break;
+            case 12: display.listEmployees(employees);          break;
         }
     }
 
-    private static void activityMenu() {
-        int maxPick, pick;
+    private static void checkAvailability() {
+        // check availability of employees
+    }
 
-        if (isCEO()) {
-            maxPick = display.activityEmployee();
-        } else {
-            maxPick = display.activityEmployee();
-        }
-        //maxPick = display.activityPM();
+    private static void getAssistance() {
+        // get assistance on an activity.
+    }
 
+    private static void registerAbsence() {
+        // Register absence of user at given start to end date interval
+    }
+
+    private static void workTime() {
+        // list projects.
+        // pick one
+        // list all activities of that project
+        // pick one
+        // add/edit work time of that one
+    }
+
+    private static void setPM() {
+        display.listProjects(projects);
+
+        // list all projects
+        // pick one
+        // set pm of that one
+    }
+
+    private static void projectMenu() {
+        int pick, maxPick;
+
+        maxPick = display.projectMenu();
         pick = controller.pickItem(maxPick);
+    }
 
-        switch(pick) {
-            case 1:
-                break;
-        }
-
-
+    private static void addEmployee() {
+        System.out.println("");
+        String initials = controller.getInitials(4);
+        employees.add(new Employee(initials));
     }
 
     private static int calculateID(int year) {
@@ -100,6 +128,7 @@ public class ProjectApp {
 
     private static void userLogin() {
         if (user.equals("NONE")) {
+            System.out.print("Please input initials to login: ");
             user = controller.getInitials(4);
             while (!isEmployee(user)) {
                 System.out.println("Input is not an employee, please enter new:");
@@ -107,6 +136,13 @@ public class ProjectApp {
             }
             System.out.println("");
         }
+    }
+
+    private static Employee getEmployee(String initials) {
+        for (Employee e : employees) {
+            if (e.getInitials().equals(initials)) { return e; }
+        }
+        return new Employee("NONE");
     }
 
     // Check if there is an employee with "initials"
