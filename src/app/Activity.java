@@ -13,7 +13,6 @@ public class Activity {
         this.name = name;
     }
 
-
     public void setTime(Employee e, float time, String date) {
         // check first if instance exists. use put if doesn't, use replace if it does.
         Map<String, Float> dateTime = null;
@@ -34,31 +33,14 @@ public class Activity {
         return wt;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
-    }
+    // Getters
+    public String getName() { return name; }
+    public String getEnd() { return end; }
+    public String getStart() { return start; }
 
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setExpectedWT(float time) {
-        expectedWorkTime = time;
-    }
+    // Setters
+    public void setName(String name) { this.name = name; }
+    public void setEnd(String end) { this.end = end; }
+    public void setStart(String start) { this.start = start; }
+    public void setExpectedWT(float time) { expectedWorkTime = time; }
 }

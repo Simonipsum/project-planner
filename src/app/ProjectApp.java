@@ -93,15 +93,15 @@ public class ProjectApp {
 
     private void addEmployee() throws OperationNotAllowedException {
         System.out.print("Initials of new Employee: ");
-        String initials = controller.getInitials(4);
-        addNewEmployee(initials);
+        String username = controller.getInitials(4);
+        addNewEmployee(username);
     }
 
-    public void addNewEmployee(String initials) throws OperationNotAllowedException {
+    public void addNewEmployee(String username) throws OperationNotAllowedException {
         if(!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
-        employees.add(new Employee(initials));
+        employees.add(new Employee(username));
     }
 
     public int calculateID(int year) {
