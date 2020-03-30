@@ -116,7 +116,7 @@ public class ProjectApp {
     }
 
     public void addProject() throws OperationNotAllowedException {
-        int id, year;
+        int year;
         String name;
 
         System.out.print("Enter year of project start: ");
@@ -165,11 +165,10 @@ public class ProjectApp {
         return employees.stream().anyMatch(e -> e.getUsername().equals(username));
     }
 
-    public List<Project> getProjects() { return projects; }
-
     public void setCEO(String username) { this.ceo = username; }
     public void setUser(String username) { this.user = username; }
     public boolean isCEO() { return user.equals(ceo); }
     public String getCEO() { return this.ceo; }
     public String getUser() { return this.user; }
+    public List<Project> getProjects() { return projects; }
 }
