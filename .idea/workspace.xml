@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07c8a79b-e12a-4158-9345-16c5fd22a1b4" name="Default Changelist" comment="" />
+    <list default="true" id="c18e354d-f2a7-4ceb-a31d-56168a1d76f8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1ZqaXtjRnVXdHRRHNlqZoJZ1Y4l" />
+  <component name="ProjectId" id="1ZqxAYMGKems2APdKqKza25IjSZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -25,23 +21,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\sap98\Documents\GitHub\project-planner\test\dtu\library\acceptance_tests" />
-    </key>
-  </component>
-  <component name="RunManager" selected="JUnit.AcceptanceTest (1)">
-    <configuration name="ProjectApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="app.ProjectApp" />
-      <module name="project-planner" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AcceptanceTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="AcceptanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project-planner" />
       <extension name="coverage">
         <pattern>
@@ -56,36 +37,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AcceptanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-planner" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AcceptanceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AcceptanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project-planner" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AcceptanceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AcceptanceTest (1)" />
         <item itemvalue="JUnit.AcceptanceTest" />
-        <item itemvalue="JUnit.AcceptanceTest (1)" />
-        <item itemvalue="Application.ProjectApp" />
       </list>
     </recent_temporary>
   </component>
@@ -94,66 +48,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="07c8a79b-e12a-4158-9345-16c5fd22a1b4" name="Default Changelist" comment="" />
-      <created>1585569121010</created>
+      <changelist id="c18e354d-f2a7-4ceb-a31d-56168a1d76f8" name="Default Changelist" comment="" />
+      <created>1585580282828</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1585569121010</updated>
-      <workItem from="1585569122469" duration="10034000" />
+      <updated>1585580282828</updated>
+      <workItem from="1585580284782" duration="147000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="92" y="92" width="2376" height="1216" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1585577081046">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="92" y="92" width="2376" height="1216" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585577081046" />
-    <state x="1060" y="549" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1585569613589">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="1060" y="549" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585569613589" />
-    <state width="2517" height="492" key="GridCell.Tab.0.bottom" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.0.center" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.0.left" timestamp="1585579166695">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166695" />
-    <state width="2517" height="492" key="GridCell.Tab.0.right" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.1.bottom" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.1.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.1.center" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.1.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.1.left" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.1.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state width="2517" height="492" key="GridCell.Tab.1.right" timestamp="1585579166696">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state width="2517" height="492" key="GridCell.Tab.1.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579166696" />
-    <state x="392" y="622" key="org.jetbrains.plugins.cucumber.inspections.ui.CreateStepDefinitionFileDialog" timestamp="1585570083312">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="392" y="622" key="org.jetbrains.plugins.cucumber.inspections.ui.CreateStepDefinitionFileDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585570083312" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1585579129853">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585579129853" />
   </component>
 </project>

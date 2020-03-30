@@ -1,10 +1,10 @@
 package app;
 
 public class Project {
-    private static int id;
-    private static String name;
-    private static String pm;
-    private static int startYear;
+    private int id;
+    private String name;
+    private String pm;
+    private int startYear;
 
     public Project(int id, int startYear) {
         this.id = id;
@@ -20,8 +20,8 @@ public class Project {
     public void setName(String name) { this.name = name; }
     public void setPm(String username) {this.pm = username; }
 
-    public static int getId() { return id; }
-    public static int getStartYear() { return startYear; }
-    public static String getPm() { return pm; }
-    public static String getName() { return name; }
+    public int getId() { return id; }
+    public int getStartYear() { return startYear; }
+    public String getPm() { return pm; }
+    public String getName() { return name; }
 }

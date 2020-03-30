@@ -3,14 +3,14 @@ package app;
 import java.util.Map;
 
 public class Activity {
-    private static String name;
-    private static String start;
-    private static String end;
-    private static float expectedWorkTime;
-    private static Map<Employee, Map<String, Float>> workTime;
+    private String name;
+    private String start;
+    private String end;
+    private float expectedWorkTime;
+    private Map<Employee, Map<String, Float>> workTime;
 
     public Activity(String name) {
-        Activity.name = name;
+        this.name = name;
     }
 
 
@@ -34,28 +34,28 @@ public class Activity {
         return wt;
     }
 
-    public static void setEnd(String end) {
-        Activity.end = end;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
-    public static void setStart(String start) {
-        Activity.start = start;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static String getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public static String getStart() {
+    public String getStart() {
         return start;
     }
 
     public void setName(String name) {
-        Activity.name = name;
+        this.name = name;
     }
 
     public void setExpectedWT(float time) {
