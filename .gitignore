@@ -1,4 +1,1 @@
-
-/out/
-*.xml
-.idea/workspace.xml
+/target/
