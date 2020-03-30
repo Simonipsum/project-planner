@@ -10,6 +10,7 @@ public class ProjectApp {
     public static void main(String[] args) {
         // Set CEO as an employee
         employees.add(new Employee(ceo));
+        //employees.add(new Employee("Simo"));
 
         // Run program
         while(true) {
@@ -19,13 +20,8 @@ public class ProjectApp {
     }
 
     private static void mainMenu() {
-        int pick, maxPick;
-
-        // do some pm stuff..
-
-        maxPick = display.mainMenu(user, isCEO(), false);
-        pick = controller.pickItem(maxPick);
-        pick += isCEO() & (pick) >= 5 ? 2 : 0; // skip PM options in switch if CEO
+        int maxPick = display.mainMenu();
+        int pick = controller.pickItem(maxPick);
 
         // Go to next menu / display
         switch(pick) {
@@ -49,6 +45,10 @@ public class ProjectApp {
     }
 
     private static void checkAvailability() {
+        // check what projects user are PM of.
+        // if none, return
+
+        // pick date / dates
         // check availability of employees
     }
 
@@ -69,6 +69,11 @@ public class ProjectApp {
     }
 
     private static void setPM() {
+        if (!isCEO()) {
+            System.out.println("User is not CEO!");
+            return;
+        }
+
         display.listProjects(projects);
 
         // list all projects
@@ -84,7 +89,7 @@ public class ProjectApp {
     }
 
     private static void addEmployee() {
-        System.out.println("");
+        System.out.print("Initials of new Employee: ");
         String initials = controller.getInitials(4);
         employees.add(new Employee(initials));
     }
@@ -97,9 +102,7 @@ public class ProjectApp {
                 count += 1;
             }
         }
-        year %= 100;
-
-        return year*10000 + count;
+        return (year%100)*10000 + count;
     }
 
     private static void addProject() {
@@ -131,7 +134,7 @@ public class ProjectApp {
             System.out.print("Please input initials to login: ");
             user = controller.getInitials(4);
             while (!isEmployee(user)) {
-                System.out.println("Input is not an employee, please enter new:");
+                System.out.print("Input is not an employee, please enter new: ");
                 user = controller.getInitials(4);
             }
             System.out.println("");

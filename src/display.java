@@ -1,89 +1,54 @@
 import java.util.*;
 
 public class display {
-    private static String[][] mainMenuOptions = {
-        {
-            // Normal employee options
-            "Add/edit work time of activity",
-            "Register absence",
-            "List activities worked on",
-            "Get assistance on activity",
-            "Logout",
-        }, {
-            // PM options
-            "Edit projects",
-            "Check availability",
-        }, {
-            // CEO options
-            "Set PM of a project",
-            "Register new employee",
-            "Add new project",
-            "List all projects",
-            "List all employees",
-        }
+    private static String[] mainMenuOptions = {
+        // Normal employee options
+        "Add/edit work time of activity",
+        "Register absence",
+        "List activities worked on",
+        "Get assistance on activity",
+        "Logout",
+        // PM options
+        "Edit projects",
+        "Check availability",
+        // CEO options
+        "Set PM of a project",
+        "Register new employee",
+        "Add new project",
+        "List all projects",
+        "List all employees",
     };
-    private static String[][] projectMenuOptions = {
-        {
-            "",
-        }, {
-            // PM options
-            "Add employee",
-            "Add activity",
-            "Edit start/end date of an activity",
-            "Change estimated work time of an activity",
-            "See timetable of project",
-        }
+    private static String[] projectMenuOptions = {
+        // PM options
+        "Add employee",
+        "Add activity",
+        "Edit start/end date of an activity",
+        "Change estimated work time of an activity",
+        "See timetable of project",
     };
 
-    private static int listMenu(String[][] menu, boolean[] hasMenu) {
-        int i, maxPick = 0;
+    private static void listMenu(String[] menu) {
         String list = "";
 
-        if (hasMenu[0]) {
-            for (i = 0; i < menu[0].length; i++) {
-                list += "\n" + (i+1) + ". " + menu[0][i];
-            }
-            maxPick += i;
-        }
-
-        if (hasMenu[1]) {
-            for (i = 0; i < menu[1].length; i++) {
-                list += "\n" + (maxPick+i+1) + ". " + menu[1][i];
-            }
-            maxPick += i;
-        }
-
-        if (hasMenu[2]) {
-            for (i = 0; i < menu[2].length; i++) {
-                list += "\n" + (maxPick+i+1) + ". " + menu[2][i];
-            }
-            maxPick += i;
+        for (int i = 0; i < menu.length; i++) {
+            list += "\n" + (i+1) + ". " + menu[i];
         }
 
         System.out.println(list);
-        return maxPick;
     }
 
     public static int projectMenu() {
-        int maxPick;
-        boolean[] hasMenu = {false, true, false};
-
         menuHeader("Project Menu");
-        maxPick = listMenu(projectMenuOptions, hasMenu);
+        listMenu(projectMenuOptions);
         System.out.print("----------------------------------\n");
-
-        return maxPick;
+        return projectMenuOptions.length;
     }
 
-    public static int mainMenu(String user, boolean isCEO, boolean isPM) {
-        int maxPick;
-        boolean[] hasMenu = {true, isPM, isCEO};
-
+    public static int mainMenu() {
         menuHeader("Main Menu");
-        maxPick = listMenu(mainMenuOptions, hasMenu);
+        listMenu(mainMenuOptions);
         System.out.print("----------------------------------\n");
-
-        return maxPick;
+        return mainMenuOptions.length;
     }
 
     private static void menuHeader(String name) {
