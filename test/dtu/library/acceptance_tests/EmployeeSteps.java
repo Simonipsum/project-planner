@@ -1,5 +1,6 @@
 package dtu.library.acceptance_tests;
 
+import app.Employee;
 import app.OperationNotAllowedException;
 import app.ProjectApp;
 
@@ -15,7 +16,6 @@ public class EmployeeSteps {
     private ProjectApp projectApp;
     private ErrorMessageHolder errorMessage;
     private String user;
-    private String ceo;
 
     public EmployeeSteps(ProjectApp projectApp, ErrorMessageHolder errorMessage) {
         this.projectApp = projectApp;
@@ -32,15 +32,13 @@ public class EmployeeSteps {
 
     @Given("the user is CEO")
     public void userIsCEO() {
-        ceo = user;
-        projectApp.setCEO(ceo);
+        projectApp.setCEO(user);
         assertTrue(projectApp.isCEO());
     }
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
-        ceo = user + "derp";
-        projectApp.setCEO(ceo);
+        projectApp.setCEO("derp");
         assertFalse(projectApp.isCEO());
     }
 
@@ -60,9 +58,10 @@ public class EmployeeSteps {
 
     @Given("the ProjectApp contains an Employee with username {string}")
     public void hasEmployee(String username) {
+        String temp = projectApp.getUser();
         projectApp.setUser(projectApp.getCEO());
         addNewEmployee(username);
-        projectApp.setUser(user);
+        projectApp.setUser(temp);
         hasNewEmployee(username);
     }
 
@@ -75,8 +74,4 @@ public class EmployeeSteps {
     public void theErrorMessageIsGiven(String errorMessage) {
         assertEquals(errorMessage, this.errorMessage.getErrorMessage());
     }
-
-
-
-
 }

@@ -1,10 +1,14 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Project {
     private int id;
     private String name;
-    private String pm;
     private int startYear;
+    private Employee pm = new Employee("NONE");
+    private List<Employee> employees = new ArrayList<>();
 
     public Project(int id, int startYear) {
         this.id = id;
@@ -17,11 +21,20 @@ public class Project {
         this.startYear = startYear;
     }
 
-    public void setName(String name) { this.name = name; }
-    public void setPm(String username) {this.pm = username; }
+    public void addEmployee(Employee e) {
+        this.employees.add(e);
+    }
 
-    public int getId() { return id; }
-    public int getStartYear() { return startYear; }
-    public String getPm() { return pm; }
-    public String getName() { return name; }
+    public void setPm(Employee e) {
+        //addEmployee(e);
+        this.pm = e;
+    }
+
+    public boolean hasEmployee(Employee e) { return this.employees.contains(e); }
+    public void setName(String name) { this.name = name; }
+    public int getId() { return this.id; }
+    public int getStartYear() { return this.startYear; }
+    public List<Employee> getEmployees() { return this.employees; }
+    public Employee getPm() { return this.pm; }
+    public String getName() { return this.name; }
 }
