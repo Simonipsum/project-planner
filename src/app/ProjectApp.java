@@ -3,8 +3,8 @@ package app;
 import java.util.*;
 
 public class ProjectApp {
-    private List<Employee> employees = new ArrayList<Employee>();
-    private List<Project> projects = new ArrayList<Project>();
+    private List<Employee> employees = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
     private String ceo = "marc";
     private String user = "NONE";
 

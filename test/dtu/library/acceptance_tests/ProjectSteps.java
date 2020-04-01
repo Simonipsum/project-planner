@@ -1,15 +1,11 @@
 package dtu.library.acceptance_tests;
 
-import app.Employee;
 import app.OperationNotAllowedException;
-import app.Project;
 import app.ProjectApp;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 
