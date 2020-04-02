@@ -1,5 +1,6 @@
 package dtu.library.acceptance_tests;
 
+import app.Employee;
 import app.OperationNotAllowedException;
 import app.ProjectApp;
 
@@ -34,8 +35,8 @@ public class ActivitySteps {
 
     @Given("the project with ID {int} contains an activity with name {string}")
     public void projectAlreadyContainsActivity(int id, String name) {
-        String temp = projectApp.getUser();
-        projectApp.setUser(projectApp.getProject(id).getPm().getUsername());
+        Employee temp = projectApp.getUser();
+        projectApp.setUser(projectApp.getProject(id).getPm());
         userAddsActivityToProject(name, id);
         projectApp.setUser(temp);
     }
@@ -67,5 +68,15 @@ public class ActivitySteps {
     @Then("the project with ID {int} does not contain an activity with name {string}")
     public void projectDoesNotContainActivity(int id, String name) {
         assertFalse(projectApp.getProject(id).hasActivity(name));
+    }
+
+    @When("the user registers absence for date {int}")
+    public void userRegistersAbsence(int date) {
+        projectApp.registerAbsence(date);
+    }
+
+    @Then("the user is absent for date {int}")
+    public void userIsAbsent(int date) {
+        assertTrue(projectApp.getAbsence().getWorkTime().get(projectApp.getUser()).get(date) == 8);
     }
 }

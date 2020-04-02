@@ -1,6 +1,6 @@
 Feature: Add Project
   Description: A project is added to the planner
-  Actors: user
+  Actors: user - An Employee or CEO
 
   Scenario: CEO adds new Project to ProjectApp
     Given the user is an Employee

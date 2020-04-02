@@ -1,5 +1,6 @@
 package dtu.library.acceptance_tests;
 
+import app.Employee;
 import app.OperationNotAllowedException;
 import app.ProjectApp;
 
@@ -26,7 +27,7 @@ public class ProjectSteps {
 
     @Given("the ProjectApp contains a project with ID 200001")
     public void hasAProject() {
-        String user = projectApp.getUser();
+        Employee user = projectApp.getUser();
         projectApp.setUser(projectApp.getCEO());
         userCreatesProject("Project1", 2020);
         projectApp.setUser(user);
@@ -62,11 +63,11 @@ public class ProjectSteps {
 
     @Given("the user is PM of the project with ID {int}")
     public void setUserPmOfProject(int id) {
-        String temp = projectApp.getUser();
+        Employee temp = projectApp.getUser();
         projectApp.setUser(projectApp.getCEO());
-        setPmOfProject(id, temp);
+        setPmOfProject(id, temp.getUsername());
         projectApp.setUser(temp);
-        assertEquals(projectApp.getProject(id).getPm().getUsername(), temp);
+        assertEquals(projectApp.getProject(id).getPm(), temp);
     }
 
     @Given("the user is not PM of the project with ID {int}")

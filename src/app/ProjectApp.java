@@ -5,13 +5,13 @@ import java.util.*;
 public class ProjectApp {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
-    private String ceo = "marc";
-    private String user = "NONE";
+    private Employee ceo = new Employee("marc");
+    private Employee user = new Employee("NONE");
     private Activity absence = new Activity("Absence");
 
     public void main(String[] args) throws OperationNotAllowedException {
         // Set CEO as an employee
-        this.employees.add(new Employee(ceo));
+        employees.add(ceo);
 
         // Run program
         while (true) {
@@ -28,8 +28,8 @@ public class ProjectApp {
         switch (pick) {
             // Employee
             case 1:  workTime();                                break;
-            case 2:  registerAbsence();                         break;
-            case 3:  display.listActivities(getEmployee(user)); break;
+            //case 2:  registerAbsence();                         break;
+            case 3:  display.listActivities(user); break;
             case 4:  getAssistance();                           break;
             case 5:  userLogout();                              break;
 
@@ -58,10 +58,6 @@ public class ProjectApp {
 
     public void getAssistance() {
         // get assistance on an activity.
-    }
-
-    public void registerAbsence() {
-        // Register absence of user at given start to end date interval
     }
 
     public void workTime() {
@@ -93,7 +89,7 @@ public class ProjectApp {
     }
 
     public void registerAbsence(int date) {
-        absence.setTime(getEmployee(user), 8, date);
+        absence.setTime(user, 8, date);
     }
 
     // Set PM of project with id
@@ -107,16 +103,16 @@ public class ProjectApp {
     private void addEmployee() throws OperationNotAllowedException {
         System.out.print("Initials of new Employee: ");
         String username = controller.getInitials(4);
-        addNewEmployee(username);
+        addNewEmployee(new Employee(username));
     }
 
     // Add new Employee to ProjectApp
-    public void addNewEmployee(String username) throws OperationNotAllowedException {
+    public void addNewEmployee(Employee e) throws OperationNotAllowedException {
         if (!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
-        employees.add(new Employee(username));
-    }
+        employees.add(e);
+}
 
     public void removeEmployee(String username) throws OperationNotAllowedException {
         if (!isCEO()) {
@@ -147,7 +143,7 @@ public class ProjectApp {
 
     public Project checkPM(int id) throws OperationNotAllowedException {
         Project project = getProject(id);
-        if (!project.getPm().getUsername().equals(user)) {
+        if (!project.getPm().equals(user)) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
         }
         return project;
@@ -187,43 +183,47 @@ public class ProjectApp {
     }
 
     public void userLogout() {
-        user = "NONE";
+        user = new Employee("NONE");
         System.out.println("User has been logged out.\n");
     }
 
     public void userLogin() {
-        if (user.equals("NONE")) {
+        String username;
+        if (user.getUsername().equals("NONE")) {
             System.out.print("Please input username to login: ");
-            user = controller.getInitials(4);
-            while (!isEmployee(user)) {
+            username = controller.getInitials(4);
+
+            while (!isEmployee(username)) {
                 System.out.print("Input is not an employee, please enter new: ");
-                user = controller.getInitials(4);
+                username = controller.getInitials(4);
             }
+
+            user = getEmployee(username);
             System.out.println("");
         }
     }
 
-    public void setCEO(String un) {
-        this.ceo = un;
+    public void setCEO(Employee e) {
+        this.ceo = e;
     }
 
-    public void setUser(String un) {
-        this.user = un;
+    public void setUser(Employee e) {
+        this.user = e;
     }
 
     public boolean isCEO() {
         return user.equals(ceo);
     }
 
-    public boolean isEmployee(String un) {
-        return employees.stream().anyMatch(e -> e.getUsername().equals(un));
+    public boolean isEmployee(String username) {
+        return employees.stream().anyMatch(e -> e.getUsername().equals(username));
     }
 
-    public String getCEO() {
+    public Employee getCEO() {
         return this.ceo;
     }
 
-    public String getUser() {
+    public Employee getUser() {
         return this.user;
     }
 
@@ -235,11 +235,15 @@ public class ProjectApp {
         return this.employees;
     }
 
+    public Activity getAbsence() {
+        return this.absence;
+    }
+
     public Project getProject(int id) {
         return projects.stream().filter(p -> p.getId() == id).findFirst().get();
     }
 
-    public Employee getEmployee(String un) {
-        return employees.stream().filter(e -> e.getUsername().equals(un)).findFirst().get();
+    public Employee getEmployee(String username) {
+        return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
     }
 }

@@ -15,7 +15,7 @@ public class EmployeeSteps {
 
     private ProjectApp projectApp;
     private ErrorMessageHolder errorMessage;
-    private String user;
+    private Employee user;
 
     public EmployeeSteps(ProjectApp projectApp, ErrorMessageHolder errorMessage) {
         this.projectApp = projectApp;
@@ -24,7 +24,7 @@ public class EmployeeSteps {
 
     @Given("the user is an Employee")
     public void userIsEmployee() throws OperationNotAllowedException {
-        user = "emil";
+        user = new Employee("emil");
         projectApp.setUser(projectApp.getCEO());
         projectApp.addNewEmployee(user);
         projectApp.setUser(user);
@@ -38,7 +38,7 @@ public class EmployeeSteps {
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
-        projectApp.setCEO("derp");
+        projectApp.setCEO(new Employee("derp"));
         assertFalse(projectApp.isCEO());
     }
 
@@ -50,7 +50,7 @@ public class EmployeeSteps {
     @When("the user adds a new Employee with username {string}")
     public void addNewEmployee(String username) {
         try {
-            projectApp.addNewEmployee(username);
+            projectApp.addNewEmployee(new Employee(username));
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -58,7 +58,7 @@ public class EmployeeSteps {
 
     @Given("the ProjectApp contains an Employee with username {string}")
     public void hasEmployee(String username) {
-        String temp = projectApp.getUser();
+        Employee temp = projectApp.getUser();
         projectApp.setUser(projectApp.getCEO());
         addNewEmployee(username);
         projectApp.setUser(temp);

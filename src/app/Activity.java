@@ -1,13 +1,13 @@
 package app;
 
-import java.util.Map;
+import java.util.*;
 
 public class Activity {
     private String name;
     private int start;
     private int end;
     private float expectedWorkTime;
-    private Map<Employee, Map<Integer, Float>> workTime;
+    private Map<Employee, Map<Integer, Float>> workTime = new HashMap<>();
 
     public Activity(String name) {
         this.name = name;
@@ -17,7 +17,7 @@ public class Activity {
 
     public void setTime(Employee e, float time, int date) {
         // check first if instance exists. use put if doesn't, use replace if it does.
-        Map<Integer, Float> dateTime = null;
+        Map<Integer, Float> dateTime = new HashMap<>();
         dateTime.put(date, time);
         workTime.put(e, dateTime);
     }
@@ -41,6 +41,9 @@ public class Activity {
     }
     public int getEnd() { return end; }
     public int getStart() { return start; }
+    public Map<Employee, Map<Integer, Float>> getWorkTime() {
+        return this.workTime;
+    }
 
     // Setters
     public void setName(String name) { this.name = name; }
