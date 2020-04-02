@@ -7,13 +7,14 @@ public class ProjectApp {
     private List<Project> projects = new ArrayList<>();
     private String ceo = "marc";
     private String user = "NONE";
+    private Activity absence = new Activity("Absence");
 
     public void main(String[] args) throws OperationNotAllowedException {
         // Set CEO as an employee
         this.employees.add(new Employee(ceo));
 
         // Run program
-        while(true) {
+        while (true) {
             userLogin();
             mainMenu(); // This menu goes to other menus.
         }
@@ -24,8 +25,8 @@ public class ProjectApp {
         int pick = controller.pickItem(maxPick);
 
         // Go to next menu / app.display
-        switch(pick) {
-            // app.Employee
+        switch (pick) {
+            // Employee
             case 1:  workTime();                                break;
             case 2:  registerAbsence();                         break;
             case 3:  display.listActivities(getEmployee(user)); break;
@@ -38,7 +39,7 @@ public class ProjectApp {
 
             // CEO
             case 8:  setPM();                                   break;
-            //case 9:  addEmployee();                             break;
+            case 9:  addEmployee();                             break;
             case 10: addProject();                              break;
 
             // undecided
@@ -91,9 +92,13 @@ public class ProjectApp {
         pick = controller.pickItem(maxPick);
     }
 
-    // Set PM of project with id 'id'.
+    public void registerAbsence(int date) {
+        absence.setTime(getEmployee(user), 8, date);
+    }
+
+    // Set PM of project with id
     public void setPM(String username, int id) throws OperationNotAllowedException {
-        if(!isCEO()) {
+        if (!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         getProject(id).setPm(getEmployee(username));
@@ -107,30 +112,53 @@ public class ProjectApp {
 
     // Add new Employee to ProjectApp
     public void addNewEmployee(String username) throws OperationNotAllowedException {
-        if(!isCEO()) {
+        if (!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         employees.add(new Employee(username));
     }
 
+    public void removeEmployee(String username) throws OperationNotAllowedException {
+        if (!isCEO()) {
+            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+        }
+        employees.remove(getEmployee(username));
+    }
+
     // Add Employee to project
     public void addEmployee(String username, int id) throws OperationNotAllowedException {
-        Project project = projects.stream().filter(p -> p.getId() == id).findFirst().get();
-        if(!project.getPm().getUsername().equals(user)) {
+        checkPM(id).addEmployee(getEmployee(username));
+    }
+
+    // Add Activity to Project
+    public void addNewActivity(String name, int id) throws  OperationNotAllowedException {
+        checkPM(id).addActivity(new Activity(name));
+    }
+
+    // Set dates of project activity
+    public void setDates(int id, String name, int start, int end) throws OperationNotAllowedException {
+        checkPM(id).setDates(name, start, end);
+    }
+
+    // Set newname of project activity
+    public void setName(String name, int id, String newname) throws OperationNotAllowedException {
+        checkPM(id).setName(name, newname);
+    }
+
+    public Project checkPM(int id) throws OperationNotAllowedException {
+        Project project = getProject(id);
+        if (!project.getPm().getUsername().equals(user)) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
         }
-        project.addEmployee(getEmployee(username));
+        return project;
     }
 
     public int calculateID(int year) {
         int count = 1;
-
         for (Project p : projects) {
-            if (p.getStartYear() == year) {
-                count += 1;
-            }
+            count += p.getStartYear() == year ? 1 : 0;
         }
-        return (year%100)*10000 + count;
+        return (year % 100) * 10000 + count;
     }
 
     public void addProject() throws OperationNotAllowedException {
@@ -147,7 +175,7 @@ public class ProjectApp {
     }
 
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
-        if(!isCEO()) {
+        if (!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
 
@@ -175,23 +203,43 @@ public class ProjectApp {
         }
     }
 
-    public Employee getEmployee(String username) {
-        return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
+    public void setCEO(String un) {
+        this.ceo = un;
     }
 
-    public boolean isEmployee(String username) {
-        return employees.stream().anyMatch(e -> e.getUsername().equals(username));
+    public void setUser(String un) {
+        this.user = un;
+    }
+
+    public boolean isCEO() {
+        return user.equals(ceo);
+    }
+
+    public boolean isEmployee(String un) {
+        return employees.stream().anyMatch(e -> e.getUsername().equals(un));
+    }
+
+    public String getCEO() {
+        return this.ceo;
+    }
+
+    public String getUser() {
+        return this.user;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public List<Employee> getEmployees() {
+        return this.employees;
     }
 
     public Project getProject(int id) {
         return projects.stream().filter(p -> p.getId() == id).findFirst().get();
     }
 
-    public void setCEO(String username) { this.ceo = username; }
-    public void setUser(String username) { this.user = username; }
-    public boolean isCEO() { return user.equals(ceo); }
-    public String getCEO() { return this.ceo; }
-    public String getUser() { return this.user; }
-    public List<Project> getProjects() { return projects; }
-
+    public Employee getEmployee(String un) {
+        return employees.stream().filter(e -> e.getUsername().equals(un)).findFirst().get();
+    }
 }

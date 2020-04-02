@@ -4,25 +4,27 @@ import java.util.Map;
 
 public class Activity {
     private String name;
-    private String start;
-    private String end;
+    private int start;
+    private int end;
     private float expectedWorkTime;
-    private Map<Employee, Map<String, Float>> workTime;
+    private Map<Employee, Map<Integer, Float>> workTime;
 
     public Activity(String name) {
         this.name = name;
+        this.start = -1;
+        this.end = -1;
     }
 
-    public void setTime(Employee e, float time, String date) {
+    public void setTime(Employee e, float time, int date) {
         // check first if instance exists. use put if doesn't, use replace if it does.
-        Map<String, Float> dateTime = null;
+        Map<Integer, Float> dateTime = null;
         dateTime.put(date, time);
         workTime.put(e, dateTime);
     }
 
     // Add time to already time set activity
-    public void addTime(Employee e, float time, String date) {
-        Map<String, Float> dateTime = workTime.get(e);
+    public void addTime(Employee e, float time, int date) {
+        Map<Integer, Float> dateTime = workTime.get(e);
         dateTime.put(date, dateTime.get(date) + time);
         workTime.put(e, dateTime);
     }
@@ -34,13 +36,15 @@ public class Activity {
     }
 
     // Getters
-    public String getName() { return name; }
-    public String getEnd() { return end; }
-    public String getStart() { return start; }
+    public String getName() {
+        return name;
+    }
+    public int getEnd() { return end; }
+    public int getStart() { return start; }
 
     // Setters
     public void setName(String name) { this.name = name; }
-    public void setEnd(String end) { this.end = end; }
-    public void setStart(String start) { this.start = start; }
+    public void setEnd(int end) { this.end = end; }
+    public void setStart(int start) { this.start = start; }
     public void setExpectedWT(float time) { expectedWorkTime = time; }
 }

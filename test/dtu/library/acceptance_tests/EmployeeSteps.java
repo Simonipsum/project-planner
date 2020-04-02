@@ -42,7 +42,7 @@ public class EmployeeSteps {
         assertFalse(projectApp.isCEO());
     }
 
-    @When("there is no employees with the username {string}")
+    @When("the ProjectApp does not contain an Employee with username {string}")
     public void hasNoEmployee(String username) {
         assertFalse(projectApp.isEmployee(username));
     }
@@ -73,5 +73,14 @@ public class EmployeeSteps {
     @Then("the error message {string} is given")
     public void theErrorMessageIsGiven(String errorMessage) {
         assertEquals(errorMessage, this.errorMessage.getErrorMessage());
+    }
+
+    @When("the user removes the Employee with username {string}")
+    public void userRemovesEmployeeFromApp(String username) {
+        try {
+            projectApp.removeEmployee(username);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
     }
 }

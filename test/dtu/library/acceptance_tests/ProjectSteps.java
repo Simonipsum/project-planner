@@ -46,7 +46,6 @@ public class ProjectSteps {
         assertTrue( projectApp.getProject(id).getName().equals(name) );
     }
 
-
     @When("the user sets the PM of the project with ID {int} to {string}")
     public void setPmOfProject(int id, String username) {
         try {
@@ -86,7 +85,7 @@ public class ProjectSteps {
 
     @Then("the Employee list of project {int} contains the Employee {string}")
     public void projectContainsEmployee(int id, String username) {
-        assertTrue(projectApp.getProject(id).hasEmployee(projectApp.getEmployee(username)));
+        assertTrue(projectApp.getProject(id).hasEmployee(username));
     }
 
 }
