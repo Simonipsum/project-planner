@@ -6,7 +6,10 @@ This is a project planner made in 02161 Software Engineering 1 @ DTU 2020
 
 
 # Authors 
-4 guys in a classroom...
+[Simon Amtoft Pedersen](https://github.com/Simonipsum), s173936
+[Janus Ivert Johansen](https://github.com/YoungPenguin), s173917
+[Marc Sun Boeg](https://github.com/MarcMarabou), s173905
+[Emil Skov Rasmussen](https://github.com/Emil252), s173402
 
 # Automatic testing
 
