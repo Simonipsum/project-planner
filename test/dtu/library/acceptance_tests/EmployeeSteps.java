@@ -42,12 +42,12 @@ public class EmployeeSteps {
         assertFalse(projectApp.isCEO());
     }
 
-    @When("the ProjectApp does not contain an Employee with username {string}")
+    @When("the ProjectApp does not contain an Employee {string}")
     public void hasNoEmployee(String username) {
         assertFalse(projectApp.isEmployee(username));
     }
 
-    @When("the user adds a new Employee with username {string}")
+    @When("the user adds a new Employee {string}")
     public void addNewEmployee(String username) {
         try {
             projectApp.addNewEmployee(new Employee(username));
@@ -56,7 +56,7 @@ public class EmployeeSteps {
         }
     }
 
-    @Given("the ProjectApp contains an Employee with username {string}")
+    @Given("the ProjectApp contains a new Employee {string}")
     public void hasEmployee(String username) {
         Employee temp = projectApp.getUser();
         projectApp.setUser(projectApp.getCEO());
@@ -65,7 +65,7 @@ public class EmployeeSteps {
         hasNewEmployee(username);
     }
 
-    @Then("the ProjectApp now contains an Employee with username {string}")
+    @Then("the ProjectApp now contains an Employee {string}")
     public void hasNewEmployee(String username) {
         assertTrue(projectApp.isEmployee(username));
     }

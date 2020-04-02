@@ -64,7 +64,7 @@
       <workItem from="1585725698138" duration="9597000" />
       <workItem from="1585746101046" duration="3645000" />
       <workItem from="1585822410278" duration="10529000" />
-      <workItem from="1585836044050" duration="2638000" />
+      <workItem from="1585836044050" duration="8304000" />
     </task>
     <servers />
   </component>
@@ -76,22 +76,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="92" y="92" width="2376" height="1216" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585829117143" />
-    <state width="2517" height="494" key="GridCell.Tab.0.bottom" timestamp="1585838688226">
+    <state width="2517" height="375" key="GridCell.Tab.0.bottom" timestamp="1585844356614">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="494" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585838688226" />
-    <state width="2517" height="494" key="GridCell.Tab.0.center" timestamp="1585838688226">
+    <state width="2517" height="375" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585844356614" />
+    <state width="2517" height="375" key="GridCell.Tab.0.center" timestamp="1585844356614">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="494" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585838688226" />
-    <state width="2517" height="494" key="GridCell.Tab.0.left" timestamp="1585838688226">
+    <state width="2517" height="375" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585844356614" />
+    <state width="2517" height="375" key="GridCell.Tab.0.left" timestamp="1585844356613">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="494" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585838688226" />
-    <state width="2517" height="494" key="GridCell.Tab.0.right" timestamp="1585838688226">
+    <state width="2517" height="375" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585844356613" />
+    <state width="2517" height="375" key="GridCell.Tab.0.right" timestamp="1585844356614">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="494" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585838688226" />
+    <state width="2517" height="375" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585844356614" />
     <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1585824483389">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -100,6 +100,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="976" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585836043079" />
+    <state x="1089" y="618" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585841379035">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1089" y="618" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585841379035" />
     <state x="976" y="298" width="607" height="804" key="find.popup" timestamp="1585824480263">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

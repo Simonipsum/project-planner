@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class ActivitySteps {
@@ -28,12 +30,12 @@ public class ActivitySteps {
         }
     }
 
-    @Then("the project {int} contains the activity {string}")
+    @Then("project {int} will contain activity {string}")
     public void projectContainsActivity(int id, String name) {
         assertTrue(projectApp.getProject(id).hasActivity(name));
     }
 
-    @Given("the project with ID {int} contains an activity with name {string}")
+    @Given("project {int} contains activity {string}")
     public void projectAlreadyContainsActivity(int id, String name) {
         Employee temp = projectApp.getUser();
         projectApp.setUser(projectApp.getProject(id).getPm());
@@ -70,13 +72,26 @@ public class ActivitySteps {
         assertFalse(projectApp.getProject(id).hasActivity(name));
     }
 
-    @When("the user registers absence for date {int}")
-    public void userRegistersAbsence(int date) {
-        projectApp.registerAbsence(date);
+    @When("the user registers absence from date {int} to date {int}")
+    public void userRegistersAbsence(int start, int end) {
+        projectApp.registerAbsence(start, end);
     }
 
     @Then("the user is absent for date {int}")
     public void userIsAbsent(int date) {
         assertTrue(projectApp.getAbsence().getWorkTime().get(projectApp.getUser()).get(date) == 8);
+    }
+
+    @Then("the user is absent for date {int} till date {int}")
+    public void userIsAbsentForMultipleDates(int start, int end) {
+        Date current = new Date(start/10000, (start%10000)/100, (start%100));
+        Date last    = new Date(end/10000, (end%10000)/100, (end%100));
+        int date;
+
+        while(!current.after(last)) {
+            date = current.getYear() * 10000 + current.getMonth() * 100 + current.getDate();
+            current.setDate(current.getDate() + 1);
+            userIsAbsent(date);
+        }
     }
 }

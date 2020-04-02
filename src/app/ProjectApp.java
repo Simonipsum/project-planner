@@ -88,8 +88,17 @@ public class ProjectApp {
         pick = controller.pickItem(maxPick);
     }
 
-    public void registerAbsence(int date) {
-        absence.setTime(user, 8, date);
+    // Start is first day of absence, end is last day of absence
+    public void registerAbsence(int start, int end) {
+        Date current = new Date(start/10000, (start%10000)/100, (start%100));
+        Date last    = new Date(end/10000, (end%10000)/100, (end%100));
+        int date;
+
+        while(!current.after(last)) {
+            date = current.getYear() * 10000 + current.getMonth() * 100 + current.getDate();
+            current.setDate(current.getDate() + 1);
+            absence.setTime(user, 8, date);
+        }
     }
 
     // Set PM of project with id

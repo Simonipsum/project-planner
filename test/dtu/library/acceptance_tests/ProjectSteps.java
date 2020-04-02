@@ -84,6 +84,18 @@ public class ProjectSteps {
         }
     }
 
+    @Given("the user is on project {int}")
+    public void userIsOnProject(int id) {
+        Employee temp = projectApp.getUser();
+        projectApp.setUser(projectApp.getProject(id).getPm());
+        try {
+            projectApp.addEmployee(temp.getUsername(), id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+        projectApp.setUser(temp);
+    }
+
     @Then("the Employee list of project {int} contains the Employee {string}")
     public void projectContainsEmployee(int id, String username) {
         assertTrue(projectApp.getProject(id).hasEmployee(username));

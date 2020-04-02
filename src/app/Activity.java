@@ -16,8 +16,13 @@ public class Activity {
     }
 
     public void setTime(Employee e, float time, int date) {
-        // check first if instance exists. use put if doesn't, use replace if it does.
-        Map<Integer, Float> dateTime = new HashMap<>();
+        Map<Integer, Float> dateTime;
+
+        if (workTime.containsKey(e)) {
+            dateTime = workTime.get(e);
+        } else {
+            dateTime = new HashMap<>();
+        }
         dateTime.put(date, time);
         workTime.put(e, dateTime);
     }
