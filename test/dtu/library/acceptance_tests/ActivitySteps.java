@@ -100,9 +100,23 @@ public class ActivitySteps {
         projectApp.setWorkTime(date, time, id, name);
     }
 
+    @When("the user sets the expected worktime of {string} from project {int} to {float}")
+    public void userSetsExpectedWorktimeOfActivity(String name, int id, float time) {
+        try {
+            projectApp.setExpectedWT(id, name, time);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
     @Then("{string} on project {int} on date {int} has {float} hours from user")
     public void activityHasWorktimeFromUser(String name, int id, int date, float time) {
         assertTrue(projectApp.getProject(id).getActivity(name).getWorkTime().get(projectApp.getUser()).get(date) == time);
+    }
+
+    @Then("{string} of project {int} has expected worktime {float}")
+    public void activityHasExpectedWorktime(String name, int id, float time) {
+        assertTrue(projectApp.getProject(id).getActivity(name).getExpectedWorkTime() == time);
     }
 
 }

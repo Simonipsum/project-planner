@@ -1,6 +1,6 @@
 Feature: Register Worktime
   Background:
-    Given the ProjectApp contains a project with ID 200001
+    Given the ProjectApp contains project 200001
     And the user is an Employee
     And the user is on project 200001
     And project 200001 contains activity "Activity1"

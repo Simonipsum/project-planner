@@ -43,9 +43,13 @@ public class Activity {
         return this.workTime;
     }
 
+    public float getExpectedWorkTime() {
+        return this.expectedWorkTime;
+    }
+
     // Setters
     public void setName(String name) { this.name = name; }
     public void setEnd(int end) { this.end = end; }
     public void setStart(int start) { this.start = start; }
-    public void setExpectedWT(float time) { expectedWorkTime = time; }
+    public void setExpectedWT(float time) { this.expectedWorkTime = time; }
 }

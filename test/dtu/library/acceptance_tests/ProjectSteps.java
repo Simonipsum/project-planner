@@ -25,12 +25,19 @@ public class ProjectSteps {
         assertEquals(0, projectApp.getProjects().size());
     }
 
-    @Given("the ProjectApp contains a project with ID 200001")
-    public void hasAProject() {
-        Employee user = projectApp.getUser();
-        projectApp.setUser(projectApp.getCEO());
-        userCreatesProject("Project1", 2020);
-        projectApp.setUser(user);
+    @Given("the ProjectApp contains project {int}")
+    public void hasAProject(int id) {
+        if (!projectApp.hasProject(id)) {
+            int year = id / 10000;
+            int numb = id % 10000;
+
+            Employee user = projectApp.getUser();
+            projectApp.setUser(projectApp.getCEO());
+            for (int i = 0; i < numb; i++) {
+                userCreatesProject("Project1", year);
+            }
+            projectApp.setUser(user);
+        }
     }
 
     @When("the user adds a project named {string} in the year {int}")
@@ -47,7 +54,7 @@ public class ProjectSteps {
         assertTrue( projectApp.getProject(id).getName().equals(name) );
     }
 
-    @When("the user sets the PM of the project with ID {int} to {string}")
+    @When("the user sets PM of project {int} to {string}")
     public void setPmOfProject(int id, String username) {
         try {
             projectApp.setPM(username, id);
@@ -96,9 +103,22 @@ public class ProjectSteps {
         projectApp.setUser(temp);
     }
 
-    @Then("the Employee list of project {int} contains the Employee {string}")
+    @When("the user removes the employee {string} from project {int}")
+    public void userRemovesEmployeeFromProject(String name, int id) {
+        try {
+            projectApp.removeEmployee(name, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the employee list of project {int} contains the employee {string}")
     public void projectContainsEmployee(int id, String username) {
         assertTrue(projectApp.getProject(id).hasEmployee(username));
     }
 
+    @Then("the employee list of project {int} does not contain the employee {string}")
+    public void projectDoesNotContainEmployee(int id, String username) {
+        assertFalse(projectApp.getProject(id).hasEmployee(username));
+    }
 }

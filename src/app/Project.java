@@ -23,13 +23,13 @@ public class Project {
     }
 
 
-    public void setDates(String name, int start, int end) {
+    public void setDates(String name, int start, int end) throws OperationNotAllowedException {
         if (start < end) {
             Activity ac = getActivity(name);
             ac.setStart(start);
             ac.setEnd(end);
         } else {
-            // throw some kind of exception
+            throw new OperationNotAllowedException("Start date must be before end date");
         }
     }
 
@@ -38,11 +38,19 @@ public class Project {
         return new int[]{ac.getStart(), ac.getEnd()};
     }
 
-    public void setName(String name, String newname) {
+    public void setName(String name, String newname) throws OperationNotAllowedException {
         if (hasActivity(name)) {
             getActivity(name).setName(newname);
         } else {
-            // throw some shit
+            throw new OperationNotAllowedException("Project does not contain activity");
+        }
+    }
+
+    public void removeEmployee(Employee e) throws OperationNotAllowedException {
+        if (hasEmployee(e.getUsername())) {
+            employees.remove(e);
+        } else {
+            throw new OperationNotAllowedException("Project does not contain employee");
         }
     }
 

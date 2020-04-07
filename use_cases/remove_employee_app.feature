@@ -7,6 +7,7 @@ Feature: Remove Employee from ProjectApp
     Given the user is CEO
     When the user removes the Employee with username "jan"
     Then the ProjectApp does not contain an Employee "jan"
+    And the error message "" is given
 
   Scenario: Employee unsuccessfully fires Employee
     Given the user is not CEO

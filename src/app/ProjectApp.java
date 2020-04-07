@@ -125,7 +125,12 @@ public class ProjectApp {
         if (!isCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
-        employees.add(e);
+
+        if (!isEmployee(e.getUsername())) {
+            employees.add(e);
+        } else {
+            throw new OperationNotAllowedException("Employee with that username already registered");
+        }
 }
 
     public void removeEmployee(String username) throws OperationNotAllowedException {
@@ -133,6 +138,10 @@ public class ProjectApp {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         employees.remove(getEmployee(username));
+    }
+
+    public void removeEmployee(String username, int id) throws OperationNotAllowedException {
+        checkPM(id).removeEmployee(getEmployee(username));
     }
 
     // Add Employee to project
@@ -153,6 +162,10 @@ public class ProjectApp {
     // Set newname of project activity
     public void setName(String name, int id, String newname) throws OperationNotAllowedException {
         checkPM(id).setName(name, newname);
+    }
+
+    public void setExpectedWT(int id, String name, float time) throws OperationNotAllowedException {
+        checkPM(id).getActivity(name).setExpectedWT(time);
     }
 
     public Project checkPM(int id) throws OperationNotAllowedException {
@@ -259,5 +272,9 @@ public class ProjectApp {
 
     public Employee getEmployee(String username) {
         return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
+    }
+
+    public boolean hasProject(int id) {
+        return projects.stream().anyMatch(p -> p.getName().equals(id));
     }
 }
