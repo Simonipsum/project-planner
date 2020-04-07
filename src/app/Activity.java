@@ -23,20 +23,13 @@ public class Activity {
         } else {
             dateTime = new HashMap<>();
         }
-        dateTime.put(date, time);
-        workTime.put(e, dateTime);
-    }
 
-    // Add time to already time set activity
-    public void addTime(Employee e, float time, int date) {
-        Map<Integer, Float> dateTime = workTime.get(e);
-        dateTime.put(date, dateTime.get(date) + time);
+        dateTime.put(date, time);
         workTime.put(e, dateTime);
     }
 
     public float getRemainingWT() {
         float wt = 0;
-
         return wt;
     }
 

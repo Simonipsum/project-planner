@@ -16,6 +16,17 @@ public class controller {
         return pick;
     }
 
+    public static float getInputFloat() {
+
+        //  ONLY ACCEPT POSITIVE INPUT!!!
+
+        while (!consoleIn.hasNextFloat()) {
+            consoleIn.next();
+            System.out.print("Input must be a float. Enter new float:");
+        }
+        return consoleIn.nextFloat();
+    }
+
     public static int getInputInt() {
         while (!consoleIn.hasNextInt()) {
             consoleIn.next();

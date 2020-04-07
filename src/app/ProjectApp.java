@@ -101,6 +101,11 @@ public class ProjectApp {
         }
     }
 
+    // Set worktime of one date
+    public void setWorkTime(int date, float time, int id, String name) {
+        getProject(id).getActivity(name).setTime(user, time, date);
+    }
+
     // Set PM of project with id
     public void setPM(String username, int id) throws OperationNotAllowedException {
         if (!isCEO()) {

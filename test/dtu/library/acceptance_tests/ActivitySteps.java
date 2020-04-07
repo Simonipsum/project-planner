@@ -94,4 +94,15 @@ public class ActivitySteps {
             userIsAbsent(date);
         }
     }
+
+    @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
+    public void userSetsWorktimeOfActivity(float time, String name, int date, int id) {
+        projectApp.setWorkTime(date, time, id, name);
+    }
+
+    @Then("{string} on project {int} on date {int} has {float} hours from user")
+    public void activityHasWorktimeFromUser(String name, int id, int date, float time) {
+        assertTrue(projectApp.getProject(id).getActivity(name).getWorkTime().get(projectApp.getUser()).get(date) == time);
+    }
+
 }
