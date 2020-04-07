@@ -24,7 +24,7 @@ public class controller {
             consoleIn.next();
             System.out.print("Input must be a float. Enter new float:");
         }
-        return consoleIn.nextFloat();
+        return consoleIn.nextInt();
     }
 
     public static int getInputInt() {
@@ -37,18 +37,15 @@ public class controller {
 
     public static String getInitials(int maxLength) {
         String input = "";
-        boolean getInput = true;
 
-        while (getInput) {
+        while (true) {
             input = consoleIn.next().toLowerCase();
 
-            if (input.length() > maxLength) {
-                System.out.printf("Please enter a maximum of %d initials.\n", maxLength);
-            } else {
-                getInput = false;
+            if (input.length() <= maxLength) {
+                return input;
             }
+            System.out.printf("Please enter a maximum of %d initials.\n", maxLength);
         }
-        return input;
     }
 
     public static String getString() {

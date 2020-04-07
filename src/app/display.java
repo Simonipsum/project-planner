@@ -24,8 +24,8 @@ public class display {
         // PM options
         "Add employee",
         "Add activity",
-        "Edit start/end date of an activity",
-        "Change estimated work time of an activity",
+        "Edit activity dates",
+        "Edit activity worktime",
         "See timetable of project",
     };
 
@@ -40,7 +40,7 @@ public class display {
     }
 
     public static int projectMenu() {
-        menuHeader("app.Project Menu");
+        menuHeader("Project Menu");
         listMenu(projectMenuOptions);
         System.out.print("----------------------------------\n");
         return projectMenuOptions.length;
@@ -69,11 +69,11 @@ public class display {
         // and start date of activities not started yet.
 
 
-        // List<app.Activity> activities = user.getActivities();
+        // List<Activity> activities = user.getActivities();
         // System.out.println("List of activities user has worked on");
         // System.out.println("-------------------------------------");
         // System.out.println("Name \t\t Work Time");
-        // for (app.Activity a : activities) {
+        // for (Activity a : activities) {
         //      System.out.printf("%s \t\t %d\n", a.getName(), a.getWorkTime(user));
         // }
         // System.out.println("-------------------------------------\n");
@@ -81,28 +81,28 @@ public class display {
 
     public static void listProjects(List<Project> projects) {
         if (projects.size() == 0) {
-            System.out.println("No projects added to app.ProjectApp yet.");
+            System.out.println("No projects added to ProjectApp yet.");
         } else {
             System.out.println("List of projects in app");
-            System.out.println("-----------------------");
+            System.out.println("----------------------------------");
             System.out.println("ID \t\t Name");
             for (Project p : projects) {
                 System.out.printf("%d \t\t %s\n", p.getId(), p.getName());
             }
-            System.out.println("-----------------------\n");
+            System.out.println("----------------------------------\n");
         }
     }
 
     public static void listEmployees(List<Employee> employees) {
         if (employees.size() == 0) {
-            System.out.println("No employees in app.ProjectApp yet.");
+            System.out.println("No employees in ProjectApp yet.");
         } else {
-            System.out.println("List of employees in app.ProjectApp");
-            System.out.println("-----------------------");
+            System.out.println("List of employees in ProjectApp");
+            System.out.println("----------------------------------");
             for (Employee e : employees) {
                 System.out.printf("\t%s\n", e.getUsername());
             }
-            System.out.println("-----------------------\n");
+            System.out.println("----------------------------------\n");
         }
     }
 }
