@@ -23,6 +23,11 @@ Feature: Edit existing Project Activity
     And the project with ID 200001 does not contain an activity with name "Activity1"
     And the error message "" is given
 
+  Scenario: Employee edits name of Activity
+    Given the user is not PM of the project with ID 200001
+    When the user sets the name of "Activity1" from project 200001 to "Activity2"
+    Then the error message "Insufficient Permissions. User is not PM." is given
+
   Scenario: PM sets expected worktime of Activity
     Given the user is PM of the project with ID 200001
     When the user sets the expected worktime of "Activity1" from project 200001 to 10
