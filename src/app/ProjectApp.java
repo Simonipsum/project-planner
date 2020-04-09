@@ -9,14 +9,14 @@ public class ProjectApp {
     private Employee user = new Employee("NONE");
     private Activity absence = new Activity("Absence");
 
-    public void main(String[] args) throws OperationNotAllowedException {
+    public static void main(String[] args) throws OperationNotAllowedException {
         // Set CEO as an employee
-        employees.add(ceo);
-
+        ProjectApp ProjectApp = new ProjectApp();
+        ProjectApp.setCEO();
         // Run program
         while (true) {
-            userLogin();
-            mainMenu(); // This menu goes to other menus.
+            ProjectApp.userLogin();
+            ProjectApp.mainMenu(); // This menu goes to other menus.
         }
     }
 
@@ -46,6 +46,10 @@ public class ProjectApp {
             case 11: display.listProjects(projects);            break;
             case 12: display.listEmployees(employees);          break;
         }
+    }
+
+    public void setCEO() {
+        employees.add(ceo);
     }
 
     public void checkAvailability() {
