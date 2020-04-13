@@ -21,6 +21,9 @@ public class display {
         "Set PM of a project",
         "Register new employee",
         "Add new project",
+        "Summary report",
+
+        // ALl
         "List all projects",
         "List all employees",
     };
@@ -132,5 +135,17 @@ public class display {
             }
             System.out.println(sep + "\n");
         }
+    }
+
+    public static void timeTable(Project p) {
+        System.out.println("List all work time on each activity for each day in a table summed over all employees");
+        System.out.println("Expected work time remaning: ");
+    }
+
+    public static void summary(List<Project> ps, Employee user, Employee ceo) {
+        if (!user.equals(ceo)) return;
+        System.out.println("List all projects with their remaining expected work times" +
+                "\n together with their end dates and number of employees assigned" +
+                "\n show how many assistants have been requested on each project");
     }
 }

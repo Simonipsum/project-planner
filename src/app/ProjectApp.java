@@ -1,5 +1,7 @@
 package app;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -45,10 +47,11 @@ public class ProjectApp {
             case 7:  setPM();                                   break;
             case 8:  addEmployee();                             break;
             case 9:  addProject();                              break;
+            case 10: display.summary(projects, user, ceo);      break;
 
             // undecided
-            case 10: display.listProjects(projects);            break;
-            case 11: display.listEmployees(employees, ceo);     break;
+            case 11: display.listProjects(projects);            break;
+            case 12: display.listEmployees(employees, ceo);     break;
         }
     }
 
@@ -97,11 +100,11 @@ public class ProjectApp {
         // Move cases to own methods?
         switch (pick) {
             case 0: return;
-            case 1: addProjectEmployee(id);     break;
-            case 2: addProjectActivity(id);     break;
-            case 3: editActivityDates(id);      break;
-            case 4: editActivityWT(id);         break;
-            case 5: //display.timeTable(project); break;
+            case 1: addProjectEmployee(id);             break;
+            case 2: addProjectActivity(id);             break;
+            case 3: editActivityDates(id);              break;
+            case 4: editActivityWT(id);                 break;
+            case 5: display.timeTable(getProject(id));  break;
         }
     }
 
