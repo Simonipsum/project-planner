@@ -22,6 +22,17 @@ public class Project {
         this.startYear = startYear;
     }
 
+    public float getWorkedTime() {
+        float wt = 0;
+        for (Activity a : activities) wt += a.getWorkedTime();
+        return wt;
+    }
+
+    public float getRemainingWT() {
+        float rwt = 0;
+        for (Activity a : activities) rwt += a.getRemainingWT();
+        return rwt;
+    }
 
     public void setDates(String name, int start, int end) throws OperationNotAllowedException {
         if (start < end) {

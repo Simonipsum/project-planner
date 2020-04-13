@@ -23,7 +23,7 @@ public class display {
         "Add new project",
         "Summary report",
 
-        // ALl
+        // All
         "List all projects",
         "List all employees",
     };
@@ -91,7 +91,7 @@ public class display {
             if (p.hasEmployee(user.getUsername())) {
                 for (Activity a : p.getActivities()) {
                     System.out.printf("%s \t\t %d\n", a.getName(), 1);
-                    a.getWorkTime(user);
+                    a.getWorkedTime(user);
                 }
             }
         }
@@ -144,8 +144,12 @@ public class display {
 
     public static void summary(List<Project> ps, Employee user, Employee ceo) {
         if (!user.equals(ceo)) return;
-        System.out.println("List all projects with their remaining expected work times" +
-                "\n together with their end dates and number of employees assigned" +
-                "\n show how many assistants have been requested on each project");
+        String out = "ID \t\t worktime \t remaining wt\n";
+        for (Project p : ps) {
+            if (p.getRemainingWT() > 0) {
+                out += p.getId() + "\t" + p.getWorkedTime() + "\t\t" + p.getRemainingWT() + "\n";
+            }
+        }
+        System.out.println(out);
     }
 }

@@ -29,8 +29,7 @@ public class Activity {
     }
 
     public float getRemainingWT() {
-        float wt = 0;
-        return wt;
+        return expectedWorkTime - getWorkedTime();
     }
 
     // Getters
@@ -43,7 +42,30 @@ public class Activity {
         return this.workTime;
     }
 
-    public float getWorkTime(Employee e) {
+    public Map<Integer, Float> getDateTime() {
+        float time;
+        Map<Integer, Float> dateTime = new HashMap<>();
+
+        for (Map<Integer, Float> dt : workTime.values()) {
+            for (Integer d : dt.keySet()) {
+                time = dt.get(d);
+                if (dateTime.containsKey(d)) {
+                    time += dateTime.get(d);
+                }
+                dateTime.put(d, time);
+            }
+        }
+        return dateTime;
+    }
+
+    public float getWorkedTime() {
+        float wt = 0;
+        Map<Integer, Float> dt = getDateTime();
+        for (Float t : dt.values()) wt += t;
+        return wt;
+    }
+
+    public float getWorkedTime(Employee e) {
         float wt = 0;
         Map<Integer, Float> dateTime = workTime.get(e);
 
