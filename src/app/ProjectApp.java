@@ -1,8 +1,5 @@
 package app;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class ProjectApp {
@@ -219,6 +216,10 @@ public class ProjectApp {
     }
 
     private void addProject() throws OperationNotAllowedException {
+        if (!isCEO()) {
+            System.out.println("Insufficient Permissions. User is not CEO.");
+            return;
+        }
         System.out.print("Enter year of project start: ");
         int year = controller.getInputInt();
         System.out.print("Enter name of project (type 'no' to skip naming): ");

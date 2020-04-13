@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c18e354d-f2a7-4ceb-a31d-56168a1d76f8" name="Default Changelist" comment="" />
+    <list default="true" id="c18e354d-f2a7-4ceb-a31d-56168a1d76f8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/app/ProjectApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ProjectApp.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,21 +105,25 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="867" y="475" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586262145437" />
-    <state width="2517" height="492" key="GridCell.Tab.0.bottom" timestamp="1586784106653">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1877" height="179" key="GridCell.Tab.0.bottom" timestamp="1586802551665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="179" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
     <state width="2517" height="492" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586784106653" />
-    <state width="2517" height="492" key="GridCell.Tab.0.center" timestamp="1586784106652">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1877" height="179" key="GridCell.Tab.0.center" timestamp="1586802551665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="179" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
     <state width="2517" height="492" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586784106652" />
-    <state width="2517" height="492" key="GridCell.Tab.0.left" timestamp="1586784106652">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1877" height="179" key="GridCell.Tab.0.left" timestamp="1586802551665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="179" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
     <state width="2517" height="492" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586784106652" />
-    <state width="2517" height="492" key="GridCell.Tab.0.right" timestamp="1586784106652">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state width="1877" height="179" key="GridCell.Tab.0.right" timestamp="1586802551665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="179" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
     <state width="2517" height="492" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586784106652" />
     <state width="2517" height="492" key="GridCell.Tab.1.bottom" timestamp="1586784106653">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -159,5 +165,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="953" y="323" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586264772187" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/project_planner$ProjectApp.ic" NAME="ProjectApp Coverage Results" MODIFIED="1586802366400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/project_planner$AcceptanceTest.ic" NAME="AcceptanceTest Coverage Results" MODIFIED="1586802297834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>dtu.library.acceptance_tests.*</FILTER>
+    </SUITE>
   </component>
 </project>
