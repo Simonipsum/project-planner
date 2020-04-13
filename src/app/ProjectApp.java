@@ -16,15 +16,14 @@ public class ProjectApp {
         app.setCEOEmployee();
 
         // Run program
-        // load XML file <---------------------
+        app.derpHelper(); // initialises ProjectApp with some employees, projects and activities
         while (true) {
             app.userLogin();
             app.mainMenu(); // This menu goes to other menus.
-            // write to XML file <---------------------
         }
     }
 
-    public void mainMenu() throws OperationNotAllowedException {
+    private void mainMenu() throws OperationNotAllowedException {
         int maxPick = display.mainMenu();
         int pick = controller.pickItem(maxPick);
 
@@ -33,8 +32,8 @@ public class ProjectApp {
             case 0: userLogout();                               break;
 
             // Employee
-            //case 1:  workTime();                                break;
-            //case 2:  registerAbsence();                         break;
+            case 1:  worktime();                                break;
+            case 2:  registerAbsence();                         break;
             //case 3:  display.listActivities(user, projects);    break;
             //case 4:  getAssistance();                           break;
 
@@ -53,8 +52,38 @@ public class ProjectApp {
         }
     }
 
-    public void projectMenu() throws OperationNotAllowedException {
+    private void worktime() {
+        if (projects.size() == 0) {
+            System.out.println("No projects added to ProjectApp yet.");
+            return;
+        }
+        int id = pickProject();
+        if (!getProject(id).hasEmployee(user.getUsername())) {
+            System.out.println("Insufficient Permissions. User is assigned to the project.");
+            return;
+        }
+        if (getProject(id).getActivities().size() == 0) {
+            System.out.println("Project doesn't have any activities.");
+            return;
+        }
+        String name = pickActivity(id);
+        System.out.print("Enter worktime of activity: ");
+        float wt = controller.getInputFloat();
+
+        System.out.print("Enter date of work: ");
+        int date = controller.getInputInt();
+
+        getProject(id).getActivity(name).setTime(user, wt, date);
+        System.out.printf("Worktime of %s on date %06d has successfully been set to %.1f\n\n", name, date, wt);
+    }
+
+    private void projectMenu() throws OperationNotAllowedException {
         int pick, maxPick;
+
+        if (projects.size() == 0) {
+            System.out.println("No projects added to ProjectApp yet.");
+            return;
+        }
 
         int id = pickProject();
         if (!getProject(id).getPm().equals(user)) {
@@ -71,32 +100,47 @@ public class ProjectApp {
             case 1: addProjectEmployee(id);     break;
             case 2: addProjectActivity(id);     break;
             case 3: editActivityDates(id);      break;
-            case 4: break;
-            case 5: break;
+            case 4: editActivityWT(id);         break;
+            case 5: //display.timeTable(project); break;
         }
     }
 
-    public void editActivityDates(int id) throws OperationNotAllowedException {
+    private void editActivityWT(int id) {
         if (getProject(id).getActivities().size() == 0) {
             System.out.println("Project doesn't have any activities.");
             return;
         }
+        String name = pickActivity(id);
+        System.out.print("Enter expected worktime of activity: ");
+        float wt = controller.getInputFloat();
+        getProject(id).getActivity(name).setExpectedWT(wt);
+        System.out.printf("Worktime of %s has successfully been set to %.1f\n\n", name, wt);
+    }
 
+    private void editActivityDates(int id) throws OperationNotAllowedException {
+        if (getProject(id).getActivities().size() == 0) {
+            System.out.println("Project doesn't have any activities.");
+            return;
+        }
         String name = pickActivity(id);
         System.out.print("Enter start date: ");
         int start = controller.getInputInt();
         while(start/10000 < id/10000) {
-            System.out.println("Start can't be before project start year: ");
+            System.out.print("Start can't be before project start year: ");
             start = controller.getInputInt();
         }
 
         System.out.print("Enter end date: ");
         int end = controller.getInputInt();
+        while(end/10000 < start/10000) {
+            System.out.print("End can't be before start date: ");
+            start = controller.getInputInt();
+        }
         setDates(id, name, start, end);
-        System.out.printf("Dates of %s successfully changed to %06d %06d\n", name, start, end);
+        System.out.printf("Dates of %s successfully changed to %06d %06d\n\n", name, start, end);
     }
 
-    public String pickActivity(int id) {
+    private String pickActivity(int id) {
         display.listActivities(getProject(id));
         System.out.print("Enter name of activity: ");
         String name = controller.getString();
@@ -108,57 +152,46 @@ public class ProjectApp {
         return name;
     }
 
-    public void addProjectActivity(int id) throws OperationNotAllowedException {
+    private void addProjectActivity(int id) throws OperationNotAllowedException {
         System.out.print("Enter name of new activity: ");
         String name = controller.getString();
         addNewActivity(name, id);
-        System.out.printf("Activity %s successfully added to %d\n", name, id);
+        System.out.printf("Activity %s successfully added to %d\n\n", name, id);
     }
 
-    public void addProjectEmployee(int id) throws OperationNotAllowedException {
+    private void addProjectEmployee(int id) throws OperationNotAllowedException {
         String username = pickEmployee();
         if (getProject(id).hasEmployee(username)) return;
         addEmployee(username, id);
-        System.out.printf("Employee %s successfully added to %d\n", username, id);
+        System.out.printf("Employee %s successfully added to %d\n\n", username, id);
     }
 
-    public int pickProject() {
-        display.listProjects(projects);
-        System.out.print("Enter ID of project you want to edit: ");
-        int pick = controller.getInputInt();
-        while(!hasProject(pick)) {
-            System.out.print("ID is not associated with any project. Please enter new: ");
-            pick = controller.getInputInt();
-        }
-        System.out.println("");
-        return pick;
-    }
-
-    public String pickEmployee() {
-        display.listEmployees(employees, ceo);
-        System.out.print("Please input username of employee: ");
-        String username = controller.getInitials(4);
-
-        while (!isEmployee(username)) {
-            System.out.print("Input is not an employee, please enter new: ");
-            username = controller.getInitials(4);
-        }
-        System.out.println("");
-        return username;
-    }
-
-    public void setPM() {
+    private void setPM() {
         if (!isCEO()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
-        } else if (projects.size() == 0) {
+        }
+        if (projects.size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
             return;
         }
         int id = pickProject();
         String username = pickEmployee();
         getProject(id).setPm(getEmployee(username));
-        System.out.printf("PM of %d was successfully set to %s\n", id, username);
+        System.out.printf("PM of %d was successfully set to %s\n\n", id, username);
+    }
+
+    public void registerAbsence() {
+        System.out.print("Enter start date: ");
+        int start = controller.getInputInt();
+        System.out.print("Enter end date: ");
+        int end = controller.getInputInt();
+        while(end < start) {
+            System.out.print("End date can't be before start date: ");
+            end = controller.getInputInt();
+        }
+        registerAbsence(start, end);
+        System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n", user.getUsername(), start, end);
     }
 
     // Start is first day of absence, end is last day of absence
@@ -174,33 +207,46 @@ public class ProjectApp {
         }
     }
 
-    // Set worktime of one date
-    public void setWorkTime(int date, float time, int id, String name) {
-        getProject(id).getActivity(name).setTime(user, time, date);
-    }
-
-    // Set PM of project with id
-    public void setPM(String username, int id) throws OperationNotAllowedException {
-        if (!isCEO()) throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
-        if (!isEmployee(username)) throw new OperationNotAllowedException("Username is not an Employee.");
-        getProject(id).setPm(getEmployee(username));
-    }
-
     // Add employee to Project App
     private void addEmployee() throws OperationNotAllowedException {
         System.out.print("Initials of new Employee: ");
         String username = controller.getInitials(4);
         addNewEmployee(new Employee(username));
-        System.out.printf("Employee %s was successfully added to the ProjectApp.\n", username);
+        System.out.printf("Employee %s was successfully added to the ProjectApp.\n\n", username);
     }
 
-    public void addProject() throws OperationNotAllowedException {
+    private void addProject() throws OperationNotAllowedException {
         System.out.print("Enter year of project start: ");
         int year = controller.getInputInt();
         System.out.print("Enter name of project (type 'no' to skip naming): ");
         String name = controller.getString();
         addNewProject(year, name);
-        System.out.printf("Project %d was successfully added to the ProjectApp.\n", calculateID(year));
+        System.out.printf("Project %d was successfully added to the ProjectApp.\n\n", calculateID(year));
+    }
+
+    private int pickProject() {
+        display.listProjects(projects);
+        System.out.print("Enter ID of project you want to edit: ");
+        int pick = controller.getInputInt();
+        while(!hasProject(pick)) {
+            System.out.print("ID is not associated with any project. Please enter new: ");
+            pick = controller.getInputInt();
+        }
+        System.out.println("");
+        return pick;
+    }
+
+    private String pickEmployee() {
+        display.listEmployees(employees, ceo);
+        System.out.print("Please input username of employee: ");
+        String username = controller.getInitials(4);
+
+        while (!isEmployee(username)) {
+            System.out.print("Input is not an employee, please enter new: ");
+            username = controller.getInitials(4);
+        }
+        System.out.println("");
+        return username;
     }
 
     // Add new Employee to ProjectApp
@@ -213,6 +259,19 @@ public class ProjectApp {
             throw new OperationNotAllowedException("Employee with that username already registered");
         }
     }
+
+    // Set worktime of one date
+    public void setWorkTime(int date, float time, int id, String name) {
+        getProject(id).getActivity(name).setTime(user, time, date);
+    }
+
+    // Set PM of project with id
+    public void setPM(String username, int id) throws OperationNotAllowedException {
+        if (!isCEO()) throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+        if (!isEmployee(username)) throw new OperationNotAllowedException("Username is not an Employee.");
+        getProject(id).setPm(getEmployee(username));
+    }
+
 
     public void removeEmployee(String username) throws OperationNotAllowedException {
         if (!isCEO()) throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
@@ -339,5 +398,37 @@ public class ProjectApp {
 
     public void setCEOEmployee() {
         employees.add(ceo);
+    }
+
+    private void derpHelper() throws OperationNotAllowedException {
+        user = getEmployee("marc");
+        employees.add(new Employee("jan"));
+        employees.add(new Employee("sim"));
+        employees.add(new Employee("joe"));
+        employees.add(new Employee("kim"));
+
+        addNewProject(2020, "Project1");
+        addNewProject(2020, "Project2");
+        addNewProject(2020, "Project3");
+        addNewProject(2020, "Project4");
+        addNewProject(2020, "Project5");
+
+        getProject(200001).addActivity(new Activity("ac1"));
+        getProject(200001).addActivity(new Activity("ac2"));
+        getProject(200002).addActivity(new Activity("ac1"));
+        getProject(200002).addActivity(new Activity("ac2"));
+        getProject(200003).addActivity(new Activity("ac1"));
+        getProject(200003).addActivity(new Activity("ac2"));
+        getProject(200004).addActivity(new Activity("ac1"));
+        getProject(200004).addActivity(new Activity("ac2"));
+        getProject(200005).addActivity(new Activity("ac1"));
+        getProject(200005).addActivity(new Activity("ac2"));
+
+        setPM("jan", 200001);
+        setPM("jan", 200003);
+        setPM("joe", 200005);
+
+
+        user = new Employee("NONE");
     }
 }

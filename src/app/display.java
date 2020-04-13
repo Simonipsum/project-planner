@@ -5,6 +5,8 @@ import io.cucumber.java.en_old.Ac;
 import java.util.*;
 
 public class display {
+    private static String sep = "-------------------------------------";
+
     private static String[] mainMenuOptions = {
         "Logout",
         // Normal employee options
@@ -33,53 +35,54 @@ public class display {
     };
 
     private static void listMenu(String[] menu) {
-        String list = "";
-
-        for (int i = 0; i < menu.length; i++) {
+        String list = 0 + ". " + menu[0];
+        for (int i = 1; i < menu.length; i++) {
             list += "\n" + (i) + ". " + menu[i];
         }
-
         System.out.println(list);
     }
 
     public static int projectMenu(int id) {
         menuHeader("Project Menu for " + id);
         listMenu(projectMenuOptions);
-        System.out.print("----------------------------------\n");
+        System.out.println(sep);
         return projectMenuOptions.length;
     }
 
     public static int mainMenu() {
         menuHeader("Main Menu");
         listMenu(mainMenuOptions);
-        System.out.print("----------------------------------\n");
+        System.out.println(sep);
         return mainMenuOptions.length;
     }
 
     private static void menuHeader(String name) {
-        String header = "----------------------------------\n";
-
+        String header = sep + "\n";
         for (int i = 0; i < (16 - name.length()/2); i++) {
             header += " ";
         }
-        header += name + "\n";
-        header += "----------------------------------";
+        header += name + "\n" + sep;
         System.out.println(header);
     }
 
     public static void listActivities(Project p) {
         System.out.println("Activities for project " + p.getId());
-        System.out.println("-------------------------------------");
-        System.out.println("Name \t Start \t\t End \t EWT");
+        System.out.println(sep);
+        System.out.println("Name \t Start \t\t End \t\t EWT");
         for (Activity a : p.getActivities()) {
-            System.out.printf("%s \t %06d \t %06d \t %.1f\n", a.getName(), a.getStart(), a.getEnd(), a.getExpectedWorkTime());
+            System.out.printf(
+                    "%s \t %06d \t %06d \t %.1f\n",
+                    a.getName(),
+                    a.getStart() == -1 ? 0 : a.getStart(),
+                    a.getEnd() == -1 ? 0 : a.getEnd(),
+                    a.getExpectedWorkTime());
         }
-        System.out.println("-------------------------------------\n");
+        System.out.println(sep + "\n");
     }
 
     public static void listActivities(Employee user, List<Project> projects) {
         System.out.println("List of activities user has worked on");
-        System.out.println("-------------------------------------");
+        System.out.println(sep);
         System.out.println("Name \t\t Work Time");
         for (Project p : projects) {
             if (p.hasEmployee(user.getUsername())) {
@@ -89,7 +92,7 @@ public class display {
                 }
             }
         }
-        System.out.println("-------------------------------------\n");
+        System.out.println(sep + "\n");
 
         // also list the end date of activities that hasn't ended yet
         // and start date of activities not started yet.
@@ -100,7 +103,7 @@ public class display {
             System.out.println("No projects added to ProjectApp yet.");
         } else {
             System.out.println("List of projects in app");
-            System.out.println("----------------------------------");
+            System.out.println(sep);
             System.out.println("ID \t\t\t Name \t\t PM");
             for (Project p : projects) {
                 System.out.printf(
@@ -110,7 +113,7 @@ public class display {
                         p.getPm().getUsername()
                 );
             }
-            System.out.println("----------------------------------\n");
+            System.out.println(sep + "\n");
         }
     }
 
@@ -119,7 +122,7 @@ public class display {
             System.out.println("No employees in ProjectApp yet.");
         } else {
             System.out.println("List of employees in ProjectApp");
-            System.out.println("----------------------------------");
+            System.out.println(sep);
             for (Employee e : employees) {
                 if (e.equals(ceo)) {
                     System.out.printf("\t%s\t(CEO)\n", e.getUsername());
@@ -127,7 +130,7 @@ public class display {
                     System.out.printf("\t%s\n", e.getUsername());
                 }
             }
-            System.out.println("----------------------------------\n");
+            System.out.println(sep + "\n");
         }
     }
 }

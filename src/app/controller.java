@@ -24,7 +24,7 @@ public class controller {
             consoleIn.next();
             System.out.print("Input must be a float. Enter new float:");
         }
-        return consoleIn.nextInt();
+        return consoleIn.nextFloat();
     }
 
     public static int getInputInt() {
