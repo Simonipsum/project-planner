@@ -8,7 +8,7 @@ public class controller {
     public static int pickItem(int maxPick) {
         System.out.print("Enter item number: ");
         int pick = getInputInt();
-        while (pick < 1 || pick > maxPick) {
+        while (pick < 0 || pick > maxPick) {
             System.out.println("Please pick one of the listed options.");
             pick = getInputInt();
         }
@@ -28,6 +28,9 @@ public class controller {
     }
 
     public static int getInputInt() {
+
+        // CHeck for positive values
+
         while (!consoleIn.hasNextInt()) {
             consoleIn.next();
             System.out.print("Input must be an integer. Enter new integer:");
@@ -54,5 +57,4 @@ public class controller {
         }
         return consoleIn.next();
     }
-
 }

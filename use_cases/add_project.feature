@@ -26,3 +26,10 @@ Feature: Add Project
     When the user sets PM of project 200001 to "jan"
     Then the PM of the project with ID 200001 is "jan"
     And the error message "" is given
+
+  Scenario: CEO sets PM of existing Project unsuccessfully
+    Given the ProjectApp contains project 200001
+    And the user is CEO
+    And the ProjectApp does not contain an Employee "jan"
+    When the user sets PM of project 200001 to "jan"
+    Then the error message "Username is not an Employee." is given
