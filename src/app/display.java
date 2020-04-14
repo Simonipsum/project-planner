@@ -138,7 +138,10 @@ public class display {
     }
 
     public static void timeTable(Project p, Employee user) {
-        if(!user.equals(p.getPm())) return;
+        if(!user.equals(p.getPm())){
+            System.out.println("Insufficient Permissions. User is not PM.");
+            return;
+        }
         String out = "Time Table for " + p.getId() + "\n";
         out += sep + "\n" + "Activity \tdate \t\twt\n";
         Map<Integer, Float> dt;
@@ -160,7 +163,10 @@ public class display {
     }
 
     public static void summary(List<Project> ps, Employee user, Employee ceo) {
-        if (!user.equals(ceo)) return;
+        if (!user.equals(ceo)){
+            System.out.println("Insufficient Permissions. User is not CEO.");
+            return;
+        }
         String out = "ID \t\t worktime \t remaining wt\n";
         for (Project p : ps) {
             //if (p.getRemainingWT() > 0) {
