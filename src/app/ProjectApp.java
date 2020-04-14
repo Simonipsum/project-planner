@@ -79,8 +79,6 @@ public class ProjectApp {
     }
 
     private void projectMenu() throws OperationNotAllowedException {
-        int pick, maxPick;
-
         if (projects.size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
             return;
@@ -91,11 +89,9 @@ public class ProjectApp {
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
         }
-        maxPick = display.projectMenu(id);
-        pick = controller.pickItem(maxPick);
-
-        // Missing error checking.
-        // Move cases to own methods?
+        
+        int maxPick = display.projectMenu(id);
+        int pick = controller.pickItem(maxPick);
         switch (pick) {
             case 0: return;
             case 1: addProjectEmployee(id);                     break;
