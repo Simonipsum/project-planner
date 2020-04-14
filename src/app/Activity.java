@@ -65,15 +65,15 @@ public class Activity {
         return wt;
     }
 
-    public float getWorkedTime(Employee e) {
-        float wt = 0;
-        Map<Integer, Float> dateTime = workTime.get(e);
-
-        for (Object value : dateTime.values()) {
-            System.out.println(value);
-        }
-        return wt;
-    }
+//    public float getWorkedTime(Employee e) {
+//        float wt = 0;
+//        Map<Integer, Float> dateTime = workTime.get(e);
+//
+//        for (Object value : dateTime.values()) {
+//            System.out.println(value);
+//        }
+//        return wt;
+//    }
 
     public float getExpectedWorkTime() {
         return this.expectedWorkTime;

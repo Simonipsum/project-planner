@@ -91,7 +91,7 @@ public class display {
             if (p.hasEmployee(user.getUsername())) {
                 for (Activity a : p.getActivities()) {
                     System.out.printf("%s \t\t %d\n", a.getName(), 1);
-                    a.getWorkedTime(user);
+                    //a.getWorkedTime(user);
                 }
             }
         }
@@ -137,9 +137,21 @@ public class display {
         }
     }
 
-    public static void timeTable(Project p) {
-        System.out.println("List all work time on each activity for each day in a table summed over all employees");
-        System.out.println("Expected work time remaning: ");
+    public static void timeTable(Project p, Employee user) {
+        if(!user.equals(p.getPm())) return;
+        String out = "Time Table for " + p.getId() + "\n";
+        out += sep + "\n" + "Activity \t date \t wt\n";
+        Map<Integer, Float> dt;
+        for (Activity a : p.getActivities()) {
+            dt = a.getDateTime();
+            out += a.getName();
+            for (Integer d : dt.keySet()) {
+                out += "\t\t" + d + "\t" + dt.get(d) + "\t";
+            }
+            out += "\n";
+        }
+        out += "Total remaining worktime: " + p.getRemainingWT();
+        System.out.println(out);
     }
 
     public static void summary(List<Project> ps, Employee user, Employee ceo) {

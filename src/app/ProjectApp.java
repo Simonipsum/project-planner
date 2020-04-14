@@ -67,11 +67,12 @@ public class ProjectApp {
             return;
         }
         String name = pickActivity(id);
-        System.out.print("Enter worktime of activity: ");
-        float wt = controller.getInputFloat();
 
-        System.out.print("Enter date of work: ");
-        int date = controller.getInputInt();
+        System.out.print("Date of work. ");
+        int date = controller.getDate();
+
+        System.out.print("Enter worktime of activity: ");
+        float wt = controller.getPosFloat();
 
         getProject(id).getActivity(name).setTime(user, wt, date);
         System.out.printf("Worktime of %s on date %06d has successfully been set to %.1f\n\n", name, date, wt);
@@ -97,11 +98,11 @@ public class ProjectApp {
         // Move cases to own methods?
         switch (pick) {
             case 0: return;
-            case 1: addProjectEmployee(id);             break;
-            case 2: addProjectActivity(id);             break;
-            case 3: editActivityDates(id);              break;
-            case 4: editActivityWT(id);                 break;
-            case 5: display.timeTable(getProject(id));  break;
+            case 1: addProjectEmployee(id);                     break;
+            case 2: addProjectActivity(id);                     break;
+            case 3: editActivityDates(id);                      break;
+            case 4: editActivityWT(id);                         break;
+            case 5: display.timeTable(getProject(id), user);    break;
         }
     }
 
@@ -112,7 +113,7 @@ public class ProjectApp {
         }
         String name = pickActivity(id);
         System.out.print("Enter expected worktime of activity: ");
-        float wt = controller.getInputFloat();
+        float wt = controller.getPosFloat();
         getProject(id).getActivity(name).setExpectedWT(wt);
         System.out.printf("Worktime of %s has successfully been set to %.1f\n\n", name, wt);
     }
@@ -123,21 +124,9 @@ public class ProjectApp {
             return;
         }
         String name = pickActivity(id);
-        System.out.print("Enter start date: ");
-        int start = controller.getInputInt();
-        while(start/10000 < id/10000) {
-            System.out.print("Start can't be before project start year: ");
-            start = controller.getInputInt();
-        }
-
-        System.out.print("Enter end date: ");
-        int end = controller.getInputInt();
-        while(end/10000 < start/10000) {
-            System.out.print("End can't be before start date: ");
-            start = controller.getInputInt();
-        }
-        setDates(id, name, start, end);
-        System.out.printf("Dates of %s successfully changed to %06d %06d\n\n", name, start, end);
+        int[] dates = controller.getDates();
+        setDates(id, name, dates[0], dates[1]);
+        System.out.printf("Dates of %s successfully changed to %06d %06d\n\n", name, dates[0], dates[1]);
     }
 
     private String pickActivity(int id) {
@@ -182,16 +171,10 @@ public class ProjectApp {
     }
 
     public void registerAbsence() {
-        System.out.print("Enter start date: ");
-        int start = controller.getInputInt();
-        System.out.print("Enter end date: ");
-        int end = controller.getInputInt();
-        while(end < start) {
-            System.out.print("End date can't be before start date: ");
-            end = controller.getInputInt();
-        }
-        registerAbsence(start, end);
-        System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n", user.getUsername(), start, end);
+        int[] dates = controller.getDates();
+        registerAbsence(dates[0], dates[1]);
+        System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n",
+                user.getUsername(), dates[0], dates[1]);
     }
 
     // Start is first day of absence, end is last day of absence
@@ -221,7 +204,7 @@ public class ProjectApp {
             return;
         }
         System.out.print("Enter year of project start: ");
-        int year = controller.getInputInt();
+        int year = controller.getInt(1900, 2999);
         System.out.print("Enter name of project (type 'no' to skip naming): ");
         String name = controller.getString();
         addNewProject(year, name);
@@ -231,10 +214,10 @@ public class ProjectApp {
     private int pickProject() {
         display.listProjects(projects);
         System.out.print("Enter ID of project you want to edit: ");
-        int pick = controller.getInputInt();
+        int pick = controller.getInt();
         while(!hasProject(pick)) {
             System.out.print("ID is not associated with any project. Please enter new: ");
-            pick = controller.getInputInt();
+            pick = controller.getInt();
         }
         System.out.println("");
         return pick;
