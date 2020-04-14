@@ -140,17 +140,22 @@ public class display {
     public static void timeTable(Project p, Employee user) {
         if(!user.equals(p.getPm())) return;
         String out = "Time Table for " + p.getId() + "\n";
-        out += sep + "\n" + "Activity \t date \t wt\n";
+        out += sep + "\n" + "Activity \tdate \t\twt\n";
         Map<Integer, Float> dt;
         for (Activity a : p.getActivities()) {
             dt = a.getDateTime();
             out += a.getName();
             for (Integer d : dt.keySet()) {
-                out += "\t\t" + d + "\t" + dt.get(d) + "\t";
+                out += "\t\t\t" + d + "\t\t" + dt.get(d) + "\n";
             }
             out += "\n";
         }
-        out += "Total remaining worktime: " + p.getRemainingWT();
+        float rwt = p.getRemainingWT();
+        if (rwt < 0) {
+            out += "Project is overworked with " + (-1*rwt) + "\nhours compared to expected worktime.";
+        } else {
+            out += "Project is expected to require " + rwt + "\nmore hours of work to be completed.";
+        }
         System.out.println(out);
     }
 
@@ -158,9 +163,9 @@ public class display {
         if (!user.equals(ceo)) return;
         String out = "ID \t\t worktime \t remaining wt\n";
         for (Project p : ps) {
-            if (p.getRemainingWT() > 0) {
-                out += p.getId() + "\t" + p.getWorkedTime() + "\t\t" + p.getRemainingWT() + "\n";
-            }
+            //if (p.getRemainingWT() > 0) {
+            out += p.getId() + "\t" + p.getWorkedTime() + "\t\t" + p.getRemainingWT() + "\n";
+            //}
         }
         System.out.println(out);
     }
