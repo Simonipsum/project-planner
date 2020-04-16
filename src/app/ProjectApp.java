@@ -89,7 +89,7 @@ public class ProjectApp {
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
         }
-        
+
         int maxPick = display.projectMenu(id);
         int pick = controller.pickItem(maxPick);
         switch (pick) {
@@ -280,7 +280,7 @@ public class ProjectApp {
         checkPM(id).setDates(name, start, end);
     }
 
-    // Set newname of project activity
+    // Set new name of project activity
     public void setName(String name, int id, String newname) throws OperationNotAllowedException {
         checkPM(id).setName(name, newname);
     }
@@ -334,7 +334,6 @@ public class ProjectApp {
         }
     }
 
-    // Used by use cases
     public void setCEO(Employee e) {
         this.ceo = e;
     }
