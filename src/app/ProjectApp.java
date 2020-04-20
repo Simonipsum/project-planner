@@ -3,34 +3,22 @@ package app;
 import java.util.*;
 
 public class ProjectApp {
-    private View v;
-    private Controller c;
+    private View v = new View();;
+    private Controller c = new Controller(v);;
 
-    private List<Employee> employees;
-    private List<Project> projects;
-    private Employee ceo;
-    private Employee user;
-    private Activity absence;
-
-    public ProjectApp(String ceo) {
-        v = new View();
-        c = new Controller(v);
-        employees = new ArrayList<>();
-        projects = new ArrayList<>();
-        this.ceo = new Employee(ceo);
-        user = new Employee("LOGGED OUT");
-        absence = new Activity("Absence");
-
-        // Add the ceo to the employees list
-        employees.add(this.ceo);
-    }
+    private List<Employee> employees = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();;
+    private Employee ceo = new Employee("marc");;
+    private Employee user = new Employee("LOGGED OUT");;
+    private Activity absence = new Activity("Absence");;
 
     public static void main(String[] args) throws OperationNotAllowedException {
-        ProjectApp app = new ProjectApp("marc");
+        ProjectApp app = new ProjectApp();
         app.mainLoop();
     }
 
     public void mainLoop() throws OperationNotAllowedException {
+        employees.add(ceo);
         while(true) {
             if (user.getUsername().equals("LOGGED OUT")) {
                 userLogin();
