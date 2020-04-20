@@ -9,13 +9,13 @@ public class ProjectApp {
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();;
     private Employee ceo = new Employee("marc");;
-    private Employee user = new Employee("NONE");
+    private Employee user = null;
     private Activity absence = new Activity("Absence");
 
     public void mainLoop() throws OperationNotAllowedException {
         employees.add(ceo);
         while(true) {
-            if (user.getUsername().equals("NONE")) {
+            if (user == null) {
                 userLogin();
             }
             mainMenu();
@@ -323,7 +323,7 @@ public class ProjectApp {
     }
 
     public void userLogout() {
-        user = new Employee("NONE");
+        user = null;
         v.println("User has been logged out.\n");
     }
 
@@ -413,6 +413,6 @@ public class ProjectApp {
         setPM("jan", 200003);
         setPM("joe", 200005);
 
-        user = new Employee("NONE");
+        user = null;
     }
 }
