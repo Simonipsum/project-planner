@@ -3,7 +3,7 @@ package app;
 import java.util.*;
 
 public class View {
-    private Model m;
+    private ProjectApp m;
 
     private static String sep = "-------------------------------------";
 
@@ -118,7 +118,7 @@ public class View {
                         "%d \t\t %s\t %s\n",
                         p.getId(),
                         p.getName() == null ? ""    : p.getName(),
-                        p.getPm() == null ? ""      : p.getPm().getUsername()
+                        p.getPm().getUsername().equals("NONE") ? ""      : p.getPm().getUsername()
                 );
             }
             System.out.println(sep + "\n");

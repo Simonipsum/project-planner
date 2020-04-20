@@ -7,7 +7,7 @@ public class Project {
     private int id;
     private String name;
     private int startYear;
-    private Employee pm;
+    private Employee pm = new Employee("");
     private List<Employee> employees = new ArrayList<>();
     private List<Activity> activities = new ArrayList<>();
 
@@ -117,4 +117,9 @@ public class Project {
     public String getName() {
         return this.name;
     }
+
+    public boolean isPm(String username) {
+        return pm.getUsername().equals(username);
+    }
+
 }

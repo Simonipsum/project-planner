@@ -2,8 +2,8 @@ package dtu.library.acceptance_tests;
 
 import app.Employee;
 import app.OperationNotAllowedException;
-import app.Model;
 
+import app.ProjectApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,38 +12,38 @@ import static org.junit.Assert.*;
 
 public class ProjectSteps {
 
-    private Model model;
+    private ProjectApp app;
     private ErrorMessageHolder errorMessage;
 
-    public ProjectSteps(Model model, ErrorMessageHolder errorMessage) {
-        this.model = model;
+    public ProjectSteps(ProjectApp app, ErrorMessageHolder errorMessage) {
+        this.app = app;
         this.errorMessage = errorMessage;
     }
 
     @Given("the ProjectApp does not contain any projects")
     public void hasNoProject() {
-        assertEquals(0, model.getProjects().size());
+        assertEquals(0, app.getProjects().size());
     }
 
     @Given("the ProjectApp contains project {int}")
     public void hasAProject(int id) {
-        if (!model.hasProject(id)) {
+        if (!app.hasProject(id)) {
             int year = id / 10000;
             int numb = id % 10000;
 
-            Employee user = model.getUser();
-            model.setUser(model.getCEO());
+            Employee user = app.getUser();
+            app.setUser(app.getCEO());
             for (int i = 0; i < numb; i++) {
                 userCreatesProject("Project1", year);
             }
-            model.setUser(user);
+            app.setUser(user);
         }
     }
 
     @When("the user adds a project named {string} in the year {int}")
     public void userCreatesProject(String name, int year) {
         try {
-            model.addNewProject(year, name);
+            app.addNewProject(year, name);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -51,13 +51,13 @@ public class ProjectSteps {
 
     @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")
     public void newProjectCreated(String name, int id) {
-        assertTrue( model.getProject(id).getName().equals(name) );
+        assertTrue( app.getProject(id).getName().equals(name) );
     }
 
     @When("the user sets PM of project {int} to {string}")
     public void setPmOfProject(int id, String username) {
         try {
-            model.setPM(username, id);
+            app.setPM(username, id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -65,27 +65,27 @@ public class ProjectSteps {
 
     @Then("the PM of the project with ID {int} is {string}")
     public void usernameIsPmOfProject(int id, String username) {
-        assertEquals(model.getProject(id).getPm(), model.getEmployee(username));
+        assertEquals(app.getProject(id).getPm(), app.getEmployee(username));
     }
 
     @Given("the user is PM of the project with ID {int}")
     public void setUserPmOfProject(int id) {
-        Employee temp = model.getUser();
-        model.setUser(model.getCEO());
+        Employee temp = app.getUser();
+        app.setUser(app.getCEO());
         setPmOfProject(id, temp.getUsername());
-        model.setUser(temp);
-        assertEquals(model.getProject(id).getPm(), temp);
+        app.setUser(temp);
+        assertEquals(app.getProject(id).getPm(), temp);
     }
 
     @Given("the user is not PM of the project with ID {int}")
     public void setNotUserPmOfProject(int id) {
-        assertNotEquals(model.getProject(id).getPm().getUsername(), model.getUser());
+        assertNotEquals(app.getProject(id).getPm().getUsername(), app.getUser());
     }
 
     @When("the user adds {string} to the project with ID {int}")
     public void pmAddsEmployeeToProject(String username, int id) {
         try {
-            model.addEmployee(username, id);
+            app.addEmployee(username, id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -93,20 +93,20 @@ public class ProjectSteps {
 
     @Given("the user is on project {int}")
     public void userIsOnProject(int id) {
-        Employee temp = model.getUser();
-        model.setUser(model.getProject(id).getPm());
+        Employee temp = app.getUser();
+        app.setUser(app.getProject(id).getPm());
         try {
-            model.addEmployee(temp.getUsername(), id);
+            app.addEmployee(temp.getUsername(), id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
-        model.setUser(temp);
+        app.setUser(temp);
     }
 
     @When("the user removes the employee {string} from project {int}")
     public void userRemovesEmployeeFromProject(String name, int id) {
         try {
-            model.removeEmployee(name, id);
+            app.removeEmployee(name, id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -114,11 +114,11 @@ public class ProjectSteps {
 
     @Then("the employee list of project {int} contains the employee {string}")
     public void projectContainsEmployee(int id, String username) {
-        assertTrue(model.getProject(id).hasEmployee(username));
+        assertTrue(app.getProject(id).hasEmployee(username));
     }
 
     @Then("the employee list of project {int} does not contain the employee {string}")
     public void projectDoesNotContainEmployee(int id, String username) {
-        assertFalse(model.getProject(id).hasEmployee(username));
+        assertFalse(app.getProject(id).hasEmployee(username));
     }
 }

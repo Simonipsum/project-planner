@@ -2,20 +2,20 @@ package app;
 
 import java.util.*;
 
-public class Model {
+public class ProjectApp {
     private View v = new View();;
     private Controller c = new Controller(v);
 
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();;
     private Employee ceo = new Employee("marc");;
-    private Employee user = null;
+    private Employee user = new Employee("NONE");
     private Activity absence = new Activity("Absence");
 
     public void mainLoop() throws OperationNotAllowedException {
         employees.add(ceo);
         while(true) {
-            if (user == null) {
+            if (user.getUsername().equals("NONE")) {
                 userLogin();
             }
             mainMenu();
@@ -85,7 +85,7 @@ public class Model {
         }
 
         int id = pickProject();
-        if (!getProject(id).getPm().equals(user)) {
+        if (!getProject(id).isPm(user.getUsername())) {
             v.println("Insufficient Permissions. User is not PM.");
             return;
         }
@@ -296,7 +296,7 @@ public class Model {
 
     public Project checkPM(int id) throws OperationNotAllowedException {
         Project project = getProject(id);
-        if (!project.getPm().equals(user)) {
+        if (!project.isPm(user.getUsername())) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
         }
         return project;
@@ -323,7 +323,7 @@ public class Model {
     }
 
     public void userLogout() {
-        user = null;
+        user = new Employee("NONE");
         v.println("User has been logged out.\n");
     }
 
@@ -413,7 +413,6 @@ public class Model {
         setPM("jan", 200003);
         setPM("joe", 200005);
 
-
-        user = null;
+        user = new Employee("NONE");
     }
 }
