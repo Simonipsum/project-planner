@@ -179,13 +179,13 @@ public class ProjectApp {
 
     // Start is first day of absence, end is last day of absence
     public void registerAbsence(int start, int end) {
-        Date current = new Date(start/10000, (start%10000)/100, (start%100));
-        Date last    = new Date(end/10000, (end%10000)/100, (end%100));
+        Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
+        Calendar last    = new GregorianCalendar(end/10000, (end%10000)/100, (end%100));
         int date;
 
         while(!current.after(last)) {
-            date = current.getYear() * 10000 + current.getMonth() * 100 + current.getDate();
-            current.setDate(current.getDate() + 1);
+            date = current.get(Calendar.YEAR) * 10000 + current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
+            current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
             absence.setTime(user, 8, date);
         }
     }
