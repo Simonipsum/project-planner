@@ -1,10 +1,10 @@
 package app;
 
-import io.cucumber.java.en_old.Ac;
-
 import java.util.*;
 
 public class View {
+    private Model m;
+
     private static String sep = "-------------------------------------";
 
     private static String[] mainMenuOptions = {
@@ -36,6 +36,11 @@ public class View {
         "Edit activity worktime",
         "See timetable of project",
     };
+
+//    public View(Model m) {
+//        this.m = m;
+//    }
+
 
     private void listMenu(String[] menu) {
         String list = 0 + ". " + menu[0];
@@ -112,8 +117,8 @@ public class View {
                 System.out.printf(
                         "%d \t\t %s\t %s\n",
                         p.getId(),
-                        p.getName() == null ? "UNNAMED" : p.getName(),
-                        p.getPm().getUsername()
+                        p.getName() == null ? ""    : p.getName(),
+                        p.getPm() == null ? ""      : p.getPm().getUsername()
                 );
             }
             System.out.println(sep + "\n");

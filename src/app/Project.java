@@ -7,7 +7,7 @@ public class Project {
     private int id;
     private String name;
     private int startYear;
-    private Employee pm = new Employee("NONE");
+    private Employee pm;
     private List<Employee> employees = new ArrayList<>();
     private List<Activity> activities = new ArrayList<>();
 

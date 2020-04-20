@@ -2,25 +2,20 @@ package app;
 
 import java.util.*;
 
-public class ProjectApp {
+public class Model {
     private View v = new View();;
-    private Controller c = new Controller(v);;
+    private Controller c = new Controller(v);
 
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();;
     private Employee ceo = new Employee("marc");;
-    private Employee user = new Employee("LOGGED OUT");;
-    private Activity absence = new Activity("Absence");;
-
-    public static void main(String[] args) throws OperationNotAllowedException {
-        ProjectApp app = new ProjectApp();
-        app.mainLoop();
-    }
+    private Employee user = null;
+    private Activity absence = new Activity("Absence");
 
     public void mainLoop() throws OperationNotAllowedException {
         employees.add(ceo);
         while(true) {
-            if (user.getUsername().equals("LOGGED OUT")) {
+            if (user == null) {
                 userLogin();
             }
             mainMenu();
@@ -42,13 +37,13 @@ public class ProjectApp {
             //case 4:  getAssistance();                           break;
 
             // PM
-            case 5:  projectMenu();                             break;
+            case 5:  projectMenu();                       break;
             //case 6:  checkAvailability();                       break;
 
             // CEO
-            case 7:  setPM();                                   break;
-            case 8:  addEmployee();                             break;
-            case 9:  addProject();                              break;
+            case 7:  setPM();                             break;
+            case 8:  addEmployee();                       break;
+            case 9:  addProject();                        break;
             case 10: v.summary(projects, user, ceo);      break;
 
             // undecided
@@ -205,7 +200,7 @@ public class ProjectApp {
         }
         v.print("Enter year of project start: ");
         int year = c.getInt(1900, 2999);
-        v.print("Enter name of project (type 'no' to skip naming): ");
+        v.print("Enter name of project (type 'N' to skip naming): ");
         String name = c.getString();
         addNewProject(year, name);
         v.print("Project " + calculateID(year) + " was successfully added to the ProjectApp.\n\n");
@@ -312,7 +307,7 @@ public class ProjectApp {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
 
-        if (name.equals("no")) {
+        if (name.equals("N")) {
             projects.add(new Project(calculateID(year), year));
         } else {
             projects.add(new Project(calculateID(year), year, name));
@@ -328,7 +323,7 @@ public class ProjectApp {
     }
 
     public void userLogout() {
-        user = new Employee("LOGGED OUT");
+        user = null;
         v.println("User has been logged out.\n");
     }
 
@@ -419,6 +414,6 @@ public class ProjectApp {
         setPM("joe", 200005);
 
 
-        user = new Employee("LOGGED OUT");
+        user = null;
     }
 }

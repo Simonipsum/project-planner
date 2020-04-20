@@ -2,7 +2,7 @@ package dtu.library.acceptance_tests;
 
 import app.Employee;
 import app.OperationNotAllowedException;
-import app.ProjectApp;
+import app.Model;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,44 +13,44 @@ import static org.junit.Assert.assertEquals;
 
 public class EmployeeSteps {
 
-    private ProjectApp projectApp;
+    private Model model;
     private ErrorMessageHolder errorMessage;
     private Employee user;
 
-    public EmployeeSteps(ProjectApp projectApp, ErrorMessageHolder errorMessage) {
-        this.projectApp = projectApp;
+    public EmployeeSteps(Model model, ErrorMessageHolder errorMessage) {
+        this.model = model;
         this.errorMessage = errorMessage;
     }
 
     @Given("the user is an Employee")
     public void userIsEmployee() throws OperationNotAllowedException {
         user = new Employee("emil");
-        projectApp.setUser(projectApp.getCEO());
-        projectApp.addNewEmployee(user);
-        projectApp.setUser(user);
+        model.setUser(model.getCEO());
+        model.addNewEmployee(user);
+        model.setUser(user);
     }
 
     @Given("the user is CEO")
     public void userIsCEO() {
-        projectApp.setCEO(user);
-        assertTrue(projectApp.isCEO());
+        model.setCEO(user);
+        assertTrue(model.isCEO());
     }
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
-        projectApp.setCEO(new Employee("derp"));
-        assertFalse(projectApp.isCEO());
+        model.setCEO(new Employee("derp"));
+        assertFalse(model.isCEO());
     }
 
     @When("the ProjectApp does not contain an Employee {string}")
     public void hasNoEmployee(String username) {
-        assertFalse(projectApp.isEmployee(username));
+        assertFalse(model.isEmployee(username));
     }
 
     @When("the user adds a new Employee {string}")
     public void addNewEmployee(String username) {
         try {
-            projectApp.addNewEmployee(new Employee(username));
+            model.addNewEmployee(new Employee(username));
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -58,16 +58,16 @@ public class EmployeeSteps {
 
     @Given("the ProjectApp contains a new Employee {string}")
     public void hasEmployee(String username) {
-        Employee temp = projectApp.getUser();
-        projectApp.setUser(projectApp.getCEO());
+        Employee temp = model.getUser();
+        model.setUser(model.getCEO());
         addNewEmployee(username);
-        projectApp.setUser(temp);
+        model.setUser(temp);
         hasNewEmployee(username);
     }
 
     @Then("the ProjectApp now contains an Employee {string}")
     public void hasNewEmployee(String username) {
-        assertTrue(projectApp.isEmployee(username));
+        assertTrue(model.isEmployee(username));
     }
 
     @Then("the error message {string} is given")
@@ -78,7 +78,7 @@ public class EmployeeSteps {
     @When("the user removes the Employee with username {string}")
     public void userRemovesEmployeeFromApp(String username) {
         try {
-            projectApp.removeEmployee(username);
+            model.removeEmployee(username);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
