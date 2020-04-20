@@ -1,4 +1,6 @@
-package app;
+package app.model;
+
+import app.OperationNotAllowedException;
 
 import java.util.ArrayList;
 import java.util.List;

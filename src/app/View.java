@@ -1,5 +1,10 @@
 package app;
 
+import app.model.Activity;
+import app.model.Employee;
+import app.model.Project;
+import app.model.ProjectApp;
+
 import java.util.*;
 
 public class View {

@@ -1,4 +1,8 @@
-package app;
+package app.model;
+
+import app.Controller;
+import app.OperationNotAllowedException;
+import app.View;
 
 import java.util.*;
 

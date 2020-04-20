@@ -1,5 +1,7 @@
 package app;
 
+import app.model.ProjectApp;
+
 public class StartApp {
     public static void main(String[] args) throws OperationNotAllowedException {
         ProjectApp m = new ProjectApp();
