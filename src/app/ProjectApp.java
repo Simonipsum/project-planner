@@ -18,7 +18,7 @@ public class ProjectApp {
         employees = new ArrayList<>();
         projects = new ArrayList<>();
         this.ceo = new Employee(ceo);
-        user = new Employee("NONE");
+        user = new Employee("LOGGED OUT");
         absence = new Activity("Absence");
 
         // Add the ceo to the employees list
@@ -32,7 +32,9 @@ public class ProjectApp {
 
     public void mainLoop() throws OperationNotAllowedException {
         while(true) {
-            userLogin();
+            if (user.getUsername().equals("LOGGED OUT")) {
+                userLogin();
+            }
             mainMenu();
         }
     }
@@ -74,7 +76,7 @@ public class ProjectApp {
         }
         int id = pickProject();
         if (!getProject(id).hasEmployee(user.getUsername())) {
-            v.println("Insufficient Permissions. User is assigned to the project.");
+            v.println("Insufficient Permissions. User is not assigned to the project.");
             return;
         }
         if (getProject(id).getActivities().size() == 0) {
@@ -109,10 +111,10 @@ public class ProjectApp {
         int pick = c.pickItem(maxPick);
         switch (pick) {
             case 0: return;
-            case 1: addProjectEmployee(id);                     break;
-            case 2: addProjectActivity(id);                     break;
-            case 3: editActivityDates(id);                      break;
-            case 4: editActivityWT(id);                         break;
+            case 1: addProjectEmployee(id);               break;
+            case 2: addProjectActivity(id);               break;
+            case 3: editActivityDates(id);                break;
+            case 4: editActivityWT(id);                   break;
             case 5: v.timeTable(getProject(id), user);    break;
         }
     }
@@ -338,24 +340,22 @@ public class ProjectApp {
     }
 
     public void userLogout() {
-        user = new Employee("NONE");
+        user = new Employee("LOGGED OUT");
         v.println("User has been logged out.\n");
     }
 
     public void userLogin() {
         String username;
-        if (user.getUsername().equals("NONE")) {
-            v.print("Please input username to login: ");
+        v.print("Please input username to login: ");
+        username = c.getInitials(4);
+
+        while (!isEmployee(username)) {
+            v.print("Input is not an employee, please enter new: ");
             username = c.getInitials(4);
-
-            while (!isEmployee(username)) {
-                v.print("Input is not an employee, please enter new: ");
-                username = c.getInitials(4);
-            }
-
-            user = getEmployee(username);
-            v.newLine();
         }
+
+        user = getEmployee(username);
+        v.newLine();
     }
 
     public void setCEO(Employee e) {
@@ -431,6 +431,6 @@ public class ProjectApp {
         setPM("joe", 200005);
 
 
-        user = new Employee("NONE");
+        user = new Employee("LOGGED OUT");
     }
 }
