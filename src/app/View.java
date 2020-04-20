@@ -8,7 +8,7 @@ import app.model.ProjectApp;
 import java.util.*;
 
 public class View {
-    private ProjectApp m;
+    private ProjectApp app;
 
     private static String sep = "-------------------------------------";
 
@@ -42,9 +42,9 @@ public class View {
         "See timetable of project",
     };
 
-//    public View(Model m) {
-//        this.m = m;
-//    }
+    public View(ProjectApp app) {
+        this.app = app;
+    }
 
 
     private void listMenu(String[] menu) {

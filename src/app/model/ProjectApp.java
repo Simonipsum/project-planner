@@ -7,8 +7,8 @@ import app.View;
 import java.util.*;
 
 public class ProjectApp {
-    private View v = new View();;
-    private Controller c = new Controller(v);
+    private View v;
+    private Controller c;
 
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();;
@@ -16,8 +16,11 @@ public class ProjectApp {
     private Employee user = null;
     private Activity absence = new Activity("Absence");
 
-    public void mainLoop() throws OperationNotAllowedException {
+    public void mainLoop(View v, Controller c) throws OperationNotAllowedException {
+        this.v = v;
+        this.c = c;
         employees.add(ceo);
+
         while(true) {
             if (user == null) {
                 userLogin();

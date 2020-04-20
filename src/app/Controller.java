@@ -1,14 +1,18 @@
 package app;
 
+import app.model.ProjectApp;
+
 import java.util.Scanner;
 
 public class Controller {
     private Scanner consoleIn;
     private View v;
+    private ProjectApp app;
 
-    public Controller(View v) {
+    public Controller(View v, ProjectApp app) {
         consoleIn = new Scanner(System.in);
         this.v = v;
+        this.app = app;
     }
 
     public int pickItem(int maxPick) {
