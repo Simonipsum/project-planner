@@ -1,182 +1,26 @@
 package app.model;
 
-import app.Controller;
 import app.OperationNotAllowedException;
-import app.View;
 
-import java.util.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ProjectApp {
-    private View v;
-    private Controller c;
+    private PropertyChangeSupport sup = new PropertyChangeSupport(this);
 
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();;
-    private Employee ceo = new Employee("marc");;
+    private Employee ceo;
     private Employee user = null;
     private Activity absence = new Activity("Absence");
 
-    public void mainLoop(View v, Controller c) throws OperationNotAllowedException {
-        this.v = v;
-        this.c = c;
+    public ProjectApp() {
+        ceo = new Employee("marc");
         employees.add(ceo);
-
-        while(true) {
-            if (user == null) {
-                userLogin();
-            }
-            mainMenu();
-        }
-    }
-
-    private void mainMenu() throws OperationNotAllowedException {
-        int maxPick = v.mainMenu();
-        int pick = c.pickItem(maxPick);
-
-        // Go to next menu / display
-        switch (pick) {
-            case 0: userLogout();                               break;
-
-            // Employee
-            case 1:  worktime();                                break;
-            case 2:  registerAbsence();                         break;
-            //case 3:  v.listActivities(user, projects);    break;
-            //case 4:  getAssistance();                           break;
-
-            // PM
-            case 5:  projectMenu();                       break;
-            //case 6:  checkAvailability();                       break;
-
-            // CEO
-            case 7:  setPM();                             break;
-            case 8:  addEmployee();                       break;
-            case 9:  addProject();                        break;
-            case 10: v.summary(projects, user, ceo);      break;
-
-            // undecided
-            case 11: v.listProjects(projects);            break;
-            case 12: v.listEmployees(employees, ceo);     break;
-        }
-    }
-
-    private void worktime() {
-        if (projects.size() == 0) {
-            v.println("No projects added to ProjectApp yet.");
-            return;
-        }
-        int id = pickProject();
-        if (!getProject(id).hasEmployee(user.getUsername())) {
-            v.println("Insufficient Permissions. User is not assigned to the project.");
-            return;
-        }
-        if (getProject(id).getActivities().size() == 0) {
-            v.println("Project doesn't have any activities.");
-            return;
-        }
-        String name = pickActivity(id);
-
-        v.print("Date of work. ");
-        int date = c.getDate();
-
-        v.print("Enter worktime of activity: ");
-        float wt = c.getPosFloat();
-
-        getProject(id).getActivity(name).setTime(user, wt, date);
-        v.printf("Worktime of %s on date %06d has successfully been set to %.1f.\n\n", name, date, wt);
-    }
-
-    private void projectMenu() throws OperationNotAllowedException {
-        if (projects.size() == 0) {
-            v.println("No projects added to ProjectApp yet.");
-            return;
-        }
-
-        int id = pickProject();
-        if (!getProject(id).isPm(user.getUsername())) {
-            v.println("Insufficient Permissions. User is not PM.");
-            return;
-        }
-
-        int maxPick = v.projectMenu(id);
-        int pick = c.pickItem(maxPick);
-        switch (pick) {
-            case 0: return;
-            case 1: addProjectEmployee(id);               break;
-            case 2: addProjectActivity(id);               break;
-            case 3: editActivityDates(id);                break;
-            case 4: editActivityWT(id);                   break;
-            case 5: v.timeTable(getProject(id), user);    break;
-        }
-    }
-
-    private void editActivityWT(int id) {
-        if (getProject(id).getActivities().size() == 0) {
-            v.println("Project doesn't have any activities.");
-            return;
-        }
-        String name = pickActivity(id);
-        v.print("Enter expected worktime of activity: ");
-        float wt = c.getPosFloat();
-        getProject(id).getActivity(name).setExpectedWT(wt);
-        v.printf("Worktime of %s has successfully been set to %.1f.\n\n", name, wt);
-    }
-
-    private void editActivityDates(int id) throws OperationNotAllowedException {
-        if (getProject(id).getActivities().size() == 0) {
-            v.println("Project doesn't have any activities.");
-            return;
-        }
-        String name = pickActivity(id);
-        int[] dates = c.getDates();
-        setDates(id, name, dates[0], dates[1]);
-        v.printDates("Dates of %s successfully changed to %06d %06d\n\n", dates);
-    }
-
-    private String pickActivity(int id) {
-        v.listActivities(getProject(id));
-        v.print("Enter name of activity: ");
-        String name = c.getString();
-        while(!getProject(id).hasActivity(name)) {
-            v.print("Activity " + name + " does not exist. Pick another: ");
-            name = c.getString();
-        }
-        v.newLine();
-        return name;
-    }
-
-    private void addProjectActivity(int id) throws OperationNotAllowedException {
-        v.print("Enter name of new activity: ");
-        String name = c.getString();
-        addNewActivity(name, id);
-        v.print("Activity " + name + "successfully added to " + id + ".\n\n");
-    }
-
-    private void addProjectEmployee(int id) throws OperationNotAllowedException {
-        String username = pickEmployee();
-        if (getProject(id).hasEmployee(username)) return;
-        addEmployee(username, id);
-        v.print("Employee " + username + " successfully added to "+ id + ".\n\n");
-    }
-
-    private void setPM() {
-        if (!isCEO()) {
-            v.println("Insufficient Permissions. User is not CEO.");
-            return;
-        }
-        if (projects.size() == 0) {
-            v.println("No projects added to ProjectApp yet.");
-            return;
-        }
-        int id = pickProject();
-        String username = pickEmployee();
-        getProject(id).setPm(getEmployee(username));
-        v.print("PM of " + id + " was successfully set to " + username + "\n\n");
-    }
-
-    public void registerAbsence() {
-        int[] dates = c.getDates();
-        registerAbsence(dates[0], dates[1]);
-        v.printDates("Successfully set absence for "+user.getUsername()+" in period: %06d to %06d\n\n", dates);
     }
 
     // Start is first day of absence, end is last day of absence
@@ -192,52 +36,6 @@ public class ProjectApp {
         }
     }
 
-    // Add employee to Project App
-    private void addEmployee() throws OperationNotAllowedException {
-        v.print("Initials of new Employee: ");
-        String username = c.getInitials(4);
-        addNewEmployee(new Employee(username));
-        v.print("Employee " + username + " was successfully added to the ProjectApp.\n\n");
-    }
-
-    private void addProject() throws OperationNotAllowedException {
-        if (!isCEO()) {
-            v.println("Insufficient Permissions. User is not CEO.");
-            return;
-        }
-        v.print("Enter year of project start: ");
-        int year = c.getInt(1900, 2999);
-        v.print("Enter name of project (type 'N' to skip naming): ");
-        String name = c.getString();
-        addNewProject(year, name);
-        v.print("Project " + calculateID(year) + " was successfully added to the ProjectApp.\n\n");
-    }
-
-    private int pickProject() {
-        v.listProjects(projects);
-        v.print("Enter ID of project you want to edit: ");
-        int pick = c.getInt();
-        while(!hasProject(pick)) {
-            v.print("ID is not associated with any project. Please enter new: ");
-            pick = c.getInt();
-        }
-        v.newLine();
-        return pick;
-    }
-
-    private String pickEmployee() {
-        v.listEmployees(employees, ceo);
-        v.print("Please input username of employee: ");
-        String username = c.getInitials(4);
-
-        while (!isEmployee(username)) {
-            v.print("Input is not an employee, please enter new: ");
-            username = c.getInitials(4);
-        }
-        v.newLine();
-        return username;
-    }
-
     // Add new Employee to ProjectApp
     public void addNewEmployee(Employee e) throws OperationNotAllowedException {
         if (!isCEO()) {
@@ -248,6 +46,10 @@ public class ProjectApp {
         } else {
             throw new OperationNotAllowedException("Employee with that username already registered");
         }
+    }
+
+    public void addNewEmployee(String username) throws OperationNotAllowedException {
+        addNewEmployee(new Employee(username));
     }
 
     // Set worktime of one date
@@ -329,25 +131,6 @@ public class ProjectApp {
         return (year % 100) * 10000 + count;
     }
 
-    public void userLogout() {
-        user = null;
-        v.println("User has been logged out.\n");
-    }
-
-    public void userLogin() {
-        String username;
-        v.print("Please input username to login: ");
-        username = c.getInitials(4);
-
-        while (!isEmployee(username)) {
-            v.print("Input is not an employee, please enter new: ");
-            username = c.getInitials(4);
-        }
-
-        user = getEmployee(username);
-        v.newLine();
-    }
-
     public void setCEO(Employee e) {
         this.ceo = e;
     }
@@ -388,11 +171,36 @@ public class ProjectApp {
         return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
     }
 
+    public List<Employee> getEmployees() {
+        return this.employees;
+    }
+
     public boolean hasProject(int id) {
         return projects.stream().anyMatch(p -> p.getId() == id);
     }
 
-    private void derpHelper() throws OperationNotAllowedException {
+    public void addObserver(PropertyChangeListener listener) {
+        sup.addPropertyChangeListener(listener);
+    }
+
+    public void logout() {
+        this.user = null;
+        sup.firePropertyChange(NotificationType.LOGOUT,null, null);
+    }
+
+    public void login(String username) {
+        this.user = getEmployee(username);
+    }
+
+    public boolean userOnProject(int id) {
+        return getProject(id).hasEmployee(user.getUsername());
+    }
+
+    public boolean userIsPm(int id) {
+        return getProject(id).isPm(user.getUsername());
+    }
+
+    public void derpHelper() throws OperationNotAllowedException {
         user = getEmployee("marc");
         employees.add(new Employee("jan"));
         employees.add(new Employee("sim"));

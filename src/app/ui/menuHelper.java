@@ -1,50 +1,50 @@
-package app;
+package app.ui;
 
 import app.model.Activity;
 import app.model.Employee;
 import app.model.Project;
 import app.model.ProjectApp;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-public class View {
-    private ProjectApp app;
+public class menuHelper {
+    private ProjectApp model;
+
+    public menuHelper(ProjectApp model) {
+        this.model = model;
+    }
 
     private static String sep = "-------------------------------------";
-
     private static String[] mainMenuOptions = {
-        "Logout",
-        // Normal employee options
-        "Add/edit work time of activity",
-        "Register absence",
-        "List activities worked on",
-        "Get assistance on activity",
-        // PM options
-        "Edit projects",
-        "Check availability",
-        // CEO options
-        "Set PM of a project",
-        "Register new employee",
-        "Add new project",
-        "Summary report",
+            "Logout",
+            // Normal employee options
+            "Add/edit work time of activity",
+            "Register absence",
+            "List activities worked on",
+            "Get assistance on activity",
+            // PM options
+            "Edit projects",
+            "Check availability",
+            // CEO options
+            "Set PM of a project",
+            "Register new employee",
+            "Add new project",
+            "Summary report",
 
-        // All
-        "List all projects",
-        "List all employees",
+            // All
+            "List all projects",
+            "List all employees",
     };
     private static String[] projectMenuOptions = {
-        // PM options
-        "Exit menu",
-        "Add employee",
-        "Add activity",
-        "Edit activity dates",
-        "Edit activity worktime",
-        "See timetable of project",
+            // PM options
+            "Exit menu",
+            "Add employee",
+            "Add activity",
+            "Edit activity dates",
+            "Edit activity worktime",
+            "See timetable of project",
     };
-
-    public View(ProjectApp app) {
-        this.app = app;
-    }
 
 
     private void listMenu(String[] menu) {
@@ -78,6 +78,43 @@ public class View {
         System.out.println(header);
     }
 
+    public void listProjects() {
+        if (model.getProjects().size() == 0) {
+            System.out.println("No projects added to ProjectApp yet.");
+        } else {
+            System.out.println("List of projects in app");
+            System.out.println(sep);
+            System.out.println("ID \t\t\t Name \t\t PM");
+            for (Project p : model.getProjects()) {
+                System.out.printf(
+                        "%d \t\t %s\t %s\n",
+                        p.getId(),
+                        p.getName() == null ? ""    : p.getName(),
+                        p.getPm().getUsername().equals("NONE") ? ""      : p.getPm().getUsername()
+                );
+            }
+            System.out.println(sep + "\n");
+        }
+    }
+
+    public void listEmployees() {
+        List<Employee> es = model.getEmployees();
+        if (es.size() == 0) {
+            System.out.println("No employees in ProjectApp yet.");
+        } else {
+            System.out.println("List of employees in ProjectApp");
+            System.out.println(sep);
+            for (Employee e : es) {
+                if (e.equals(model.getCEO())) {
+                    System.out.printf("\t%s\t(CEO)\n", e.getUsername());
+                } else {
+                    System.out.printf("\t%s\n", e.getUsername());
+                }
+            }
+            System.out.println(sep + "\n");
+        }
+    }
+
     public void listActivities(Project p) {
         System.out.println("Activities for project " + p.getId());
         System.out.println(sep);
@@ -93,62 +130,9 @@ public class View {
         System.out.println(sep + "\n");
     }
 
-    public void listActivities(Employee user, List<Project> projects) {
-        System.out.println("List of activities user has worked on");
-        System.out.println(sep);
-        System.out.println("Name \t\t Work Time");
-        for (Project p : projects) {
-            if (p.hasEmployee(user.getUsername())) {
-                for (Activity a : p.getActivities()) {
-                    System.out.printf("%s \t\t %d\n", a.getName(), 1);
-                    //a.getWorkedTime(user);
-                }
-            }
-        }
-        System.out.println(sep + "\n");
-
-        // also list the end date of activities that hasn't ended yet
-        // and start date of activities not started yet.
-    }
-
-    public void listProjects(List<Project> projects) {
-        if (projects.size() == 0) {
-            System.out.println("No projects added to ProjectApp yet.");
-        } else {
-            System.out.println("List of projects in app");
-            System.out.println(sep);
-            System.out.println("ID \t\t\t Name \t\t PM");
-            for (Project p : projects) {
-                System.out.printf(
-                        "%d \t\t %s\t %s\n",
-                        p.getId(),
-                        p.getName() == null ? ""    : p.getName(),
-                        p.getPm().getUsername().equals("NONE") ? ""      : p.getPm().getUsername()
-                );
-            }
-            System.out.println(sep + "\n");
-        }
-    }
-
-    public void listEmployees(List<Employee> employees, Employee ceo) {
-        if (employees.size() == 0) {
-            System.out.println("No employees in ProjectApp yet.");
-        } else {
-            System.out.println("List of employees in ProjectApp");
-            System.out.println(sep);
-            for (Employee e : employees) {
-                if (e.equals(ceo)) {
-                    System.out.printf("\t%s\t(CEO)\n", e.getUsername());
-                } else {
-                    System.out.printf("\t%s\n", e.getUsername());
-                }
-            }
-            System.out.println(sep + "\n");
-        }
-    }
-
-    public void timeTable(Project p, Employee user) {
-        if(!user.equals(p.getPm())){
+    public void timeTable(int id) {
+        Project p = model.getProject(id);
+        if(!p.isPm(model.getUser().getUsername())) {
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
         }
@@ -172,41 +156,18 @@ public class View {
         System.out.println(out);
     }
 
-    public void summary(List<Project> ps, Employee user, Employee ceo) {
-        if (!user.equals(ceo)){
+
+    public void summary() {
+        if (!model.getUser().equals(model.getCEO())){
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
         String out = "ID \t\t worktime \t remaining wt\n";
-        for (Project p : ps) {
+        for (Project p : model.getProjects()) {
             //if (p.getRemainingWT() > 0) {
             out += p.getId() + "\t" + p.getWorkedTime() + "\t\t" + p.getRemainingWT() + "\n";
             //}
         }
         System.out.println(out);
-    }
-
-    public void print(String out) {
-        System.out.print(out);
-    }
-
-    public void println(String out) {
-        System.out.println(out);
-    }
-
-    public void newLine() {
-        System.out.println("");
-    }
-
-    public void printDates(String out, int[] dates) {
-        System.out.printf(out, dates[0], dates[1]);
-    }
-
-    public void printf(String out, String arg1, float arg2) {
-        System.out.printf(out, arg1, arg2);
-    }
-
-    public void printf(String out, String arg1, int arg2, float arg3) {
-        System.out.printf(out, arg1, arg2, arg3);
     }
 }
