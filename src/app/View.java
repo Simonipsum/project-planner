@@ -175,4 +175,28 @@ public class View {
         }
         System.out.println(out);
     }
+
+    public void print(String out) {
+        System.out.print(out);
+    }
+
+    public void println(String out) {
+        System.out.println(out);
+    }
+
+    public void newLine() {
+        System.out.println("");
+    }
+
+    public void printDates(String out, int[] dates) {
+        System.out.printf(out, dates[0], dates[1]);
+    }
+
+    public void printf(String out, String arg1, float arg2) {
+        System.out.printf(out, arg1, arg2);
+    }
+
+    public void printf(String out, String arg1, int arg2, float arg3) {
+        System.out.printf(out, arg1, arg2, arg3);
+    }
 }
