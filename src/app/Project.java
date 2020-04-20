@@ -102,10 +102,6 @@ public class Project {
         return this.startYear;
     }
 
-    public List<Employee> getEmployees() {
-        return this.employees;
-    }
-
     public List<Activity> getActivities() {
         return this.activities;
     }

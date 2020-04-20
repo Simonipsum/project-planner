@@ -4,7 +4,7 @@ import io.cucumber.java.en_old.Ac;
 
 import java.util.*;
 
-public class display {
+public class View {
     private static String sep = "-------------------------------------";
 
     private static String[] mainMenuOptions = {
@@ -37,7 +37,7 @@ public class display {
         "See timetable of project",
     };
 
-    private static void listMenu(String[] menu) {
+    private void listMenu(String[] menu) {
         String list = 0 + ". " + menu[0];
         for (int i = 1; i < menu.length; i++) {
             list += "\n" + (i) + ". " + menu[i];
@@ -45,21 +45,21 @@ public class display {
         System.out.println(list);
     }
 
-    public static int projectMenu(int id) {
+    public int projectMenu(int id) {
         menuHeader("Project Menu for " + id);
         listMenu(projectMenuOptions);
         System.out.println(sep);
         return projectMenuOptions.length;
     }
 
-    public static int mainMenu() {
+    public int mainMenu() {
         menuHeader("Main Menu");
         listMenu(mainMenuOptions);
         System.out.println(sep);
         return mainMenuOptions.length;
     }
 
-    private static void menuHeader(String name) {
+    private void menuHeader(String name) {
         String header = sep + "\n";
         for (int i = 0; i < (16 - name.length()/2); i++) {
             header += " ";
@@ -68,7 +68,7 @@ public class display {
         System.out.println(header);
     }
 
-    public static void listActivities(Project p) {
+    public void listActivities(Project p) {
         System.out.println("Activities for project " + p.getId());
         System.out.println(sep);
         System.out.println("Name \t Start \t\t End \t\t EWT");
@@ -83,7 +83,7 @@ public class display {
         System.out.println(sep + "\n");
     }
 
-    public static void listActivities(Employee user, List<Project> projects) {
+    public void listActivities(Employee user, List<Project> projects) {
         System.out.println("List of activities user has worked on");
         System.out.println(sep);
         System.out.println("Name \t\t Work Time");
@@ -101,7 +101,7 @@ public class display {
         // and start date of activities not started yet.
     }
 
-    public static void listProjects(List<Project> projects) {
+    public void listProjects(List<Project> projects) {
         if (projects.size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
         } else {
@@ -120,7 +120,7 @@ public class display {
         }
     }
 
-    public static void listEmployees(List<Employee> employees, Employee ceo) {
+    public void listEmployees(List<Employee> employees, Employee ceo) {
         if (employees.size() == 0) {
             System.out.println("No employees in ProjectApp yet.");
         } else {
@@ -137,7 +137,7 @@ public class display {
         }
     }
 
-    public static void timeTable(Project p, Employee user) {
+    public void timeTable(Project p, Employee user) {
         if(!user.equals(p.getPm())){
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
@@ -162,7 +162,7 @@ public class display {
         System.out.println(out);
     }
 
-    public static void summary(List<Project> ps, Employee user, Employee ceo) {
+    public void summary(List<Project> ps, Employee user, Employee ceo) {
         if (!user.equals(ceo)){
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;

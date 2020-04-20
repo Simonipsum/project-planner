@@ -13,6 +13,9 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="267" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -37,7 +40,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
   </component>
-  <component name="RunManager" selected="Application.ProjectApp">
+  <component name="RunManager" selected="JUnit.AcceptanceTest">
     <configuration name="ProjectApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.ProjectApp" />
       <module name="project-planner" />
@@ -58,10 +61,16 @@
           <option name="PATTERN" value="dtu.library.acceptance_tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
+        <pattern>
+          <option name="PATTERN" value="app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="dtu.library.acceptance_tests" />
       <option name="MAIN_CLASS_NAME" value="dtu.library.acceptance_tests.AcceptanceTest" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="PARAMETERS" value="" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -95,6 +104,8 @@
       <workItem from="1586767407455" duration="15604000" />
       <workItem from="1586813360937" duration="2505000" />
       <workItem from="1586862477109" duration="6505000" />
+      <workItem from="1587041939873" duration="2113000" />
+      <workItem from="1587372278470" duration="565000" />
     </task>
     <servers />
   </component>
@@ -102,6 +113,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="978" y="330" key="#AcceptanceTest" timestamp="1587042406200">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="978" y="330" key="#AcceptanceTest/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587042406200" />
     <state x="822" y="357" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586262235545">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -110,30 +125,34 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="92" y="92" width="2376" height="1216" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585829117143" />
-    <state x="867" y="475" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586262145437">
+    <state x="1110" y="439" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1587042402510">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="867" y="475" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586262145437" />
-    <state width="2517" height="364" key="GridCell.Tab.0.bottom" timestamp="1586869003693">
+    <state x="1110" y="439" key="#com.intellij.ide.util.PackageChooserDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587042402510" />
+    <state x="867" y="475" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1587042399913">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="867" y="475" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587042399913" />
+    <state width="1848" height="279" key="GridCell.Tab.0.bottom" timestamp="1587044055617">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1877" height="179" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
-    <state width="2517" height="364" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586869003693" />
-    <state width="2517" height="364" key="GridCell.Tab.0.center" timestamp="1586869003693">
+    <state width="1848" height="279" key="GridCell.Tab.0.bottom/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587044055617" />
+    <state width="1848" height="279" key="GridCell.Tab.0.center" timestamp="1587044055616">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1877" height="179" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
-    <state width="2517" height="364" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586869003693" />
-    <state width="2517" height="364" key="GridCell.Tab.0.left" timestamp="1586869003693">
+    <state width="1848" height="279" key="GridCell.Tab.0.center/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587044055616" />
+    <state width="1848" height="279" key="GridCell.Tab.0.left" timestamp="1587044055616">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1877" height="179" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
-    <state width="2517" height="364" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586869003693" />
-    <state width="2517" height="364" key="GridCell.Tab.0.right" timestamp="1586869003693">
+    <state width="1848" height="279" key="GridCell.Tab.0.left/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587044055616" />
+    <state width="1848" height="279" key="GridCell.Tab.0.right" timestamp="1587044055617">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1877" height="179" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586802551665" />
-    <state width="2517" height="364" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586869003693" />
+    <state width="1848" height="279" key="GridCell.Tab.0.right/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587044055617" />
     <state width="2517" height="492" key="GridCell.Tab.1.bottom" timestamp="1586815867001">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -154,11 +173,11 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1585824483389" />
-    <state x="732" y="390" key="com.intellij.ide.util.TipDialog" timestamp="1586866978462">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="976" y="525" key="com.intellij.ide.util.TipDialog" timestamp="1587372432557">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="732" y="390" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586866978462" />
-    <state x="976" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586862476931" />
+    <state x="976" y="525" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1587372432557" />
     <state x="1089" y="618" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585841379035">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -177,9 +196,10 @@
     <state x="953" y="323" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-1920.349.1920.1040@0.0.2560.1400" timestamp="1586264772187" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/project_planner$ProjectApp.ic" NAME="ProjectApp Coverage Results" MODIFIED="1586802366400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/project_planner$AcceptanceTest.ic" NAME="AcceptanceTest Coverage Results" MODIFIED="1586802297834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/project_planner$ProjectApp.ic" NAME="ProjectApp Coverage Results" MODIFIED="1587042276780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/project_planner$AcceptanceTest.ic" NAME="AcceptanceTest Coverage Results" MODIFIED="1587042410988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>dtu.library.acceptance_tests.*</FILTER>
+      <FILTER>app.*</FILTER>
     </SUITE>
   </component>
 </project>

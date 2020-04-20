@@ -2,10 +2,10 @@ package app;
 
 import java.util.Scanner;
 
-public class controller {
+public class Controller {
     static Scanner consoleIn = new Scanner(System.in);
 
-    public static int pickItem(int maxPick) {
+    public int pickItem(int maxPick) {
         System.out.print("Enter item number: ");
         int pick = getInt();
         while (pick < 0 || pick > maxPick) {
@@ -16,7 +16,7 @@ public class controller {
         return pick;
     }
 
-    public static int[] getDates() {
+    public int[] getDates() {
         int[] dates = {0, 0};
         System.out.print("Enter start date: ");
         dates[0] = getDate();
@@ -29,7 +29,7 @@ public class controller {
         return dates;
     }
 
-    public static int getDate() {
+    public int getDate() {
         int year, month, day, date;
         System.out.print("Enter year: ");
         year = getInt(1900, 2999);
@@ -54,7 +54,7 @@ public class controller {
         return (year%100)*10000 + month*100 + day;
     }
 
-    public static int getInt(int min, int max) {
+    public int getInt(int min, int max) {
         int input = getInt();
         while (input > max || input < min) {
             System.out.printf("Input not in range %d-%d. Enter new: ", min, max);
@@ -63,7 +63,7 @@ public class controller {
         return input;
     }
 
-    public static float getPosFloat() {
+    public float getPosFloat() {
         float input = getFloat();
         while (input < 0) {
             System.out.print("Input float has to be positive. Enter new: ");
@@ -72,7 +72,7 @@ public class controller {
         return input;
     }
 
-    public static int getPosInt() {
+    public int getPosInt() {
         int input = getInt();
         while (input < 0) {
             System.out.print("Input integer has to be positive. Enter new: ");
@@ -81,7 +81,7 @@ public class controller {
         return input;
     }
 
-    public static float getFloat() {
+    public float getFloat() {
         while (!consoleIn.hasNextFloat()) {
             consoleIn.next();
             System.out.print("Input must be a float. Enter new float:");
@@ -89,7 +89,7 @@ public class controller {
         return consoleIn.nextFloat();
     }
 
-    public static int getInt() {
+    public int getInt() {
         while (!consoleIn.hasNextInt()) {
             consoleIn.next();
             System.out.print("Input must be an integer. Enter new integer:");
@@ -97,7 +97,7 @@ public class controller {
         return consoleIn.nextInt();
     }
 
-    public static String getInitials(int maxLength) {
+    public String getInitials(int maxLength) {
         String input = "";
 
         while (true) {
@@ -110,7 +110,7 @@ public class controller {
         }
     }
 
-    public static String getString() {
+    public String getString() {
         while (!consoleIn.hasNext()) {
             consoleIn.next();
         }
