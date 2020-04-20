@@ -117,9 +117,9 @@ public class Controller {
     }
 
     public String getString() {
-        while (!consoleIn.hasNext()) {
-            consoleIn.next();
-        }
+//        while (!consoleIn.hasNext()) {
+//            consoleIn.next();
+//        }
         return consoleIn.next();
     }
 }

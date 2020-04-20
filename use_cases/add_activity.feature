@@ -7,7 +7,7 @@ Feature: Add Activity to Project
     Given the user is PM of the project with ID 200001
     When the user adds an activity with name "Activity1" to the project with ID 200001
     Then project 200001 will contain activity "Activity1"
-    Then the error message "" is given
+    And the error message "" is given
 
   Scenario: Employee adds and activity to the Project
     Given the user is not PM of the project with ID 200001
