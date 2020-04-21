@@ -4,6 +4,7 @@ import app.OperationNotAllowedException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,8 +24,12 @@ public class ProjectApp {
         employees.add(ceo);
     }
 
-    // Start is first day of absence, end is last day of absence
+
+
+    /* Alter ProjectApp */
+
     public void registerAbsence(int start, int end) {
+        // Start is first day of absence, end is last day of absence
         Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
         Calendar last    = new GregorianCalendar(end/10000, (end%10000)/100, (end%100));
         int date;
@@ -38,10 +43,10 @@ public class ProjectApp {
 
     // Add new Employee to ProjectApp
     public void addNewEmployee(Employee e) throws OperationNotAllowedException {
-        if (!isCEO()) {
+        if (!isUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
-        if (!isEmployee(e.getUsername())) {
+        if (!hasEmployee(e.getUsername())) {
             employees.add(e);
         } else {
             throw new OperationNotAllowedException("Employee with that username already registered");
@@ -52,67 +57,16 @@ public class ProjectApp {
         addNewEmployee(new Employee(username));
     }
 
-    // Set worktime of one date
-    public void setWorkTime(int date, float time, int id, String name) {
-        getProject(id).getActivity(name).setTime(user, time, date);
-    }
-
-    // Set PM of project with id
-    public void setPM(String username, int id) throws OperationNotAllowedException {
-        if (!isCEO()) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
-        }
-        if (!isEmployee(username)) {
-            throw new OperationNotAllowedException("Username is not an Employee.");
-        }
-        getProject(id).setPm(getEmployee(username));
-    }
-
+    // Removes an Employee from ProjectApp
     public void removeEmployee(String username) throws OperationNotAllowedException {
-        if (!isCEO()) {
+        if (!isUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         employees.remove(getEmployee(username));
     }
 
-    public void removeEmployee(String username, int id) throws OperationNotAllowedException {
-        checkPM(id).removeEmployee(getEmployee(username));
-    }
-
-    // Add Employee to project
-    public void addEmployee(String username, int id) throws OperationNotAllowedException {
-        checkPM(id).addEmployee(getEmployee(username));
-    }
-
-    // Add Activity to Project
-    public void addNewActivity(String name, int id) throws  OperationNotAllowedException {
-        checkPM(id).addActivity(new Activity(name));
-    }
-
-    // Set dates of project activity
-    public void setDates(int id, String name, int start, int end) throws OperationNotAllowedException {
-        checkPM(id).setDates(name, start, end);
-    }
-
-    // Set new name of project activity
-    public void setName(String name, int id, String newname) throws OperationNotAllowedException {
-        checkPM(id).setName(name, newname);
-    }
-
-    public void setExpectedWT(int id, String name, float time) throws OperationNotAllowedException {
-        checkPM(id).getActivity(name).setExpectedWT(time);
-    }
-
-    public Project checkPM(int id) throws OperationNotAllowedException {
-        Project project = getProject(id);
-        if (!project.isPm(user.getUsername())) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
-        }
-        return project;
-    }
-
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
-        if (!isCEO()){
+        if (!isUserCeo()){
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
 
@@ -123,65 +77,65 @@ public class ProjectApp {
         }
     }
 
-    public int calculateID(int year) {
-        int count = 1;
-        for (Project p : projects) {
-            count += p.getStartYear() == year ? 1 : 0;
+
+
+    /* Alter Projects & Activities */
+
+    // Removes an Employee from a project
+    public void removeEmployee(String username, int id) throws OperationNotAllowedException {
+        accessProject(id).removeEmployee(getEmployee(username));
+    }
+
+    // Add Employee to Project
+    public void addEmployee(String username, int id) throws OperationNotAllowedException {
+        accessProject(id).addEmployee(getEmployee(username));
+    }
+
+    // Add Activity to Project
+    public void addNewActivity(String name, int id) throws  OperationNotAllowedException {
+        accessProject(id).addActivity(new Activity(name));
+    }
+
+    // Set dates of project activity
+    public void setDates(int id, String name, int start, int end) throws OperationNotAllowedException {
+        accessProject(id).setActivityDates(name, start, end);
+    }
+
+    public Project accessProject(int id) throws OperationNotAllowedException {
+        Project project = getProject(id);
+        if (!project.isPm(user.getUsername())) {
+            throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
         }
-        return (year % 100) * 10000 + count;
+        return project;
     }
 
-    public void setCEO(Employee e) {
-        this.ceo = e;
+    // Set PM of project with id
+    public void setPM(String username, int id) throws OperationNotAllowedException {
+        if (!isUserCeo()) {
+            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+        }
+        if (!hasEmployee(username)) {
+            throw new OperationNotAllowedException("Username is not an Employee.");
+        }
+        getProject(id).setPm(getEmployee(username));
     }
 
-    public void setUser(Employee e) {
-        this.user = e;
+    public void setActivityName(String name, int id, String newname) throws OperationNotAllowedException {
+        accessProject(id).setActivityName(name, newname);
     }
 
-    public boolean isCEO() {
-        return user.equals(ceo);
+    public void setExpectedWt(int id, String name, float time) throws OperationNotAllowedException {
+        accessProject(id).getActivity(name).setExpectedWT(time);
     }
 
-    public boolean isEmployee(String username) {
-        return employees.stream().anyMatch(e -> e.getUsername().equals(username));
+    // Set worktime of one date
+    public void setWorktime(int date, float time, int id, String name) {
+        getProject(id).getActivity(name).setTime(user, time, date);
     }
 
-    public Employee getCEO() {
-        return this.ceo;
-    }
 
-    public Employee getUser() {
-        return this.user;
-    }
 
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public Activity getAbsence() {
-        return this.absence;
-    }
-
-    public Project getProject(int id) {
-        return projects.stream().filter(p -> p.getId() == id).findFirst().get();
-    }
-
-    public Employee getEmployee(String username) {
-        return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
-    }
-
-    public List<Employee> getEmployees() {
-        return this.employees;
-    }
-
-    public boolean hasProject(int id) {
-        return projects.stream().anyMatch(p -> p.getId() == id);
-    }
-
-    public void addObserver(PropertyChangeListener listener) {
-        sup.addPropertyChangeListener(listener);
-    }
+    /* Login and logout*/
 
     public void logout() {
         this.user = null;
@@ -192,12 +146,86 @@ public class ProjectApp {
         this.user = getEmployee(username);
     }
 
-    public boolean userOnProject(int id) {
+
+
+    /* Has/is checks */
+
+    public boolean isUserOnProject(int id) {
         return getProject(id).hasEmployee(user.getUsername());
     }
 
-    public boolean userIsPm(int id) {
+    public boolean hasEmployee(String username) {
+        return employees.stream().anyMatch(e -> e.getUsername().equals(username));
+    }
+
+    public boolean hasProject(int id) {
+        return projects.stream().anyMatch(p -> p.getId() == id);
+    }
+
+    public boolean isUserPm(int id) {
         return getProject(id).isPm(user.getUsername());
+    }
+
+    public boolean isUserCeo() {
+        return user.equals(ceo);
+    }
+
+
+
+
+    /* Getters and Setters */
+
+    public Employee getCEO() {
+        return this.ceo;
+    }
+
+    public void setCEO(Employee e) {
+        this.ceo = e;
+    }
+
+    public Employee getUser() {
+        return this.user;
+    }
+
+    public void setUser(Employee e) {
+        this.user = e;
+    }
+
+    public Project getProject(int id) {
+        return projects.stream().filter(p -> p.getId() == id).findFirst().get();
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public Activity getAbsence() {
+        return this.absence;
+    }
+
+    public List<Employee> getEmployees() {
+        return this.employees;
+    }
+
+    public Employee getEmployee(String username) {
+        return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
+    }
+
+
+
+
+    /* MISC */
+
+    public int calculateID(int year) {
+        int count = 1;
+        for (Project p : projects) {
+            count += p.getStartYear() == year ? 1 : 0;
+        }
+        return (year % 100) * 10000 + count;
+    }
+
+    public void addObserver(PropertyChangeListener listener) {
+        sup.addPropertyChangeListener(listener);
     }
 
     public void derpHelper() throws OperationNotAllowedException {

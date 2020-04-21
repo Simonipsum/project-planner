@@ -33,18 +33,18 @@ public class EmployeeSteps {
     @Given("the user is CEO")
     public void userIsCEO() {
         app.setCEO(user);
-        assertTrue(app.isCEO());
+        assertTrue(app.isUserCeo());
     }
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
         app.setCEO(new Employee("derp"));
-        assertFalse(app.isCEO());
+        assertFalse(app.isUserCeo());
     }
 
     @When("the ProjectApp does not contain an Employee {string}")
     public void hasNoEmployee(String username) {
-        assertFalse(app.isEmployee(username));
+        assertFalse(app.hasEmployee(username));
     }
 
     @When("the user adds a new Employee {string}")
@@ -67,7 +67,7 @@ public class EmployeeSteps {
 
     @Then("the ProjectApp now contains an Employee {string}")
     public void hasNewEmployee(String username) {
-        assertTrue(app.isEmployee(username));
+        assertTrue(app.hasEmployee(username));
     }
 
     @Then("the error message {string} is given")

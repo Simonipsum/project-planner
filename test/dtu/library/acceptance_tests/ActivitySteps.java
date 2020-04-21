@@ -1,5 +1,6 @@
 package dtu.library.acceptance_tests;
 
+import app.model.Activity;
 import app.model.Employee;
 import app.OperationNotAllowedException;
 
@@ -55,14 +56,15 @@ public class ActivitySteps {
 
     @Then("the activity with name {string} in project {int} has start date {int} and end date {int}")
     public void projectActivityHasDates(String name, int id, int start, int end) {
-        assertEquals(app.getProject(id).getDates(name)[0], start);
-        assertEquals(app.getProject(id).getDates(name)[1], end);
+        Activity a = app.getProject(id).getActivity(name);
+        assertEquals(a.getStart(), start);
+        assertEquals(a.getEnd(), end);
     }
 
     @When("the user sets the name of {string} from project {int} to {string}")
     public void userSetsNameOfProjectActivity(String name, int id, String newname) {
         try {
-            app.setName(name, id, newname);
+            app.setActivityName(name, id, newname);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
@@ -99,13 +101,13 @@ public class ActivitySteps {
 
     @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
     public void userSetsWorktimeOfActivity(float time, String name, int date, int id) {
-        app.setWorkTime(date, time, id, name);
+        app.setWorktime(date, time, id, name);
     }
 
     @When("the user sets the expected worktime of {string} from project {int} to {float}")
     public void userSetsExpectedWorktimeOfActivity(String name, int id, float time) {
         try {
-            app.setExpectedWT(id, name, time);
+            app.setExpectedWt(id, name, time);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }

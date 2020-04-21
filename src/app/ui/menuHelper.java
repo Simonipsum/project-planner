@@ -78,7 +78,7 @@ public class menuHelper {
         System.out.println(header);
     }
 
-    public void listProjects() {
+    public void projectList() {
         if (model.getProjects().size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
         } else {
@@ -97,7 +97,7 @@ public class menuHelper {
         }
     }
 
-    public void listEmployees() {
+    public void employeeList() {
         List<Employee> es = model.getEmployees();
         if (es.size() == 0) {
             System.out.println("No employees in ProjectApp yet.");
@@ -115,7 +115,7 @@ public class menuHelper {
         }
     }
 
-    public void listActivities(Project p) {
+    public void activityList(Project p) {
         System.out.println("Activities for project " + p.getId());
         System.out.println(sep);
         System.out.println("Name \t Start \t\t End \t\t EWT");

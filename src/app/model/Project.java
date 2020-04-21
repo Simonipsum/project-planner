@@ -36,7 +36,7 @@ public class Project {
         return rwt;
     }
 
-    public void setDates(String name, int start, int end) throws OperationNotAllowedException {
+    public void setActivityDates(String name, int start, int end) throws OperationNotAllowedException {
         if (start < end) {
             Activity ac = getActivity(name);
             ac.setStart(start);
@@ -46,12 +46,7 @@ public class Project {
         }
     }
 
-    public int[] getDates(String name) {
-        Activity ac = getActivity(name);
-        return new int[]{ac.getStart(), ac.getEnd()};
-    }
-
-    public void setName(String name, String newname) throws OperationNotAllowedException {
+    public void setActivityName(String name, String newname) throws OperationNotAllowedException {
         if (hasActivity(name)) {
             getActivity(name).setName(newname);
         } else {
