@@ -15,24 +15,10 @@ public class Activity {
         this.end = -1;
     }
 
-    public void setTime(Employee e, float time, int date) {
-        Map<Integer, Float> dateTime;
-
-        if (workTime.containsKey(e)) {
-            dateTime = workTime.get(e);
-        } else {
-            dateTime = new HashMap<>();
-        }
-
-        dateTime.put(date, time);
-        workTime.put(e, dateTime);
-    }
-
+    // Getters
     public float getRemainingWT() {
         return expectedWorkTime - getWorkedTime();
     }
-
-    // Getters
     public String getName() {
         return name;
     }
@@ -80,6 +66,18 @@ public class Activity {
     }
 
     // Setters
+    public void setTime(Employee e, float time, int date) {
+        Map<Integer, Float> dateTime;
+
+        if (workTime.containsKey(e)) {
+            dateTime = workTime.get(e);
+        } else {
+            dateTime = new HashMap<>();
+        }
+
+        dateTime.put(date, time);
+        workTime.put(e, dateTime);
+    }
     public void setName(String name) { this.name = name; }
     public void setEnd(int end) { this.end = end; }
     public void setStart(int start) { this.start = start; }
