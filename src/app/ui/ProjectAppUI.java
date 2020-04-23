@@ -75,7 +75,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void addProject() throws OperationNotAllowedException {
-        if (!app.isUserCeo()) {
+        if (!app.currentUserIsCEO()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
@@ -96,7 +96,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void setPM() throws OperationNotAllowedException {
-        if (!app.isUserCeo()) {
+        if (!app.currentUserIsCEO()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
@@ -109,7 +109,6 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.setPM(username, id);
         System.out.print("PM of " + id + " was successfully set to " + username + "\n\n");
     }
-
 
     public void projectMenu() throws OperationNotAllowedException {
         if (app.getProjects().size() == 0) {
@@ -152,7 +151,6 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.addNewActivity(name, id);
         System.out.printf("Activity %s successfully added to %d.\n\n", name, id);
     }
-
 
     private void editActivityDates(int id) throws OperationNotAllowedException {
         if (app.getProject(id).getActivities().size() == 0) {
