@@ -33,13 +33,13 @@ public class EmployeeSteps {
     @Given("the user is CEO")
     public void userIsCEO() {
         app.setCEO(user);
-        assertTrue(app.isUserCeo());
+        assertTrue(app.currentUserIsCEO());
     }
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
         app.setCEO(new Employee("derp"));
-        assertFalse(app.isUserCeo());
+        assertFalse(app.currentUserIsCEO());
     }
 
     @When("the ProjectApp does not contain an Employee {string}")

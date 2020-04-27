@@ -130,6 +130,20 @@ public class menuHelper {
         System.out.println(sep + "\n");
     }
 
+    public void listActivities(Employee currentUser, List<Project> projects) {
+        for (Project p : projects) {
+            if (p.hasEmployee(currentUser.getUsername())) {
+                for (Activity a : p.getActivities()) {
+                    System.out.printf(
+                            "%s \t %06d \t %06d \t %.1f\n",
+                            a.getName(),
+                            a.getStart() == -1 ? 0 : a.getStart(),
+                            a.getEnd() == -1 ? 0 : a.getEnd(),
+                            a.getExpectedWorkTime());
+                }
+            }
+        }
+    }
     public void timeTable(int id) {
         Project p = app.getProject(id);
         if(!p.isPm(app.getUser().getUsername())) {

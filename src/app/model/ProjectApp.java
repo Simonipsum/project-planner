@@ -14,7 +14,7 @@ public class ProjectApp {
     private PropertyChangeSupport sup = new PropertyChangeSupport(this);
 
     private List<Employee> employees = new ArrayList<>();
-    private List<Project> projects = new ArrayList<>();;
+    private List<Project> projects = new ArrayList<>();
     private Employee ceo;
     private Employee user = null;
     private Activity absence = new Activity("Absence");
@@ -23,8 +23,6 @@ public class ProjectApp {
         ceo = new Employee("marc");
         employees.add(ceo);
     }
-
-
 
     /* Alter ProjectApp */
 
@@ -43,7 +41,7 @@ public class ProjectApp {
 
     // Add new Employee to ProjectApp
     public void addNewEmployee(Employee e) throws OperationNotAllowedException {
-        if (!isUserCeo()) {
+        if (!currentUserIsCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         if (!hasEmployee(e.getUsername())) {
@@ -59,14 +57,14 @@ public class ProjectApp {
 
     // Removes an Employee from ProjectApp
     public void removeEmployee(String username) throws OperationNotAllowedException {
-        if (!isUserCeo()) {
+        if (!currentUserIsCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         employees.remove(getEmployee(username));
     }
 
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
-        if (!isUserCeo()){
+        if (!currentUserIsCEO()){
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
 
@@ -76,8 +74,6 @@ public class ProjectApp {
             projects.add(new Project(calculateID(year), year, name));
         }
     }
-
-
 
     /* Alter Projects & Activities */
 
@@ -111,7 +107,7 @@ public class ProjectApp {
 
     // Set PM of project with id
     public void setPM(String username, int id) throws OperationNotAllowedException {
-        if (!isUserCeo()) {
+        if (!currentUserIsCEO()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         if (!hasEmployee(username)) {
@@ -133,8 +129,6 @@ public class ProjectApp {
         getProject(id).getActivity(name).setTime(user, time, date);
     }
 
-
-
     /* Login and logout*/
 
     public void logout() {
@@ -145,8 +139,6 @@ public class ProjectApp {
     public void login(String username) {
         this.user = getEmployee(username);
     }
-
-
 
     /* Has/is checks */
 
@@ -166,12 +158,9 @@ public class ProjectApp {
         return getProject(id).isPm(user.getUsername());
     }
 
-    public boolean isUserCeo() {
+    public boolean currentUserIsCEO() {
         return user.equals(ceo);
     }
-
-
-
 
     /* Getters and Setters */
 
@@ -210,9 +199,6 @@ public class ProjectApp {
     public Employee getEmployee(String username) {
         return employees.stream().filter(e -> e.getUsername().equals(username)).findFirst().get();
     }
-
-
-
 
     /* MISC */
 

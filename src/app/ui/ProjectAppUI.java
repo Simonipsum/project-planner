@@ -1,11 +1,11 @@
 package app.ui;
 
 import app.OperationNotAllowedException;
-import app.model.NotificationType;
-import app.model.ProjectApp;
+import app.model.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class ProjectAppUI implements PropertyChangeListener {
     private ProjectApp app;
@@ -32,7 +32,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.derpHelper();
 
         while(true) {
-            if (app.getUser()==null) {
+            if (app.getUser() == null) {
                 userLogin();
             }
             display.mainMenu();
@@ -48,12 +48,12 @@ public class ProjectAppUI implements PropertyChangeListener {
             // Employee
             case 1:  registerWorktime();                break;
             case 2:  registerAbsence();          break;
-//            case 3:  display.listActivities(model.getUser(), model.getProjects());    break;
+            case 3:  display.listActivities(app.getUser(), app.getProjects());    break;
 //            case 4:  getAssistance();                           break;
 
             // PM
             case 5:  projectMenu();             break;
-//            case 6:  checkAvailability();                       break;
+            case 6:  checkAvailability();                       break;
 
             // CEO
             case 7:  setPM();                   break;
@@ -67,6 +67,25 @@ public class ProjectAppUI implements PropertyChangeListener {
         }
     }
 
+
+    private void checkAvailability() {
+        int[] dates = in.getDates();
+        List<Employee> es = app.getEmployees();
+        if (es.size() == 0) {
+            System.out.println("No employees in ProjectApp yet.");
+        } else {
+            for (Employee e : es) {
+                for (Project p : app.getProjects()) {
+                        for (Activity a : p.getActivities()) {
+                            int start = a.getStart();
+                            int end = a.getEnd();
+     /* date compare l8ter w/e*/
+                        }
+                    }
+            }
+        }
+    }
+
     private void registerAbsence() {
         int[] dates = in.getDates();
         app.registerAbsence(dates[0], dates[1]);
@@ -75,7 +94,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void addProject() throws OperationNotAllowedException {
-        if (!app.isUserCeo()) {
+        if (!app.currentUserIsCEO()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
@@ -96,7 +115,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void setPM() throws OperationNotAllowedException {
-        if (!app.isUserCeo()) {
+        if (!app.currentUserIsCEO()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
@@ -109,7 +128,6 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.setPM(username, id);
         System.out.print("PM of " + id + " was successfully set to " + username + "\n\n");
     }
-
 
     public void projectMenu() throws OperationNotAllowedException {
         if (app.getProjects().size() == 0) {
@@ -152,7 +170,6 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.addNewActivity(name, id);
         System.out.printf("Activity %s successfully added to %d.\n\n", name, id);
     }
-
 
     private void editActivityDates(int id) throws OperationNotAllowedException {
         if (app.getProject(id).getActivities().size() == 0) {
