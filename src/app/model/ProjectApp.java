@@ -5,10 +5,7 @@ import app.OperationNotAllowedException;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class ProjectApp {
     private PropertyChangeSupport sup = new PropertyChangeSupport(this);
@@ -86,6 +83,12 @@ public class ProjectApp {
     public void addEmployee(String username, int id) throws OperationNotAllowedException {
         accessProject(id).addEmployee(getEmployee(username));
     }
+
+    // Add assistance to Project
+    public void addAssistance(String username, String name, int id) {
+
+    }
+
 
     // Add Activity to Project
     public void addNewActivity(String name, int id) throws  OperationNotAllowedException {
@@ -202,6 +205,30 @@ public class ProjectApp {
 
     /* MISC */
 
+    public Map<Employee, Integer> getAvailability(int[] dates) {
+        int overlap, start, end;
+        Map<Employee, Integer> availability = new HashMap<>();
+
+        for (Employee e : employees) {
+            overlap = 0;
+
+            for (Project p : projects) {
+                if (p.hasEmployee(e.getUsername())) {
+                    for (Activity a : p.getActivities()) {
+                        start = a.getStart();
+                        end = a.getEnd();
+
+                        if (end >= dates[0] && start <= dates[1]) {
+                            overlap += Math.min(end, dates[1]) - Math.max(start, dates[0]) + 1;
+                        }
+                    }
+                }
+            }
+            availability.put(e, overlap);
+        }
+        return availability;
+    }
+
     public int calculateID(int year) {
         int count = 1;
         for (Project p : projects) {
@@ -239,8 +266,26 @@ public class ProjectApp {
         getProject(200005).addActivity(new Activity("ac2"));
 
         setPM("jan", 200001);
-        setPM("jan", 200003);
+        setPM("sim", 200002);
+        setPM("kim", 200003);
         setPM("joe", 200005);
+
+
+        // Set some start and end dates
+        getProject(200001).getActivity("ac1").setStart(200101);
+        getProject(200001).getActivity("ac1").setEnd(200201);
+
+        getProject(200002).getActivity("ac1").setStart(200301);
+        getProject(200002).getActivity("ac1").setEnd(200401);
+
+        getProject(200003).getActivity("ac1").setStart(200115);
+        getProject(200003).getActivity("ac1").setEnd(200220);
+
+        getProject(200004).getActivity("ac1").setStart(200120);
+        getProject(200004).getActivity("ac1").setEnd(200205);
+
+        getProject(200005).getActivity("ac1").setStart(200220);
+        getProject(200005).getActivity("ac1").setEnd(200330);
 
         user = null;
     }

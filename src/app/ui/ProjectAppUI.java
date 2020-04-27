@@ -5,7 +5,11 @@ import app.model.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProjectAppUI implements PropertyChangeListener {
     private ProjectApp app;
@@ -68,22 +72,9 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
 
-    private void checkAvailability() {
+    public void checkAvailability() {
         int[] dates = in.getDates();
-        List<Employee> es = app.getEmployees();
-        if (es.size() == 0) {
-            System.out.println("No employees in ProjectApp yet.");
-        } else {
-            for (Employee e : es) {
-                for (Project p : app.getProjects()) {
-                        for (Activity a : p.getActivities()) {
-                            int start = a.getStart();
-                            int end = a.getEnd();
-     /* date compare l8ter w/e*/
-                        }
-                    }
-            }
-        }
+        display.availability(dates);
     }
 
     private void registerAbsence() {
@@ -176,6 +167,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.println("Project doesn't have any activities.");
             return;
         }
+        display.activityList(app.getProject(id));
         String name = in.pickActivity(id);
         int[] dates = in.getDates();
         app.setDates(id, name, dates[0], dates[1]);
@@ -187,6 +179,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.println("Project doesn't have any activities.");
             return;
         }
+        display.activityList(app.getProject(id));
         String name = in.pickActivity(id);
         System.out.print("Enter expected worktime of activity: ");
         float wt = in.getPosFloat();

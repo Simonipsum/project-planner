@@ -5,8 +5,10 @@ import app.model.Employee;
 import app.model.Project;
 import app.model.ProjectApp;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class menuHelper {
     private ProjectApp app;
@@ -183,5 +185,25 @@ public class menuHelper {
             //}
         }
         System.out.println(out);
+    }
+
+    void availability(int[] dates) {
+        String tabs, output = "";
+        if (app.getEmployees().size() == 0) {
+            output = "No employees in ProjectApp yet.";
+        } else {
+            Map<Employee, Integer> sortedAvailability = app.getAvailability(dates).entrySet()
+                    .stream()
+                    .sorted((Map.Entry.<Employee, Integer>comparingByValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+            output += "\nEmployee\tDays\n----------------\n";
+
+            for (Employee e : sortedAvailability.keySet()) {
+                tabs = e.getUsername().length() != 4 ? "\t\t\t" : "\t\t";
+                output += e.getUsername() + tabs + sortedAvailability.get(e) + "\n";
+            }
+        }
+        System.out.println(output);
     }
 }

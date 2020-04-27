@@ -3,7 +3,9 @@ package app.model;
 import app.OperationNotAllowedException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Project {
     private int id;
@@ -12,6 +14,7 @@ public class Project {
     private Employee pm = new Employee("");
     private List<Employee> employees = new ArrayList<>();
     private List<Activity> activities = new ArrayList<>();
+    private Map<Employee, List<Activity>> assistant = new HashMap<>();
 
     public Project(int id, int startYear) {
         this.id = id;
@@ -73,6 +76,21 @@ public class Project {
     public void addEmployee(Employee e) {
         if (!hasEmployee(e.getUsername())) {
             this.employees.add(e);
+        }
+    }
+
+    public void addAssistant(Employee e, String name) {
+        List<Activity> temp = new ArrayList<>();
+
+        if (assistant.containsKey(e)) {
+            if (assistant.get(e).stream().anyMatch(a -> a.getName().equals(name))) {
+                temp = assistant.get(e);
+                temp.add(getActivity(name));
+                assistant.replace(e, temp);
+            }
+        } else {
+            temp.add(getActivity(name));
+            assistant.put(e, temp);
         }
     }
 
