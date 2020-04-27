@@ -52,7 +52,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             // Employee
             case 1:  registerWorktime();                break;
             case 2:  registerAbsence();          break;
-            case 3:  display.listActivities(app.getUser(), app.getProjects());    break;
+            case 3:  display.listActivities();    break;
 //            case 4:  getAssistance();                           break;
 
             // PM

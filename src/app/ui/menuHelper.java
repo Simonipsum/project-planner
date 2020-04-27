@@ -132,9 +132,9 @@ public class menuHelper {
         System.out.println(sep + "\n");
     }
 
-    public void listActivities(Employee currentUser, List<Project> projects) {
-        for (Project p : projects) {
-            if (p.hasEmployee(currentUser.getUsername())) {
+    public void listActivities() {
+        for (Project p : app.getProjects()) {
+            if (p.hasEmployee(app.getUser().getUsername())) {
                 for (Activity a : p.getActivities()) {
                     System.out.printf(
                             "%s \t %06d \t %06d \t %.1f\n",
