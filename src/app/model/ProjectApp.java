@@ -14,7 +14,7 @@ public class ProjectApp {
     private PropertyChangeSupport sup = new PropertyChangeSupport(this);
 
     private List<Employee> employees = new ArrayList<>();
-    private List<Project> projects = new ArrayList<>();;
+    private List<Project> projects = new ArrayList<>();
     private Employee ceo;
     private Employee user = null;
     private Activity absence = new Activity("Absence");

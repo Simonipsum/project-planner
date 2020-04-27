@@ -2,6 +2,7 @@ package app.ui;
 
 import app.OperationNotAllowedException;
 import app.model.NotificationType;
+import app.model.Project;
 import app.model.ProjectApp;
 
 import java.beans.PropertyChangeEvent;
@@ -32,7 +33,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.derpHelper();
 
         while(true) {
-            if (app.getUser()==null) {
+            if (app.getUser() == null) {
                 userLogin();
             }
             display.mainMenu();
@@ -48,7 +49,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             // Employee
             case 1:  registerWorktime();                break;
             case 2:  registerAbsence();          break;
-//            case 3:  display.listActivities(model.getUser(), model.getProjects());    break;
+            case 3:  display.listActivities(app.getUser(), app.getProjects());    break;
 //            case 4:  getAssistance();                           break;
 
             // PM
