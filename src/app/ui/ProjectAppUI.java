@@ -1,12 +1,11 @@
 package app.ui;
 
 import app.OperationNotAllowedException;
-import app.model.NotificationType;
-import app.model.Project;
-import app.model.ProjectApp;
+import app.model.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class ProjectAppUI implements PropertyChangeListener {
     private ProjectApp app;
@@ -54,7 +53,7 @@ public class ProjectAppUI implements PropertyChangeListener {
 
             // PM
             case 5:  projectMenu();             break;
-//            case 6:  checkAvailability();                       break;
+            case 6:  checkAvailability();                       break;
 
             // CEO
             case 7:  setPM();                   break;
@@ -65,6 +64,25 @@ public class ProjectAppUI implements PropertyChangeListener {
             // undecided
             case 11: display.projectList();    break;
             case 12: display.employeeList();   break;
+        }
+    }
+
+
+    private void checkAvailability() {
+        int[] dates = in.getDates();
+        List<Employee> es = app.getEmployees();
+        if (es.size() == 0) {
+            System.out.println("No employees in ProjectApp yet.");
+        } else {
+            for (Employee e : es) {
+                for (Project p : app.getProjects()) {
+                        for (Activity a : p.getActivities()) {
+                            int start = a.getStart();
+                            int end = a.getEnd();
+     /* date compare l8ter w/e*/
+                        }
+                    }
+            }
         }
     }
 

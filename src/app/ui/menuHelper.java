@@ -130,8 +130,6 @@ public class menuHelper {
         System.out.println(sep + "\n");
     }
 
-
-
     public void listActivities(Employee currentUser, List<Project> projects) {
         for (Project p : projects) {
             if (p.hasEmployee(currentUser.getUsername())) {
