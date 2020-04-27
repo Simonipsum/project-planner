@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class menuHelper {
-    private ProjectApp model;
+    private ProjectApp app;
 
-    public menuHelper(ProjectApp model) {
-        this.model = model;
+    public menuHelper(ProjectApp app) {
+        this.app = app;
     }
 
     private static String sep = "-------------------------------------";
@@ -79,13 +79,13 @@ public class menuHelper {
     }
 
     public void projectList() {
-        if (model.getProjects().size() == 0) {
+        if (app.getProjects().size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
         } else {
             System.out.println("List of projects in app");
             System.out.println(sep);
             System.out.println("ID \t\t\t Name \t\t PM");
-            for (Project p : model.getProjects()) {
+            for (Project p : app.getProjects()) {
                 System.out.printf(
                         "%d \t\t %s\t %s\n",
                         p.getId(),
@@ -98,14 +98,14 @@ public class menuHelper {
     }
 
     public void employeeList() {
-        List<Employee> es = model.getEmployees();
+        List<Employee> es = app.getEmployees();
         if (es.size() == 0) {
             System.out.println("No employees in ProjectApp yet.");
         } else {
             System.out.println("List of employees in ProjectApp");
             System.out.println(sep);
             for (Employee e : es) {
-                if (e.equals(model.getCEO())) {
+                if (e.equals(app.getCEO())) {
                     System.out.printf("\t%s\t(CEO)\n", e.getUsername());
                 } else {
                     System.out.printf("\t%s\n", e.getUsername());
@@ -131,8 +131,8 @@ public class menuHelper {
     }
 
     public void timeTable(int id) {
-        Project p = model.getProject(id);
-        if(!p.isPm(model.getUser().getUsername())) {
+        Project p = app.getProject(id);
+        if(!p.isPm(app.getUser().getUsername())) {
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
         }
@@ -158,12 +158,12 @@ public class menuHelper {
 
 
     public void summary() {
-        if (!model.getUser().equals(model.getCEO())){
+        if (!app.getUser().equals(app.getCEO())){
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
         String out = "ID \t\t worktime \t remaining wt\n";
-        for (Project p : model.getProjects()) {
+        for (Project p : app.getProjects()) {
             //if (p.getRemainingWT() > 0) {
             out += p.getId() + "\t" + p.getWorkedTime() + "\t\t" + p.getRemainingWT() + "\n";
             //}
