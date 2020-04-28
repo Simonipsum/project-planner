@@ -133,6 +133,13 @@ public class Project {
         return this.assistants.get(e);
     }
 
+    public boolean hasAssistant(Employee e, String name) {
+        if (hasAssistant(e)) {
+            getAssistantActivities(e).stream().anyMatch(a -> a.getName().equals(name));
+        }
+        return false;
+    }
+
     public Activity getActivity(String n) {
         return activities.stream().filter(a -> a.getName().equals(n)).findFirst().get();
     }

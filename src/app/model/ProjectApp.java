@@ -87,7 +87,10 @@ public class ProjectApp {
 
     // Add assistance to Project
     public void addAssistance(String username, String name, int id) {
-        getProject(id).addAssistant(getEmployee(username), name);
+        Project p = getProject(id);
+        if (p.hasEmployee(username)) {
+            p.addAssistant(getEmployee(username), name);
+        }
     }
 
     // Add Activity to Project

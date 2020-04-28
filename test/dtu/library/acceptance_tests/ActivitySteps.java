@@ -115,7 +115,7 @@ public class ActivitySteps {
 
     @When("the user ask for assistance on activity {string} in project {int} from employee {string}")
     public void userAksForAssistanceOnActivity(String name, int id, String username) {
-        app.addAssistance(username,name, id);
+        app.addAssistance(username, name, id);
     }
 
     @Then("{string} on project {int} on date {int} has {float} hours from user")
