@@ -113,6 +113,11 @@ public class ActivitySteps {
         }
     }
 
+    @When("the user ask for assistance on activity {string} in project {int} from employee {string}")
+    public void userAksForAssistanceOnActivity(String name, int id, String username) {
+        app.addAssistance(username,name, id);
+    }
+
     @Then("{string} on project {int} on date {int} has {float} hours from user")
     public void activityHasWorktimeFromUser(String name, int id, int date, float time) {
         assertTrue(app.getProject(id).getActivity(name).getWorkTime().get(app.getUser()).get(date) == time);
@@ -123,4 +128,8 @@ public class ActivitySteps {
         assertTrue(app.getProject(id).getActivity(name).getExpectedWorkTime() == time);
     }
 
+    @Then("the activity with name {string} in project {int} has an assistant {string}")
+    public void activityHasAssistant(String name, int id, String username) {
+        assertTrue(app.getProject(id).hasAssistant(app.getEmployee(username)));
+    }
 }

@@ -278,7 +278,7 @@ public class ProjectApp {
         setPM("kim", 200003);
         setPM("joe", 200005);
 
-
+        addAssistance("sim","ac1", 200001);
         // Set some start and end dates
         getProject(200001).getActivity("ac1").setStart(200101);
         getProject(200001).getActivity("ac1").setEnd(200201);
