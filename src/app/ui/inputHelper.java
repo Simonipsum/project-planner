@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class inputHelper {
     private Scanner consoleIn = new Scanner(System.in);
-    private ProjectApp model;
+    private ProjectApp app;
 
-    public inputHelper(ProjectApp model) {
-        this.model = model;
+    public inputHelper(ProjectApp app) {
+        this.app = app;
     }
 
     int pickItem(int maxPick) {
@@ -118,16 +118,16 @@ public class inputHelper {
     }
 
     String getString() {
-//        while (!consoleIn.hasNext()) {
-//            consoleIn.next();
-//        }
+        while (!consoleIn.hasNext()) {
+            consoleIn.next();
+        }
         return consoleIn.next();
     }
 
     String pickActivity(int id) {
         System.out.print("Enter name of activity: ");
         String name = getString();
-        while(!model.getProject(id).hasActivity(name)) {
+        while(!app.getProject(id).hasActivity(name)) {
             System.out.print("Activity " + name + " does not exist. Pick another: ");
             name = getString();
         }

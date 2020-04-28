@@ -64,12 +64,13 @@ public class ProjectApp {
         if (!currentUserIsCEO()){
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
-
+        int id = calculateID(year);
         if (name.equals("N")) {
-            projects.add(new Project(calculateID(year), year));
+            projects.add(new Project(id, year));
         } else {
-            projects.add(new Project(calculateID(year), year, name));
+            projects.add(new Project(id, year, name));
         }
+        getProject(id).addEmployee(ceo); // Lets always have CEO on the project
     }
 
     /* Alter Projects & Activities */
@@ -86,9 +87,8 @@ public class ProjectApp {
 
     // Add assistance to Project
     public void addAssistance(String username, String name, int id) {
-
+        getProject(id).addAssistant(getEmployee(username), name);
     }
-
 
     // Add Activity to Project
     public void addNewActivity(String name, int id) throws  OperationNotAllowedException {
@@ -116,7 +116,11 @@ public class ProjectApp {
         if (!hasEmployee(username)) {
             throw new OperationNotAllowedException("Username is not an Employee.");
         }
-        getProject(id).setPm(getEmployee(username));
+        Project p = getProject(id);
+        if (!p.hasEmployee(username)) {
+            p.addEmployee(getEmployee(username));       // Add pm to the project if he was not on it
+        }
+        p.setPm(getEmployee(username));
     }
 
     public void setActivityName(String name, int id, String newname) throws OperationNotAllowedException {
@@ -146,7 +150,11 @@ public class ProjectApp {
     /* Has/is checks */
 
     public boolean isUserOnProject(int id) {
-        return getProject(id).hasEmployee(user.getUsername());
+        return getProject(id).hasEmployee(user);
+    }
+
+    public boolean isUserAssistantOnProject(int id) {
+        return getProject(id).hasAssistant(user);
     }
 
     public boolean hasEmployee(String username) {
@@ -213,7 +221,7 @@ public class ProjectApp {
             overlap = 0;
 
             for (Project p : projects) {
-                if (p.hasEmployee(e.getUsername())) {
+                if (p.hasEmployee(e)) {
                     for (Activity a : p.getActivities()) {
                         start = a.getStart();
                         end = a.getEnd();

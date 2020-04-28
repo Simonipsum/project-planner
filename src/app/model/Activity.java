@@ -27,7 +27,6 @@ public class Activity {
     public Map<Employee, Map<Integer, Float>> getWorkTime() {
         return this.workTime;
     }
-
     public Map<Integer, Float> getDateTime() {
         float time;
         Map<Integer, Float> dateTime = new HashMap<>();
@@ -43,24 +42,12 @@ public class Activity {
         }
         return dateTime;
     }
-
     public float getWorkedTime() {
         float wt = 0;
         Map<Integer, Float> dt = getDateTime();
         for (Float t : dt.values()) wt += t;
         return wt;
     }
-
-//    public float getWorkedTime(Employee e) {
-//        float wt = 0;
-//        Map<Integer, Float> dateTime = workTime.get(e);
-//
-//        for (Object value : dateTime.values()) {
-//            System.out.println(value);
-//        }
-//        return wt;
-//    }
-
     public float getExpectedWorkTime() {
         return this.expectedWorkTime;
     }

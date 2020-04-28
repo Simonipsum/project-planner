@@ -14,7 +14,7 @@ public class Project {
     private Employee pm = new Employee("");
     private List<Employee> employees = new ArrayList<>();
     private List<Activity> activities = new ArrayList<>();
-    private Map<Employee, List<Activity>> assistant = new HashMap<>();
+    private Map<Employee, List<Activity>> assistants = new HashMap<>();
 
     public Project(int id, int startYear) {
         this.id = id;
@@ -58,15 +58,23 @@ public class Project {
     }
 
     public void removeEmployee(Employee e) throws OperationNotAllowedException {
-        if (hasEmployee(e.getUsername())) {
+        if (hasEmployee(e)) {
             employees.remove(e);
         } else {
             throw new OperationNotAllowedException("Project does not contain employee");
         }
     }
 
-    public boolean hasEmployee(String name) {
-        return this.employees.stream().anyMatch(e -> e.getUsername().equals(name));
+    public boolean hasEmployee(String un) {
+        return this.employees.stream().anyMatch(e -> e.getUsername().equals(un));
+    }
+
+    public boolean hasEmployee(Employee e) {
+        return this.employees.contains(e);
+    }
+
+    public boolean hasAssistant(Employee e){
+        return assistants.containsKey(e);
     }
 
     public boolean hasActivity(String name) {
@@ -74,7 +82,7 @@ public class Project {
     }
 
     public void addEmployee(Employee e) {
-        if (!hasEmployee(e.getUsername())) {
+        if (!hasEmployee(e)) {
             this.employees.add(e);
         }
     }
@@ -82,15 +90,15 @@ public class Project {
     public void addAssistant(Employee e, String name) {
         List<Activity> temp = new ArrayList<>();
 
-        if (assistant.containsKey(e)) {
-            if (assistant.get(e).stream().anyMatch(a -> a.getName().equals(name))) {
-                temp = assistant.get(e);
+        if (hasAssistant(e)) {
+            if (assistants.get(e).stream().anyMatch(a -> a.getName().equals(name))) {
+                temp = assistants.get(e);
                 temp.add(getActivity(name));
-                assistant.replace(e, temp);
+                assistants.replace(e, temp);
             }
         } else {
             temp.add(getActivity(name));
-            assistant.put(e, temp);
+            assistants.put(e, temp);
         }
     }
 
@@ -119,6 +127,10 @@ public class Project {
 
     public List<Activity> getActivities() {
         return this.activities;
+    }
+
+    public List<Activity> getAssistantActivities(Employee e) {
+        return this.assistants.get(e);
     }
 
     public Activity getActivity(String n) {

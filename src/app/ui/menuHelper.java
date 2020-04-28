@@ -21,10 +21,10 @@ public class menuHelper {
     private static String[] mainMenuOptions = {
             "Logout",
             // Normal employee options
-            "Add/edit work time of activity",
+            "Add/edit work time of an activity",
             "Register absence",
-            "List activities worked on",
-            "Get assistance on activity",
+            "List assigned activities",
+            "Get assistance on an activity",
             // PM options
             "Edit projects",
             "Check availability",
@@ -33,9 +33,8 @@ public class menuHelper {
             "Register new employee",
             "Add new project",
             "Summary report",
-
-            // All
-            "List all projects",
+            // more options for employees
+            "List assigned projects",
             "List all employees",
     };
     private static String[] projectMenuOptions = {
@@ -84,16 +83,18 @@ public class menuHelper {
         if (app.getProjects().size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
         } else {
-            System.out.println("List of projects in app");
+            System.out.println("List of assigned projects");
             System.out.println(sep);
             System.out.println("ID \t\t\t Name \t\t PM");
             for (Project p : app.getProjects()) {
-                System.out.printf(
-                        "%d \t\t %s\t %s\n",
-                        p.getId(),
-                        p.getName() == null ? ""    : p.getName(),
-                        p.getPm().getUsername().equals("NONE") ? ""      : p.getPm().getUsername()
-                );
+                if (app.isUserOnProject(p.getId()) || app.isUserAssistantOnProject(p.getId())) {
+                    System.out.printf(
+                            "%d \t\t %s\t %s\n",
+                            p.getId(),
+                            p.getName() == null ? ""                    : p.getName(),
+                            p.getPm().getUsername().equals("NONE") ? "" : p.getPm().getUsername()
+                    );
+                }
             }
             System.out.println(sep + "\n");
         }
@@ -121,31 +122,63 @@ public class menuHelper {
         System.out.println("Activities for project " + p.getId());
         System.out.println(sep);
         System.out.println("Name \t Start \t\t End \t\t EWT");
-        for (Activity a : p.getActivities()) {
+
+        List<Activity> as;
+        String assistant = "";
+        if (p.hasAssistant(app.getUser())) {
+            as = p.getAssistantActivities(app.getUser());
+            assistant = "\t\t(assistant)";
+        } else {
+            as = p.getActivities();
+        }
+
+        for (Activity a : as) {
             System.out.printf(
-                    "%s \t %06d \t %06d \t %.1f\n",
+                    "%s \t %06d \t %06d \t %.1f%s\n",
                     a.getName(),
                     a.getStart() == -1 ? 0 : a.getStart(),
                     a.getEnd() == -1 ? 0 : a.getEnd(),
-                    a.getExpectedWorkTime());
+                    a.getExpectedWorkTime(),
+                    assistant
+            );
         }
         System.out.println(sep + "\n");
     }
 
-    public void listActivities() {
+    public void activityListUser() {
+        Employee user = app.getUser();
+        System.out.printf("All activities assigned to %s\n", app.getUser().getUsername());
+        System.out.println(sep);
+        System.out.println("Activity\tStart\tEnd\t\tProject\tWorktime");
+
         for (Project p : app.getProjects()) {
-            if (p.hasEmployee(app.getUser().getUsername())) {
+            if (p.hasEmployee(user)) {
                 for (Activity a : p.getActivities()) {
                     System.out.printf(
-                            "%s \t %06d \t %06d \t %.1f\n",
+                            "%s\t\t\t%06d\t%06d\t%d\t%.1f\n",
                             a.getName(),
                             a.getStart() == -1 ? 0 : a.getStart(),
                             a.getEnd() == -1 ? 0 : a.getEnd(),
-                            a.getExpectedWorkTime());
+                            p.getId(),
+                            a.getExpectedWorkTime()
+                    );
+                }
+            } else if (p.hasAssistant(user)) {
+                for (Activity a : p.getAssistantActivities(user)) {
+                    System.out.printf(
+                            "%s\t\t\t%06d\t%06d\t%d\t%.1f\t\t(assistant)\n",
+                            a.getName(),
+                            a.getStart() == -1 ? 0 : a.getStart(),
+                            a.getEnd() == -1 ? 0 : a.getEnd(),
+                            p.getId(),
+                            a.getExpectedWorkTime()
+                    );
                 }
             }
         }
+        System.out.println("");
     }
+
     public void timeTable(int id) {
         Project p = app.getProject(id);
         if(!p.isPm(app.getUser().getUsername())) {

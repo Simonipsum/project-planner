@@ -5,11 +5,6 @@ import app.model.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ProjectAppUI implements PropertyChangeListener {
     private ProjectApp app;
@@ -47,32 +42,91 @@ public class ProjectAppUI implements PropertyChangeListener {
 
     private void processChoiceMain(int pick) throws OperationNotAllowedException {
         switch(pick) {
-            case 0: app.logout();             break;
+            case 0: app.logout();                   break;
 
             // Employee
-            case 1:  registerWorktime();                break;
-            case 2:  registerAbsence();          break;
-            case 3:  display.listActivities();    break;
-//            case 4:  getAssistance();                           break;
+            case 1:  registerWorktime();            break;
+            case 2:  registerAbsence();             break;
+            case 3:  display.activityListUser();    break;
+            case 4:  getAssistance();               break;
 
             // PM
-            case 5:  projectMenu();             break;
-            case 6:  checkAvailability();                       break;
+            case 5:  projectMenu();                 break;
+            case 6:  checkAvailability();           break;
 
             // CEO
-            case 7:  setPM();                   break;
-            case 8:  addEmployee();             break;
-            case 9:  addProject();              break;
-            case 10: display.summary();         break;
+            case 7:  setPM();                       break;
+            case 8:  addEmployee();                 break;
+            case 9:  addProject();                  break;
+            case 10: display.summary();             break;
 
             // undecided
-            case 11: display.projectList();    break;
-            case 12: display.employeeList();   break;
+            case 11: display.projectList();         break;
+            case 12: display.employeeList();        break;
         }
     }
 
+    private void registerWorktime() {
+        int id;
+        try {
+            id = userPickProjectWithActivity();
+        } catch (OperationNotAllowedException e){
+            System.out.println(e.getMessage());
+            return;
+        }
 
-    public void checkAvailability() {
+        display.activityList(app.getProject(id));
+        String name = in.pickActivity(id);
+
+        System.out.print("Date of work. ");
+        int date = in.getDate();
+
+        System.out.print("Enter worktime of activity: ");
+        float wt = in.getPosFloat();
+
+        app.setWorktime(date, wt, id, name);
+    }
+
+
+    private void getAssistance() {
+        int id;
+        try {
+            id = userPickProjectWithActivity();
+        } catch (OperationNotAllowedException e){
+            System.out.println(e.getMessage());
+            return;
+        }
+        if(app.isUserAssistantOnProject(id)) {
+            System.out.println("Insufficient Permissions: User is not assigned to that project.");
+            return;
+        }
+
+        display.activityList(app.getProject(id));
+        String name = in.pickActivity(id);
+
+        String un = pickEmployee();
+
+        app.addAssistance(un, name, id);
+        System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, name, id);
+    }
+
+    private int userPickProjectWithActivity() throws OperationNotAllowedException {
+        if (app.getProjects().size() == 0) {
+            throw new OperationNotAllowedException("No projects added to ProjectApp yet.");
+        }
+        int id = pickProject();
+        if (!app.isUserOnProject(id) && !app.isUserAssistantOnProject(id)) {
+            throw new OperationNotAllowedException("Insufficient Permissions: " +
+                    "User is not assigned to that project " +
+                    "or is an assistant on the project.");
+        }
+        if (app.getProject(id).getActivities().size() == 0) {
+            throw new OperationNotAllowedException("Project doesn't have any activities.");
+        }
+        return id;
+    }
+
+    private void checkAvailability() {
         int[] dates = in.getDates();
         display.availability(dates);
     }
@@ -120,7 +174,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         System.out.print("PM of " + id + " was successfully set to " + username + "\n\n");
     }
 
-    public void projectMenu() throws OperationNotAllowedException {
+    private void projectMenu() throws OperationNotAllowedException {
         if (app.getProjects().size() == 0) {
             System.out.println("No projects added to ProjectApp yet.");
             return;
@@ -149,6 +203,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void addProjectEmployee(int id) throws OperationNotAllowedException {
         String username = pickEmployee();
         if (app.getProject(id).hasEmployee(username)) {
+            System.out.printf("%s is already on project %d\n\n", username, id);
             return;
         }
         app.addEmployee(username, id);
@@ -187,33 +242,6 @@ public class ProjectAppUI implements PropertyChangeListener {
         System.out.printf("Worktime of %s has successfully been set to %.1f.\n\n", name, wt);
     }
 
-    private void registerWorktime() {
-        if (app.getProjects().size() == 0) {
-            System.out.println("No projects added to ProjectApp yet.");
-            return;
-        }
-        int id = pickProject();
-        if (!app.isUserOnProject(id)) {
-            System.out.println("Insufficient Permissions. User is not assigned to the project.");
-            return;
-        }
-        if (app.getProject(id).getActivities().size() == 0) {
-            System.out.println("Project doesn't have any activities.");
-            return;
-        }
-
-        display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
-
-        System.out.print("Date of work. ");
-        int date = in.getDate();
-
-        System.out.print("Enter worktime of activity: ");
-        float wt = in.getPosFloat();
-
-        app.setWorktime(date, wt, id, name);
-    }
-
     private String pickEmployee() {
         display.employeeList();
         System.out.print("Please input username of employee: ");
@@ -229,7 +257,7 @@ public class ProjectAppUI implements PropertyChangeListener {
 
     private int pickProject() {
         display.projectList();
-        System.out.print("Enter ID of project you want to edit: ");
+        System.out.print("Enter ID of project: ");
         int pick = in.getInt();
         while(!app.hasProject(pick)) {
             System.out.print("ID is not associated with any project. Please enter new: ");
@@ -239,7 +267,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         return pick;
     }
 
-    public void userLogin() {
+    private void userLogin() {
         String username;
         System.out.print("Please input username to login: ");
         username = in.getInitials(4);
