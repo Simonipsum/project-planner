@@ -20,6 +20,16 @@ public class ProjectSteps {
         this.errorMessage = errorMessage;
     }
 
+    public void setUser(Employee emp) {
+        app.logout();
+        try {
+            app.login(emp);
+        } catch (OperationNotAllowedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     @Given("the ProjectApp does not contain any projects")
     public void hasNoProject() {
         assertEquals(0, app.getProjects().size());
@@ -32,11 +42,11 @@ public class ProjectSteps {
             int numb = id % 10000;
 
             Employee user = app.getUser();
-            app.setUser(app.getCEO());
+            setUser(app.getCEO());
             for (int i = 0; i < numb; i++) {
                 userCreatesProject("Project1", year);
             }
-            app.setUser(user);
+            setUser(user);
         }
     }
 
@@ -71,9 +81,9 @@ public class ProjectSteps {
     @Given("the user is PM of the project with ID {int}")
     public void setUserPmOfProject(int id) {
         Employee temp = app.getUser();
-        app.setUser(app.getCEO());
+        setUser(app.getCEO());
         setPmOfProject(id, temp.getUsername());
-        app.setUser(temp);
+        setUser(temp);
         assertEquals(app.getProject(id).getPm(), temp);
     }
 
@@ -94,13 +104,13 @@ public class ProjectSteps {
     @Given("the user is on project {int}")
     public void userIsOnProject(int id) {
         Employee temp = app.getUser();
-        app.setUser(app.getProject(id).getPm());
+        setUser(app.getProject(id).getPm());
         try {
             app.addEmployee(temp.getUsername(), id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
-        app.setUser(temp);
+        setUser(temp);
     }
 
     @When("the user removes the employee {string} from project {int}")

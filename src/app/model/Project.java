@@ -77,6 +77,13 @@ public class Project {
         return assistants.containsKey(e);
     }
 
+    public boolean hasAssistant(Employee e, String name) {
+        if (hasAssistant(e)) {
+            return getAssistantActivities(e).stream().anyMatch(a -> a.getName().equals(name));
+        }
+        return false;
+    }
+
     public boolean hasActivity(String name) {
         return this.activities.stream().anyMatch(a -> a.getName().equals(name));
     }
@@ -89,6 +96,10 @@ public class Project {
 
     public void addAssistant(Employee e, String name) {
         List<Activity> temp = new ArrayList<>();
+
+        if (hasEmployee(e)) {
+            return;
+        }
 
         if (hasAssistant(e)) {
             if (assistants.get(e).stream().anyMatch(a -> a.getName().equals(name))) {
@@ -131,13 +142,6 @@ public class Project {
 
     public List<Activity> getAssistantActivities(Employee e) {
         return this.assistants.get(e);
-    }
-
-    public boolean hasAssistant(Employee e, String name) {
-        if (hasAssistant(e)) {
-            getAssistantActivities(e).stream().anyMatch(a -> a.getName().equals(name));
-        }
-        return false;
     }
 
     public Activity getActivity(String n) {

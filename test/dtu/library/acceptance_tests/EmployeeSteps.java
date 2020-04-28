@@ -22,12 +22,21 @@ public class EmployeeSteps {
         this.errorMessage = errorMessage;
     }
 
+    public void setUser(Employee emp) {
+        app.logout();
+        try {
+            app.login(emp);
+        } catch (OperationNotAllowedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @Given("the user is an Employee")
     public void userIsEmployee() throws OperationNotAllowedException {
         user = new Employee("emil");
-        app.setUser(app.getCEO());
+        setUser(app.getCEO());
         app.addNewEmployee(user);
-        app.setUser(user);
+        setUser(user);
     }
 
     @Given("the user is CEO")
@@ -59,9 +68,9 @@ public class EmployeeSteps {
     @Given("the ProjectApp contains a new Employee {string}")
     public void hasEmployee(String username) {
         Employee temp = app.getUser();
-        app.setUser(app.getCEO());
+        setUser(app.getCEO());
         addNewEmployee(username);
-        app.setUser(temp);
+        setUser(temp);
         hasNewEmployee(username);
     }
 

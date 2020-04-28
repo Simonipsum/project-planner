@@ -88,7 +88,7 @@ public class ProjectApp {
     // Add assistance to Project
     public void addAssistance(String username, String name, int id) {
         Project p = getProject(id);
-        if (p.hasEmployee(username)) {
+        if (p.hasEmployee(user.getUsername())) {
             p.addAssistant(getEmployee(username), name);
         }
     }
@@ -135,8 +135,14 @@ public class ProjectApp {
     }
 
     // Set worktime of one date
-    public void setWorktime(int date, float time, int id, String name) {
-        getProject(id).getActivity(name).setTime(user, time, date);
+    public void setWorktime(int date, float time, int id, String name) throws OperationNotAllowedException {
+        Project p = getProject(id);
+
+        if(p.hasEmployee(user) || p.hasAssistant(user)) {
+            p.getActivity(name).setTime(user, time, date);
+        } else {
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not assigned to that project or is a helper on that activity");
+        }
     }
 
     /* Login and logout*/
@@ -146,8 +152,12 @@ public class ProjectApp {
         sup.firePropertyChange(NotificationType.LOGOUT,null, null);
     }
 
-    public void login(String username) {
-        this.user = getEmployee(username);
+    public void login(Employee e) throws OperationNotAllowedException {
+        if (this.user == null) {
+            this.user = e;
+        } else {
+            throw new OperationNotAllowedException("Insufficient Permissions: A user is already logged in.");
+        }
     }
 
     /* Has/is checks */
@@ -188,10 +198,6 @@ public class ProjectApp {
 
     public Employee getUser() {
         return this.user;
-    }
-
-    public void setUser(Employee e) {
-        this.user = e;
     }
 
     public Project getProject(int id) {

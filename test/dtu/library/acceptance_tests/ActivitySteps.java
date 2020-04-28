@@ -23,6 +23,15 @@ public class ActivitySteps {
         this.errorMessage = errorMessage;
     }
 
+    public void setUser(Employee emp) {
+        app.logout();
+        try {
+            app.login(emp);
+        } catch (OperationNotAllowedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @When("the user adds an activity with name {string} to the project with ID {int}")
     public void userAddsActivityToProject(String name, int id) {
         try {
@@ -40,9 +49,9 @@ public class ActivitySteps {
     @Given("project {int} contains activity {string}")
     public void projectAlreadyContainsActivity(int id, String name) {
         Employee temp = app.getUser();
-        app.setUser(app.getProject(id).getPm());
+        setUser(app.getProject(id).getPm());
         userAddsActivityToProject(name, id);
-        app.setUser(temp);
+        setUser(temp);
     }
 
     @When("the user sets the start date as {int} and end date as {int} of {string} in project {int}")
@@ -101,7 +110,19 @@ public class ActivitySteps {
 
     @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
     public void userSetsWorktimeOfActivity(float time, String name, int date, int id) {
-        app.setWorktime(date, time, id, name);
+        try {
+            app.setWorktime(date, time, id, name);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the {string} sets worktime of {float} hours to {string} on date {int} on project {int}")
+    public void employeeSetsWorktimeOfActivity(String un, float time, String name, int date, int id) {
+        Employee temp = app.getUser();
+        setUser(app.getEmployee(un));
+        userSetsWorktimeOfActivity(time, name, date, id);
+        setUser(temp);
     }
 
     @When("the user sets the expected worktime of {string} from project {int} to {float}")
@@ -123,6 +144,11 @@ public class ActivitySteps {
         assertTrue(app.getProject(id).getActivity(name).getWorkTime().get(app.getUser()).get(date) == time);
     }
 
+    @Then("{string} on project {int} on date {int} has {float} hours from {string}")
+    public void activityHasWorktimeFromEmployee(String name, int id, int date, float time, String un) {
+        assertTrue(app.getProject(id).getActivity(name).getWorkTime().get(app.getEmployee(un)).get(date) == time);
+    }
+
     @Then("{string} of project {int} has expected worktime {float}")
     public void activityHasExpectedWorktime(String name, int id, float time) {
         assertTrue(app.getProject(id).getActivity(name).getExpectedWorkTime() == time);
@@ -130,6 +156,11 @@ public class ActivitySteps {
 
     @Then("the activity with name {string} in project {int} has an assistant {string}")
     public void activityHasAssistant(String name, int id, String username) {
-        assertTrue(app.getProject(id).hasAssistant(app.getEmployee(username)));
+        assertTrue(app.getProject(id).hasAssistant(app.getEmployee(username), name));
+    }
+
+    @Then("the activity with name {string} in project {int} does not have an assistant {string}")
+    public void activityDoesNotHaveAssistant(String name, int id, String username) {
+        assertFalse(app.getProject(id).hasAssistant(app.getEmployee(username), name));
     }
 }

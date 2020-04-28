@@ -18,16 +18,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.addObserver(this);
     }
 
-    public ProjectAppUI() {
-        app = new ProjectApp();
-        display = new menuHelper(app);
-        in = new inputHelper(app);
-        app.addObserver(this);
-    }
-
     public void mainLoop() throws OperationNotAllowedException {
-        int pick;
-
         app.derpHelper();
 
         while(true) {
@@ -35,8 +26,7 @@ public class ProjectAppUI implements PropertyChangeListener {
                 userLogin();
             }
             display.mainMenu();
-            pick = in.pickItem(12);
-            processChoiceMain(pick);
+            processChoiceMain(in.pickItem(12));
         }
     }
 
@@ -66,7 +56,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         }
     }
 
-    private void registerWorktime() {
+    private void registerWorktime() throws OperationNotAllowedException {
         int id;
         try {
             id = userPickProjectWithActivity();
@@ -277,7 +267,11 @@ public class ProjectAppUI implements PropertyChangeListener {
             username = in.getInitials(4);
         }
 
-        app.login(username);
+        try {
+            app.login(app.getEmployee(username));
+        } catch (OperationNotAllowedException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.print("");
     }
 

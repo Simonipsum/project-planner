@@ -10,5 +10,6 @@ Feature: Get assistance for an existing activity
     When the user ask for assistance on activity "Activity1" in project 200001 from employee "jan"
     Then the activity with name "Activity1" in project 200001 has an assistant "jan"
 
-   Scenario: user not on project asks for assistance
-
+  Scenario: user not on project asks for assistance
+    When the user ask for assistance on activity "Activity1" in project 200001 from employee "jan"
+    Then the activity with name "Activity1" in project 200001 does not have an assistant "jan"

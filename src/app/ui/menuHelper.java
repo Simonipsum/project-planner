@@ -89,11 +89,15 @@ public class menuHelper {
             for (Project p : app.getProjects()) {
                 if (app.isUserOnProject(p.getId()) || app.isUserAssistantOnProject(p.getId())) {
                     System.out.printf(
-                            "%d \t\t %s\t %s\n",
+                            "%d \t\t %s\t %s",
                             p.getId(),
                             p.getName() == null ? ""                    : p.getName(),
                             p.getPm().getUsername().equals("NONE") ? "" : p.getPm().getUsername()
                     );
+                    if (app.isUserAssistantOnProject(p.getId())) {
+                        System.out.print("\t\t(assistant)");
+                    }
+                    System.out.print("\n");
                 }
             }
             System.out.println(sep + "\n");
