@@ -187,6 +187,30 @@ public class ProjectAppUI implements PropertyChangeListener {
                 case 3: editActivityDates(id);  break;
                 case 4: editActivityWt(id);     break;
                 case 5: display.timeTable(id);  break;
+                case 6: editProjectName(id);    break;
+                case 7: editactivityName(id);    break;
+        }
+    }
+
+    private void editProjectName(int id) throws OperationNotAllowedException {
+        System.out.print("Enter new name of project");
+        String name = in.getString();
+        app.setProjectName(id, name);
+    }
+
+    private void editactivityName(int id){
+        if (app.getProject(id).getActivities().size() == 0) {
+            System.out.println("Project doesn't have any activities.");
+            return;
+        }
+        display.activityList(app.getProject(id));
+        String name = in.pickActivity(id);
+        System.out.print("Enter new name of activity: ");
+        String newname = in.getString();
+        try {
+            app.setActivityName(name, id, newname);
+        } catch (OperationNotAllowedException e) {
+            e.printStackTrace();
         }
     }
 

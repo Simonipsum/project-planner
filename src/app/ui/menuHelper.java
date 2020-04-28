@@ -45,6 +45,8 @@ public class menuHelper {
             "Edit activity dates",
             "Edit activity worktime",
             "See timetable of project",
+            "Edit name of project",
+            "Edit name of activity",
     };
 
 

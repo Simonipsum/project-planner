@@ -130,6 +130,10 @@ public class ProjectApp {
         accessProject(id).setActivityName(name, newname);
     }
 
+    public void setProjectName(int id, String newname) throws OperationNotAllowedException {
+        accessProject(id).setName(newname);
+    }
+
     public void setExpectedWt(int id, String name, float time) throws OperationNotAllowedException {
         accessProject(id).getActivity(name).setExpectedWT(time);
     }

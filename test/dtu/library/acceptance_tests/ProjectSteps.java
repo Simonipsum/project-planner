@@ -50,6 +50,11 @@ public class ProjectSteps {
         }
     }
 
+    @Given("project with ID {int} is named {string}")
+    public void projectHasName(int id, String name){
+        app.getProject(id).setName(name);
+    }
+
     @When("the user adds a project named {string} in the year {int}")
     public void userCreatesProject(String name, int year) {
         try {
@@ -59,9 +64,18 @@ public class ProjectSteps {
         }
     }
 
+    @When("the user changes the name of the project with ID {int} to {string}")
+    public void userChangeProjectName(int id, String newname) {
+        try {
+            app.setProjectName(id, newname);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
     @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")
     public void newProjectCreated(String name, int id) {
-        assertTrue( app.getProject(id).getName().equals(name) );
+        assertTrue(app.getProject(id).getName().equals(name));
     }
 
     @When("the user sets PM of project {int} to {string}")
