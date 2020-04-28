@@ -117,7 +117,7 @@ public class ActivitySteps {
         }
     }
 
-    @When("the {string} sets worktime of {float} hours to {string} on date {int} on project {int}")
+    @When("the employee {string} sets worktime of {float} hours to {string} on date {int} on project {int}")
     public void employeeSetsWorktimeOfActivity(String un, float time, String name, int date, int id) {
         Employee temp = app.getUser();
         setUser(app.getEmployee(un));
