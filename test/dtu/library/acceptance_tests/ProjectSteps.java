@@ -98,12 +98,12 @@ public class ProjectSteps {
         setUser(app.getCEO());
         setPmOfProject(id, temp.getUsername());
         setUser(temp);
-        assertEquals(app.getProject(id).getPm(), temp);
+        assertTrue(app.isUserPm(id));
     }
 
     @Given("the user is not PM of the project with ID {int}")
     public void setNotUserPmOfProject(int id) {
-        assertNotEquals(app.getProject(id).getPm().getUsername(), app.getUser());
+        assertFalse(app.isUserPm(id));
     }
 
     @When("the user adds {string} to the project with ID {int}")
@@ -125,6 +125,7 @@ public class ProjectSteps {
             errorMessage.setErrorMessage(e.getMessage());
         }
         setUser(temp);
+        assertTrue(app.isUserOnProject(id));
     }
 
     @When("the user removes the employee {string} from project {int}")

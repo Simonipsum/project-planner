@@ -1,6 +1,6 @@
 Feature: Add Employee to a Project
   Background:
-    Given the ProjectApp contains project 200001
+    Given the ProjectApp contains project 200002
     And the user is an Employee
     And the ProjectApp contains a new Employee "jan"
 

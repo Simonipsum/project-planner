@@ -77,6 +77,7 @@ public class EmployeeSteps {
     @Then("the ProjectApp now contains an Employee {string}")
     public void hasNewEmployee(String username) {
         assertTrue(app.hasEmployee(username));
+        assertTrue(app.getEmployees().contains(app.getEmployee(username)));
     }
 
     @Then("the error message {string} is given")

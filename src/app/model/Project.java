@@ -159,5 +159,4 @@ public class Project {
     public boolean isPm(String username) {
         return pm.getUsername().equals(username);
     }
-
 }

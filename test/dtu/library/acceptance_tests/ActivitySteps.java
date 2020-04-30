@@ -44,6 +44,7 @@ public class ActivitySteps {
     @Then("project {int} will contain activity {string}")
     public void projectContainsActivity(int id, String name) {
         assertTrue(app.getProject(id).hasActivity(name));
+        assertTrue(app.getProject(id).getActivities().stream().anyMatch(a -> a.getName().equals(name)));
     }
 
     @Given("project {int} contains activity {string}")

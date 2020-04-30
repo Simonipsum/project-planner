@@ -19,7 +19,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-        app.derpHelper(); // Initialize some data to ease testing
+        //app.derpHelper(); // Initialize some data to ease testing
 
         // Run program
         while(true) {
@@ -163,7 +163,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void addEmployee() throws OperationNotAllowedException {
         System.out.print("Initials of new Employee: ");
         String username = in.getInitials(4);
-        app.addNewEmployee(username);
+        app.addNewEmployee(new Employee(username));
         System.out.print("Employee " + username + " was successfully added to the ProjectApp.\n\n");
     }
 
