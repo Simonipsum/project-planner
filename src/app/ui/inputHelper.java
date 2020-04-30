@@ -111,6 +111,17 @@ public class inputHelper {
         return consoleIn.nextInt();
     }
 
+    boolean getConfirmation() {
+        System.out.print("Are you sure (y/n)? ");
+        String ch = getString();
+        while (!ch.equals("y") && !ch.equals("n")) {
+            System.out.print("Error: Didn't type 'y' or 'n'.\n" +
+                    "Please enter either 'y' or 'n': ");
+            ch = getString();
+        }
+        return ch.equals("y");
+    }
+
     String getInitials(int maxLength) {
         String input = "";
 

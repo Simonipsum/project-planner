@@ -65,13 +65,8 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.println("Insufficient Permissions: User is not CEO.\n");
             return;
         }
-        System.out.print("Are you sure you want to exit the ProjectApp?\n" +
-                "All data will be lost. (y/n): ");
-        String answer = in.getString().toLowerCase();
-        while(!answer.equals("y") && !answer.equals("n")) {
-            answer = in.getString();
-        }
-        if (answer.equals("y")) {
+        System.out.println("Exiting ProjectApp. All data will be lost.");
+        if (in.getConfirmation()) {
             System.out.println("ProjectApp exiting...");
             System.exit(0);
         } else {
