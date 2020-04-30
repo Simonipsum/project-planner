@@ -19,14 +19,15 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-        app.derpHelper();
+        app.derpHelper(); // Initialize some data to ease testing
 
+        // Run program
         while(true) {
             if (app.getUser() == null) {
                 userLogin();
             }
             display.mainMenu();
-            processChoiceMain(in.pickItem(12));
+            processChoiceMain(in.pickItem(13));
         }
     }
 
@@ -50,9 +51,31 @@ public class ProjectAppUI implements PropertyChangeListener {
             case 9:  addProject();                  break;
             case 10: display.summary();             break;
 
-            // undecided
+            // for all employees
             case 11: display.projectList();         break;
             case 12: display.employeeList();        break;
+
+            // CEO
+            case 13: exitApp();                     break;
+        }
+    }
+
+    private void exitApp() {
+        if (!app.getUser().equals(app.getCEO())) {
+            System.out.println("Insufficient Permissions: User is not CEO.\n");
+            return;
+        }
+        System.out.print("Are you sure you want to exit the ProjectApp?\n" +
+                "All data will be lost. (y/n): ");
+        String answer = in.getString().toLowerCase();
+        while(!answer.equals("y") && !answer.equals("n")) {
+            answer = in.getString();
+        }
+        if (answer.equals("y")) {
+            System.out.println("ProjectApp exiting...");
+            System.exit(0);
+        } else {
+            System.out.println("ProjectApp will continue running.\n");
         }
     }
 

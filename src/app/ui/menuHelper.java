@@ -36,6 +36,7 @@ public class menuHelper {
             // more options for employees
             "List assigned projects",
             "List all employees",
+            "Exit ProjectApp",
     };
     private static String[] projectMenuOptions = {
             // PM options
