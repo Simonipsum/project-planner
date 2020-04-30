@@ -17,7 +17,7 @@ public class ProjectApp {
     private Activity absence = new Activity("Absence");
 
     public ProjectApp() {
-        ceo = new Employee("marc");
+        ceo = new Employee("huba");
         employees.add(ceo);
     }
 
@@ -263,7 +263,7 @@ public class ProjectApp {
     }
 
     public void derpHelper() throws OperationNotAllowedException {
-        user = getEmployee("marc");
+        login(ceo);
         employees.add(new Employee("jan"));
         employees.add(new Employee("sim"));
         employees.add(new Employee("joe"));
