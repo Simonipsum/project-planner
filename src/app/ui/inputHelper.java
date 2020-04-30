@@ -16,7 +16,8 @@ public class inputHelper {
         System.out.print("Enter item number: ");
         int pick = getInt();
         while (pick < 0 || pick > maxPick) {
-            System.out.print("Please pick one of the listed options.");
+            System.out.printf("Error: Item %d is not on the list.\n" +
+                    "Please try again: ", pick);
             pick = getInt();
         }
         System.out.println("");
@@ -30,7 +31,8 @@ public class inputHelper {
         System.out.println("End date");
         dates[1] = getDate();
         while(dates[1] < dates[0]) {
-            System.out.print("End date can't be before start date: ");
+            System.out.print("Error: End date can't be before start date.\n" +
+                    "Please enter new end date: ");
             dates[1] = getDate();
         }
         return dates;
@@ -64,7 +66,8 @@ public class inputHelper {
     int getInt(int min, int max) {
         int input = getInt();
         while (input > max || input < min) {
-            System.out.println("Input not in range " + min + "-" + max + ". Enter new: ");
+            System.out.printf("Error: Input %d in range %d-%d.\n" +
+                    "Please input integer in range: ", input, min, max);
             input = getInt();
         }
         return input;
@@ -73,7 +76,8 @@ public class inputHelper {
     float getPosFloat() {
         float input = getFloat();
         while (input < 0) {
-            System.out.print("Input float has to be positive. Enter new: ");
+            System.out.print("Error: Input float %f has to be positive.\n" +
+                    "Please enter a positive float: ");
             input = getFloat();
         }
         return input;
@@ -82,7 +86,8 @@ public class inputHelper {
     private int getPosInt() {
         int input = getInt();
         while (input < 0) {
-            System.out.print("Input integer has to be positive. Enter new: ");
+            System.out.print("Error: Input integer has to be positive.\n" +
+                    "Please enter a positive integer: ");
             input = getInt();
         }
         return input;
@@ -91,7 +96,8 @@ public class inputHelper {
     private float getFloat() {
         while (!consoleIn.hasNextFloat()) {
             consoleIn.next();
-            System.out.print("Input must be a float. Enter new float:");
+            System.out.print("Error: Input must be a float.\n" +
+                    "Please a float: ");
         }
         return consoleIn.nextFloat();
     }
@@ -99,7 +105,8 @@ public class inputHelper {
     int getInt() {
         while (!consoleIn.hasNextInt()) {
             consoleIn.next();
-            System.out.print("Input must be an integer. Enter new integer: ");
+            System.out.print("Error: Input must be an integer.\n" +
+                    "Please enter an integer: ");
         }
         return consoleIn.nextInt();
     }
@@ -113,7 +120,8 @@ public class inputHelper {
             if (input.length() <= maxLength) {
                 return input;
             }
-            System.out.print("Please enter a maximum of " + maxLength + " initials.\n");
+            System.out.printf("Error: String '%s' too long.\n" +
+                    "Please enter a string of maximum %d length:", input, maxLength);
         }
     }
 
@@ -127,8 +135,10 @@ public class inputHelper {
     String pickActivity(int id) {
         System.out.print("Enter name of activity: ");
         String name = getString();
+
         while(!app.getProject(id).hasActivity(name)) {
-            System.out.print("Activity " + name + " does not exist. Pick another: ");
+            System.out.printf("Error: Activity %s is not on project %d.\n" +
+                    "Please pick one of the listed activities: ", name, id);
             name = getString();
         }
         System.out.println("");
