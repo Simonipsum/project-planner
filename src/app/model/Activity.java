@@ -22,11 +22,19 @@ public class Activity {
     public String getName() {
         return name;
     }
-    public int getEnd() { return end; }
-    public int getStart() { return start; }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
     public Map<Employee, Map<Integer, Float>> getWorkTime() {
         return this.workTime;
     }
+
     public Map<Integer, Float> getDateTime() {
         float time;
         Map<Integer, Float> dateTime = new HashMap<>();
@@ -42,12 +50,14 @@ public class Activity {
         }
         return dateTime;
     }
+
     public float getWorkedTime() {
         float wt = 0;
         Map<Integer, Float> dt = getDateTime();
         for (Float t : dt.values()) wt += t;
         return wt;
     }
+
     public float getExpectedWorkTime() {
         return this.expectedWorkTime;
     }
@@ -65,8 +75,19 @@ public class Activity {
         dateTime.put(date, time);
         workTime.put(e, dateTime);
     }
-    public void setName(String name) { this.name = name; }
-    public void setEnd(int end) { this.end = end; }
-    public void setStart(int start) { this.start = start; }
-    public void setExpectedWT(float time) { this.expectedWorkTime = time; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setEnd(int end) {
+        this.end = end;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public void setExpectedWT(float time) {
+        this.expectedWorkTime = time;
+    }
 }
