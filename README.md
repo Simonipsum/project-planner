@@ -8,13 +8,8 @@ This is a project planner made in 02161 Software Engineering 1 @ DTU 2020 for th
 [Marc Sun Boeg](https://github.com/MarcMarabou), s173905
 [Emil Skov Rasmussen](https://github.com/Emil252), s173402
 
-# Automatic testing
-
-The code is tested upon each push to out git repository and then Travis CI have checked everything automatically as a quality control. Code coverage is only tested manually on the development teams computers.
-
-
 # Pre requirements
-Environment, tested on Windows and Linux.
+Environment, tested on Window.
 
 * Java 8 update 202, 64-bit JDK or later updates.
 
@@ -34,6 +29,3 @@ Environment, tested on Windows and Linux.
 
 # Licence 
 Just take it w/e brooo..
-
-# comment
-changed a lot of stuff during the development, so the code quality is kinda trashy... but anyways if it will help you out just take it.
