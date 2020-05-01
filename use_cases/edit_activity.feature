@@ -10,6 +10,11 @@ Feature: Edit existing Project Activity
     Then the activity with name "Activity1" in project 200001 has start date 20200101 and end date 20200501
     And the error message "" is given
 
+  Scenario: PM sets start/end date of Activity with end date before start date
+    Given the user is PM of the project with ID 200001
+    When the user sets the start date as 20200501 and end date as 20200101 of "Activity1" in project 200001
+    Then the error message "Start date must be before end date" is given
+
   Scenario: Employee sets start/end date of Activity
     Given the user is not PM of the project with ID 200001
     When the user sets the start date as 20200101 and end date as 20200501 of "Activity1" in project 200001
