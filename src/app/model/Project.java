@@ -39,9 +39,9 @@ public class Project {
         return rwt;
     }
 
-    public void setActivityDates(String name, int start, int end) throws OperationNotAllowedException {
+    public void setActivityDates(String acName, int start, int end) throws OperationNotAllowedException {
         if (start < end) {
-            Activity ac = getActivity(name);
+            Activity ac = getActivity(acName);
             ac.setStart(start);
             ac.setEnd(end);
         } else {
@@ -49,9 +49,9 @@ public class Project {
         }
     }
 
-    public void setActivityName(String name, String newname) throws OperationNotAllowedException {
-        if (hasActivity(name)) {
-            getActivity(name).setName(newname);
+    public void setActivityName(String acName, String newname) throws OperationNotAllowedException {
+        if (hasActivity(acName)) {
+            getActivity(acName).setName(newname);
         } else {
             throw new OperationNotAllowedException("Project does not contain activity");
         }
@@ -77,15 +77,15 @@ public class Project {
         return assistants.containsKey(e);
     }
 
-    public boolean hasAssistant(Employee e, String name) {
+    public boolean hasAssistant(Employee e, String acName) {
         if (hasAssistant(e)) {
-            return getAssistantActivities(e).stream().anyMatch(a -> a.getName().equals(name));
+            return getAssistantActivities(e).stream().anyMatch(a -> a.getName().equals(acName));
         }
         return false;
     }
 
-    public boolean hasActivity(String name) {
-        return this.activities.stream().anyMatch(a -> a.getName().equals(name));
+    public boolean hasActivity(String acName) {
+        return this.activities.stream().anyMatch(a -> a.getName().equals(acName));
     }
 
     public void addEmployee(Employee e) {
@@ -94,7 +94,7 @@ public class Project {
         }
     }
 
-    public void addAssistant(Employee e, String name) {
+    public void addAssistant(Employee e, String acName) {
         List<Activity> temp = new ArrayList<>();
 
         if (hasEmployee(e)) {
@@ -102,13 +102,13 @@ public class Project {
         }
 
         if (hasAssistant(e)) {
-            if (assistants.get(e).stream().anyMatch(a -> a.getName().equals(name))) {
+            if (!assistants.get(e).stream().anyMatch(a -> a.getName().equals(acName))) {
                 temp = assistants.get(e);
-                temp.add(getActivity(name));
+                temp.add(getActivity(acName));
                 assistants.replace(e, temp);
             }
         } else {
-            temp.add(getActivity(name));
+            temp.add(getActivity(acName));
             assistants.put(e, temp);
         }
     }
