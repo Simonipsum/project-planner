@@ -6,8 +6,9 @@ Feature: Edit existing Project Activity
 
   Scenario: PM sets start/end date of Activity
     Given the user is PM of the project with ID 200001
-    When the user sets the start date as 20200101 and end date as 20200501 of "Activity1" in project 200001
-    Then the activity with name "Activity1" in project 200001 has start date 20200101 and end date 20200501
+    When the user sets the start date as 20200101 and end date as 20200110 of "Activity1" in project 200001
+    Then the activity with name "Activity1" in project 200001 has start date 20200101 and end date 20200110
+    And the user will have overlap of 10 activity days for the period 20200101 to 20200110
     And the error message "" is given
 
   Scenario: PM sets start/end date of Activity with end date before start date

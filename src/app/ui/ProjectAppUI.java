@@ -104,7 +104,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.println(e.getMessage());
             return;
         }
-        if(app.isUserAssistantOnProject(id)) {
+        if(app.getProject(id).hasAssistant(app.getUser())) {
             System.out.println("Insufficient Permissions: User is not assigned to that project.");
             return;
         }
@@ -115,9 +115,10 @@ public class ProjectAppUI implements PropertyChangeListener {
         String un = pickEmployee();
 
         try {
-            app.addAssistance(un, name, id);
+            app.addAssistance(app.getEmployee(un), name, id);
         } catch (OperationNotAllowedException e) {
             System.out.println(e.getMessage());
+            return;
         }
         System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, name, id);
     }
@@ -127,7 +128,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             throw new OperationNotAllowedException("No projects added to ProjectApp yet.");
         }
         int id = pickProject();
-        if (!app.isUserOnProject(id) && !app.isUserAssistantOnProject(id)) {
+        if (!app.isUserOnProject(id) && !app.getProject(id).hasAssistant(app.getUser())) {
             throw new OperationNotAllowedException("Insufficient Permissions: " +
                     "User is not assigned to that project " +
                     "or is an assistant on the project.");
@@ -143,7 +144,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         display.availability(dates);
     }
 
-    private void registerAbsence() {
+    private void registerAbsence() throws OperationNotAllowedException {
         int[] dates = in.getDates();
         app.registerAbsence(dates[0], dates[1]);
         System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n",
@@ -210,7 +211,7 @@ public class ProjectAppUI implements PropertyChangeListener {
                 case 4: editActivityWt(id);     break;
                 case 5: display.timeTable(id);  break;
                 case 6: editProjectName(id);    break;
-                case 7: editactivityName(id);    break;
+                case 7: editActivityName(id);    break;
         }
     }
 
@@ -220,7 +221,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.setProjectName(id, name);
     }
 
-    private void editactivityName(int id){
+    private void editActivityName(int id) throws OperationNotAllowedException {
         if (app.getProject(id).getActivities().size() == 0) {
             System.out.println("Project doesn't have any activities.");
             return;
@@ -229,11 +230,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         String name = in.pickActivity(id);
         System.out.print("Enter new name of activity: ");
         String newname = in.getString();
-        try {
-            app.setActivityName(name, id, newname);
-        } catch (OperationNotAllowedException e) {
-            e.printStackTrace();
-        }
+        app.setActivityName(name, id, newname);
     }
 
     private void addProjectEmployee(int id) throws OperationNotAllowedException {
@@ -303,7 +300,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         return pick;
     }
 
-    private void userLogin() {
+    private void userLogin() throws OperationNotAllowedException {
         String username;
         System.out.print("Please input username to login: ");
         username = in.getInitials(4);
@@ -312,12 +309,7 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.print("Input is not an employee, please enter new: ");
             username = in.getInitials(4);
         }
-
-        try {
-            app.login(app.getEmployee(username));
-        } catch (OperationNotAllowedException e) {
-            System.out.println(e.getMessage());
-        }
+        app.login(app.getEmployee(username));
         System.out.print("");
     }
 
@@ -327,6 +319,9 @@ public class ProjectAppUI implements PropertyChangeListener {
         switch (type) {
             case NotificationType.LOGOUT:
                 System.out.println("User has been logged out.\n");
+                break;
+            case NotificationType.LOGIN:
+                System.out.printf("Successfully logged in as %s.\n\n", app.getUser().getUsername());
                 break;
         }
     }

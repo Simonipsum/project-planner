@@ -51,7 +51,11 @@ public class ActivitySteps {
 
     @When("the user registers absence from date {int} to date {int}")
     public void userRegistersAbsence(int start, int end) {
-        app.registerAbsence(start, end);
+        try {
+            app.registerAbsence(start, end);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
     }
 
     @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
@@ -83,7 +87,7 @@ public class ActivitySteps {
     @When("the user ask for assistance on activity {string} in project {int} from employee {string}")
     public void userAksForAssistanceOnActivity(String name, int id, String username) {
         try {
-            app.addAssistance(username, name, id);
+            app.addAssistance(app.getEmployee(username), name, id);
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }

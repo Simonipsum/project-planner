@@ -90,14 +90,14 @@ public class menuHelper {
             System.out.println(sep);
             System.out.println("ID \t\t\t Name \t\t PM");
             for (Project p : app.getProjects()) {
-                if (app.isUserOnProject(p.getId()) || app.isUserAssistantOnProject(p.getId())) {
+                if (app.isUserOnProject(p.getId()) || p.hasAssistant(app.getUser())) {
                     System.out.printf(
                             "%d \t\t %s\t %s",
                             p.getId(),
                             p.getName() == null ? ""                    : p.getName(),
                             p.getPm().getUsername().equals("NONE") ? "" : p.getPm().getUsername()
                     );
-                    if (app.isUserAssistantOnProject(p.getId())) {
+                    if (p.hasAssistant(app.getUser())) {
                         System.out.print("\t\t(assistant)");
                     }
                     System.out.print("\n");
@@ -232,7 +232,7 @@ public class menuHelper {
         if (app.getEmployees().size() == 0) {
             output = "No employees in ProjectApp yet.";
         } else {
-            Map<Employee, Integer> sortedAvailability = app.getAvailability(dates).entrySet()
+            Map<Employee, Integer> sortedAvailability = app.getActivityOverlap(dates).entrySet()
                     .stream()
                     .sorted((Map.Entry.<Employee, Integer>comparingByValue()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));

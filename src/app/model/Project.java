@@ -102,7 +102,7 @@ public class Project {
         }
 
         if (hasAssistant(e)) {
-            if (!assistants.get(e).stream().anyMatch(a -> a.getName().equals(acName))) {
+            if (assistants.get(e).stream().noneMatch(a -> a.getName().equals(acName))) {
                 temp = assistants.get(e);
                 temp.add(getActivity(acName));
                 assistants.replace(e, temp);

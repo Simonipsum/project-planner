@@ -23,7 +23,11 @@ public class ProjectApp {
 
     /* Alter ProjectApp */
 
-    public void registerAbsence(int start, int end) {
+    public void registerAbsence(int start, int end) throws OperationNotAllowedException {
+        if (start > end) {
+            throw new OperationNotAllowedException("Start date must be before end date.");
+        }
+
         // Start is first day of absence, end is last day of absence
         Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
         Calendar last    = new GregorianCalendar(end/10000, (end%10000)/100, (end%100));
@@ -82,10 +86,12 @@ public class ProjectApp {
     }
 
     // Add assistance to Project
-    public void addAssistance(String username, String name, int id) throws OperationNotAllowedException {
+    public void addAssistance(Employee assistant, String name, int id) throws OperationNotAllowedException {
         Project p = getProject(id);
-        if (p.hasEmployee(user.getUsername())) {
-            p.addAssistant(getEmployee(username), name);
+        if (p.hasEmployee(user)) {
+            p.addAssistant(assistant, name);
+        } else {
+            throw new OperationNotAllowedException("User is not on that project.");
         }
     }
 
@@ -155,19 +161,14 @@ public class ProjectApp {
     public void login(Employee e) throws OperationNotAllowedException {
         if (this.user == null) {
             this.user = e;
-        } else {
-            throw new OperationNotAllowedException("Insufficient Permissions: A user is already logged in.");
         }
+        sup.firePropertyChange(NotificationType.LOGIN, null, null);
     }
 
     /* Has/is checks */
 
     public boolean isUserOnProject(int id) {
         return getProject(id).hasEmployee(user);
-    }
-
-    public boolean isUserAssistantOnProject(int id) {
-        return getProject(id).hasAssistant(user);
     }
 
     public boolean hasEmployee(String username) {
@@ -222,13 +223,12 @@ public class ProjectApp {
 
     /* MISC */
 
-    public Map<Employee, Integer> getAvailability(int[] dates) {
+    public Map<Employee, Integer> getActivityOverlap(int[] dates) {
         int overlap, start, end;
-        Map<Employee, Integer> availability = new HashMap<>();
+        Map<Employee, Integer> acOverlap = new HashMap<>();
 
         for (Employee e : employees) {
             overlap = 0;
-
             for (Project p : projects) {
                 if (p.hasEmployee(e)) {
                     for (Activity a : p.getActivities()) {
@@ -241,9 +241,9 @@ public class ProjectApp {
                     }
                 }
             }
-            availability.put(e, overlap);
+            acOverlap.put(e, overlap);
         }
-        return availability;
+        return acOverlap;
     }
 
     public int calculateID(int year) {
@@ -255,8 +255,7 @@ public class ProjectApp {
     }
 
     public void addObserver(PropertyChangeListener listener) {
-        sup.addPropertyChangeListener(listener);
-    }
+        sup.addPropertyChangeListener(listener); }
 
 //    public void derpHelper() throws OperationNotAllowedException {
 //        login(ceo);
