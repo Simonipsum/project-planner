@@ -19,7 +19,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-        //app.derpHelper(); // Initialize some data to ease testing
+//        app.derpHelper(); // Initialize some data to ease testing
 
         // Run program
         while(true) {
@@ -114,7 +114,11 @@ public class ProjectAppUI implements PropertyChangeListener {
 
         String un = pickEmployee();
 
-        app.addAssistance(un, name, id);
+        try {
+            app.addAssistance(un, name, id);
+        } catch (OperationNotAllowedException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, name, id);
     }
 

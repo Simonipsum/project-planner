@@ -82,7 +82,11 @@ public class ActivitySteps {
 
     @When("the user ask for assistance on activity {string} in project {int} from employee {string}")
     public void userAksForAssistanceOnActivity(String name, int id, String username) {
-        app.addAssistance(username, name, id);
+        try {
+            app.addAssistance(username, name, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
     }
 
     @When("the user adds an activity with name {string} to the project with ID {int}")
@@ -142,17 +146,17 @@ public class ActivitySteps {
 
     @Then("{string} on project {int} on date {int} has {float} hours from user")
     public void activityHasWorktimeFromUser(String name, int id, int date, float time) {
-        assertTrue(app.getProject(id).getActivity(name).getWorkTime().get(app.getUser()).get(date) == time);
+        assertEquals(app.getProject(id).getActivity(name).getWorkTime().get(app.getUser()).get(date), time, 0.0);
     }
 
     @Then("{string} on project {int} on date {int} has {float} hours from {string}")
     public void activityHasWorktimeFromEmployee(String name, int id, int date, float time, String un) {
-        assertTrue(app.getProject(id).getActivity(name).getWorkTime().get(app.getEmployee(un)).get(date) == time);
+        assertEquals(app.getProject(id).getActivity(name).getWorkTime().get(app.getEmployee(un)).get(date), time, 0.0);
     }
 
     @Then("{string} of project {int} has expected worktime {float}")
     public void activityHasExpectedWorktime(String name, int id, float time) {
-        assertTrue(app.getProject(id).getActivity(name).getExpectedWorkTime() == time);
+        assertEquals(app.getProject(id).getActivity(name).getExpectedWorkTime(), time, 0.0);
     }
 
     @Then("the activity with name {string} in project {int} has an assistant {string}")

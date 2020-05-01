@@ -19,6 +19,7 @@ public class Activity {
     public float getRemainingWT() {
         return expectedWorkTime - getWorkedTime();
     }
+
     public String getName() {
         return name;
     }

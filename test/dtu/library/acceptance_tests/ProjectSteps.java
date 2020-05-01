@@ -31,7 +31,15 @@ public class ProjectSteps {
 
     @Given("{string} is on project {int}")
     public void EmployeeIsOnProject(String username, int id) {
-        app.getProject(id).hasEmployee(username);
+        Employee temp = app.getUser();
+        setUser(app.getProject(id).getPm());
+        try {
+            app.addEmployee(username, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+        setUser(temp);
+        assertTrue(app.getProject(id).hasEmployee(username));
     }
 
     @Given("the ProjectApp does not contain any projects")
@@ -69,7 +77,7 @@ public class ProjectSteps {
     }
 
     @Given("the user is not PM of the project with ID {int}")
-    public void setNotUserPmOfProject(int id) {
+    public void userIsNotPmOfProject(int id) {
         assertFalse(app.isUserPm(id));
     }
 
@@ -138,12 +146,12 @@ public class ProjectSteps {
 
     @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")
     public void newProjectCreated(String name, int id) {
-        assertTrue(app.getProject(id).getName().equals(name));
+        assertEquals(app.getProject(id).getName(), name);
     }
 
     @Then("a project with no name and project ID {int} exists in the ProjectApp.")
     public void newProjectCreated(int id) {
-        assertTrue(app.getProject(id).getName() == null);
+        assertNull(app.getProject(id).getName());
     }
 
     @Then("the employee list of project {int} contains the employee {string}")
@@ -155,4 +163,15 @@ public class ProjectSteps {
     public void projectDoesNotContainEmployee(int id, String username) {
         assertFalse(app.getProject(id).hasEmployee(username));
     }
+
+    @Then("project {int} has total worktime of {float} hours")
+    public void projectHasTotalWorktime(int id, float time) {
+        assertEquals(app.getProject(id).getWorkedTime(), time, 0.0);
+    }
+
+    @Then("project {int} has expected remaining worktime of {float}")
+    public void projectHasExpectedRemainingWorktime(int id, float time) {
+        assertEquals(app.getProject(id).getRemainingWT(), time, 0.0);
+    }
+
 }

@@ -10,6 +10,7 @@ Feature: Assistant registers worktime
     Given the user ask for assistance on activity "Activity1" in project 200001 from employee "jan"
     When the employee "jan" sets worktime of 7.5 hours to "Activity1" on date 20200420 on project 200001
     Then "Activity1" on project 200001 on date 20200420 has 7.5 hours from "jan"
+    And project 200001 has total worktime of 7.5 hours
     And the error message "" is given
 
   Scenario: Unsuccessful

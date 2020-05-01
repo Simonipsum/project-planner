@@ -94,11 +94,11 @@ public class Project {
         }
     }
 
-    public void addAssistant(Employee e, String acName) {
+    public void addAssistant(Employee e, String acName) throws OperationNotAllowedException {
         List<Activity> temp = new ArrayList<>();
 
         if (hasEmployee(e)) {
-            return;
+            throw new OperationNotAllowedException("Error: Project already has Employee.");
         }
 
         if (hasAssistant(e)) {

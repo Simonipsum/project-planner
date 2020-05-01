@@ -32,6 +32,7 @@ Feature: Edit existing Project Activity
     Given the user is PM of the project with ID 200001
     When the user sets the expected worktime of "Activity1" from project 200001 to 10
     Then "Activity1" of project 200001 has expected worktime 10
+    And project 200001 has expected remaining worktime of 10
     And the error message "" is given
 
   Scenario: Employee sets expected worktime of Activity
