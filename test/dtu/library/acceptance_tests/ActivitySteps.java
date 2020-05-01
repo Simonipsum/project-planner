@@ -32,21 +32,6 @@ public class ActivitySteps {
         }
     }
 
-    @When("the user adds an activity with name {string} to the project with ID {int}")
-    public void userAddsActivityToProject(String name, int id) {
-        try {
-            app.addNewActivity(name, id);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
-    }
-
-    @Then("project {int} will contain activity {string}")
-    public void projectContainsActivity(int id, String name) {
-        assertTrue(app.getProject(id).hasActivity(name));
-        assertTrue(app.getProject(id).getActivities().stream().anyMatch(a -> a.getName().equals(name)));
-    }
-
     @Given("project {int} contains activity {string}")
     public void projectAlreadyContainsActivity(int id, String name) {
         Employee temp = app.getUser();
@@ -64,49 +49,9 @@ public class ActivitySteps {
         }
     }
 
-    @Then("the activity with name {string} in project {int} has start date {int} and end date {int}")
-    public void projectActivityHasDates(String name, int id, int start, int end) {
-        Activity a = app.getProject(id).getActivity(name);
-        assertEquals(a.getStart(), start);
-        assertEquals(a.getEnd(), end);
-    }
-
-    @When("the user sets the name of {string} from project {int} to {string}")
-    public void userSetsNameOfProjectActivity(String name, int id, String newname) {
-        try {
-            app.setActivityName(name, id, newname);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
-    }
-
-    @Then("the project with ID {int} does not contain an activity with name {string}")
-    public void projectDoesNotContainActivity(int id, String name) {
-        assertFalse(app.getProject(id).hasActivity(name));
-    }
-
     @When("the user registers absence from date {int} to date {int}")
     public void userRegistersAbsence(int start, int end) {
         app.registerAbsence(start, end);
-    }
-
-    @Then("the user is absent for date {int}")
-    public void userIsAbsent(int date) {
-        assertTrue(app.getAbsence().getWorkTime().get(app.getUser()).get(date) == 8);
-    }
-
-    @Then("the user is absent for date {int} till date {int}")
-    public void userIsAbsentForMultipleDates(int start, int end) {
-
-        Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
-        Calendar last    = new GregorianCalendar(end/10000, (end%10000)/100, (end%100));
-        int date;
-
-        while(!current.after(last)) {
-            date = current.get(Calendar.YEAR) * 10000 + current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
-            current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
-            userIsAbsent(date);
-        }
     }
 
     @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
@@ -138,6 +83,61 @@ public class ActivitySteps {
     @When("the user ask for assistance on activity {string} in project {int} from employee {string}")
     public void userAksForAssistanceOnActivity(String name, int id, String username) {
         app.addAssistance(username, name, id);
+    }
+
+    @When("the user adds an activity with name {string} to the project with ID {int}")
+    public void userAddsActivityToProject(String name, int id) {
+        try {
+            app.addNewActivity(name, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user sets the name of {string} from project {int} to {string}")
+    public void userSetsNameOfProjectActivity(String name, int id, String newname) {
+        try {
+            app.setActivityName(name, id, newname);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @Then("the activity with name {string} in project {int} has start date {int} and end date {int}")
+    public void projectActivityHasDates(String name, int id, int start, int end) {
+        Activity a = app.getProject(id).getActivity(name);
+        assertEquals(a.getStart(), start);
+        assertEquals(a.getEnd(), end);
+    }
+
+    @Then("the project with ID {int} does not contain an activity with name {string}")
+    public void projectDoesNotContainActivity(int id, String name) {
+        assertFalse(app.getProject(id).hasActivity(name));
+    }
+
+    @Then("the user is absent for date {int}")
+    public void userIsAbsent(int date) {
+        assertTrue(app.getAbsence().getWorkTime().get(app.getUser()).get(date) == 8);
+    }
+
+    @Then("the user is absent for date {int} till date {int}")
+    public void userIsAbsentForMultipleDates(int start, int end) {
+
+        Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
+        Calendar last    = new GregorianCalendar(end/10000, (end%10000)/100, (end%100));
+        int date;
+
+        while(!current.after(last)) {
+            date = current.get(Calendar.YEAR) * 10000 + current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
+            current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
+            userIsAbsent(date);
+        }
+    }
+
+    @Then("project {int} will contain activity {string}")
+    public void projectContainsActivity(int id, String name) {
+        assertTrue(app.getProject(id).hasActivity(name));
+        assertTrue(app.getProject(id).getActivities().stream().anyMatch(a -> a.getName().equals(name)));
     }
 
     @Then("{string} on project {int} on date {int} has {float} hours from user")

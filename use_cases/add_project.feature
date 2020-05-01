@@ -33,3 +33,17 @@ Feature: Add Project
     And the ProjectApp does not contain an Employee "jan"
     When the user sets PM of project 200001 to "jan"
     Then the error message "Username is not an Employee." is given
+
+  Scenario: Employee unsuccessfully sets PM of existing Project
+    Given the ProjectApp contains project 200001
+    And the user is not CEO
+    And the ProjectApp contains a new Employee "jan"
+    When the user sets PM of project 200001 to "jan"
+    Then the error message "Insufficient Permissions. User is not CEO." is given
+
+  Scenario: CEO adds new Project with no name to ProjectApp
+    Given the user is CEO
+    And the ProjectApp does not contain any projects
+    When the user adds a project named "N" in the year 2020
+    Then a project with no name and project ID 200001 exists in the ProjectApp.
+    And the error message "" is given

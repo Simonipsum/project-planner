@@ -29,6 +29,10 @@ public class ProjectSteps {
         }
     }
 
+    @Given("{string} is on project {int}")
+    public void EmployeeIsOnProject(String username, int id) {
+        app.getProject(id).hasEmployee(username);
+    }
 
     @Given("the ProjectApp does not contain any projects")
     public void hasNoProject() {
@@ -55,6 +59,51 @@ public class ProjectSteps {
         app.getProject(id).setName(name);
     }
 
+    @Given("the user is PM of the project with ID {int}")
+    public void setUserPmOfProject(int id) {
+        Employee temp = app.getUser();
+        setUser(app.getCEO());
+        setPmOfProject(id, temp.getUsername());
+        setUser(temp);
+        assertTrue(app.isUserPm(id));
+    }
+
+    @Given("the user is not PM of the project with ID {int}")
+    public void setNotUserPmOfProject(int id) {
+        assertFalse(app.isUserPm(id));
+    }
+
+    @Given("the user is on project {int}")
+    public void userIsOnProject(int id) {
+        Employee temp = app.getUser();
+        setUser(app.getProject(id).getPm());
+        try {
+            app.addEmployee(temp.getUsername(), id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+        setUser(temp);
+        assertTrue(app.isUserOnProject(id));
+    }
+
+    @When("the user adds {string} to the project with ID {int}")
+    public void pmAddsEmployeeToProject(String username, int id) {
+        try {
+            app.addEmployee(username, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
+    @When("the user removes the employee {string} from project {int}")
+    public void userRemovesEmployeeFromProject(String name, int id) {
+        try {
+            app.removeEmployee(name, id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
     @When("the user adds a project named {string} in the year {int}")
     public void userCreatesProject(String name, int year) {
         try {
@@ -73,11 +122,6 @@ public class ProjectSteps {
         }
     }
 
-    @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")
-    public void newProjectCreated(String name, int id) {
-        assertTrue(app.getProject(id).getName().equals(name));
-    }
-
     @When("the user sets PM of project {int} to {string}")
     public void setPmOfProject(int id, String username) {
         try {
@@ -92,49 +136,14 @@ public class ProjectSteps {
         assertEquals(app.getProject(id).getPm(), app.getEmployee(username));
     }
 
-    @Given("the user is PM of the project with ID {int}")
-    public void setUserPmOfProject(int id) {
-        Employee temp = app.getUser();
-        setUser(app.getCEO());
-        setPmOfProject(id, temp.getUsername());
-        setUser(temp);
-        assertTrue(app.isUserPm(id));
+    @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")
+    public void newProjectCreated(String name, int id) {
+        assertTrue(app.getProject(id).getName().equals(name));
     }
 
-    @Given("the user is not PM of the project with ID {int}")
-    public void setNotUserPmOfProject(int id) {
-        assertFalse(app.isUserPm(id));
-    }
-
-    @When("the user adds {string} to the project with ID {int}")
-    public void pmAddsEmployeeToProject(String username, int id) {
-        try {
-            app.addEmployee(username, id);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
-    }
-
-    @Given("the user is on project {int}")
-    public void userIsOnProject(int id) {
-        Employee temp = app.getUser();
-        setUser(app.getProject(id).getPm());
-        try {
-            app.addEmployee(temp.getUsername(), id);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
-        setUser(temp);
-        assertTrue(app.isUserOnProject(id));
-    }
-
-    @When("the user removes the employee {string} from project {int}")
-    public void userRemovesEmployeeFromProject(String name, int id) {
-        try {
-            app.removeEmployee(name, id);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
+    @Then("a project with no name and project ID {int} exists in the ProjectApp.")
+    public void newProjectCreated(int id) {
+        assertTrue(app.getProject(id).getName() == null);
     }
 
     @Then("the employee list of project {int} contains the employee {string}")

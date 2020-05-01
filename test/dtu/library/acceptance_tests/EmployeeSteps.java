@@ -51,6 +51,15 @@ public class EmployeeSteps {
         assertFalse(app.currentUserIsCEO());
     }
 
+    @Given("the ProjectApp contains a new Employee {string}")
+    public void hasEmployee(String username) {
+        Employee temp = app.getUser();
+        setUser(app.getCEO());
+        addNewEmployee(username);
+        setUser(temp);
+        hasNewEmployee(username);
+    }
+
     @When("the ProjectApp does not contain an Employee {string}")
     public void hasNoEmployee(String username) {
         assertFalse(app.hasEmployee(username));
@@ -64,14 +73,13 @@ public class EmployeeSteps {
             errorMessage.setErrorMessage(e.getMessage());
         }
     }
-
-    @Given("the ProjectApp contains a new Employee {string}")
-    public void hasEmployee(String username) {
-        Employee temp = app.getUser();
-        setUser(app.getCEO());
-        addNewEmployee(username);
-        setUser(temp);
-        hasNewEmployee(username);
+    @When("the user removes the Employee with username {string}")
+    public void userRemovesEmployeeFromApp(String username) {
+        try {
+            app.removeEmployee(username);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
     }
 
     @Then("the ProjectApp now contains an Employee {string}")
@@ -83,14 +91,5 @@ public class EmployeeSteps {
     @Then("the error message {string} is given")
     public void theErrorMessageIsGiven(String errorMessage) {
         assertEquals(errorMessage, this.errorMessage.getErrorMessage());
-    }
-
-    @When("the user removes the Employee with username {string}")
-    public void userRemovesEmployeeFromApp(String username) {
-        try {
-            app.removeEmployee(username);
-        } catch (OperationNotAllowedException e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }
     }
 }
