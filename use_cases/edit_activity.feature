@@ -23,6 +23,13 @@ Feature: Edit existing Project Activity
     And the project with ID 200001 does not contain an activity with name "Activity1"
     And the error message "" is given
 
+  Scenario: PM edits name of non-existing Activity
+    Given the user is PM of the project with ID 200001
+    When the user sets the name of "Activity2" from project 200001 to "Activity1"
+    Then the error message "Project does not contain activity" is given
+    And project 200001 will contain activity "Activity1"
+    And the project with ID 200001 does not contain an activity with name "Activity2"
+
   Scenario: Employee edits name of Activity
     Given the user is not PM of the project with ID 200001
     When the user sets the name of "Activity1" from project 200001 to "Activity2"
