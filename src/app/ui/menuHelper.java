@@ -50,7 +50,6 @@ public class menuHelper {
             "Edit name of activity",
     };
 
-
     private void listMenu(String[] menu) {
         String list = 0 + ". " + menu[0];
         for (int i = 1; i < menu.length; i++) {
@@ -211,7 +210,6 @@ public class menuHelper {
         }
         System.out.println(out);
     }
-
 
     public void summary() {
         if (!app.getUser().equals(app.getCEO())){
