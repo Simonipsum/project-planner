@@ -9,7 +9,6 @@ import java.util.*;
 
 public class ProjectApp {
     private PropertyChangeSupport sup = new PropertyChangeSupport(this);
-
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
     private Employee ceo;
@@ -36,7 +35,7 @@ public class ProjectApp {
         while(!current.after(last)) {
             date = current.get(Calendar.YEAR) * 10000 +
                     current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
-            current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
+            current.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
             absence.setTime(user, 8, date);
         }
     }
