@@ -188,7 +188,7 @@ public class menuHelper {
 
     public void timeTable(int id) {
         Project p = app.getProject(id);
-        if(!p.isPm(app.getUser().getUsername())) {
+        if(!p.isPm(app.getUser())) {
             System.out.println("Insufficient Permissions. User is not PM.");
             return;
         }

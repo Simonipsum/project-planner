@@ -34,7 +34,8 @@ public class ProjectApp {
         int date;
 
         while(!current.after(last)) {
-            date = current.get(Calendar.YEAR) * 10000 + current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
+            date = current.get(Calendar.YEAR) * 10000 +
+                    current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
             current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
             absence.setTime(user, 8, date);
         }
@@ -107,7 +108,7 @@ public class ProjectApp {
 
     public Project accessProject(int id) throws OperationNotAllowedException {
         Project project = getProject(id);
-        if (!project.isPm(user.getUsername())) {
+        if (!project.isPm(user)) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
         }
         return project;
@@ -144,10 +145,11 @@ public class ProjectApp {
     public void setWorktime(int date, float time, int id, String name) throws OperationNotAllowedException {
         Project p = getProject(id);
 
-        if(p.hasEmployee(user) || p.hasAssistant(user)) {
+        if(p.hasEmployee(user) || p.hasAssistant(user, name)) {
             p.getActivity(name).setTime(user, time, date);
         } else {
-            throw new OperationNotAllowedException("Insufficient Permissions: User is not assigned to that project or is a helper on that activity");
+            throw new OperationNotAllowedException("Insufficient Permissions: " +
+                    "User is not assigned to that project or is an assistant on that activity");
         }
     }
 
@@ -180,7 +182,7 @@ public class ProjectApp {
     }
 
     public boolean isUserPm(int id) {
-        return getProject(id).isPm(user.getUsername());
+        return getProject(id).isPm(user);
     }
 
     public boolean currentUserIsCEO() {

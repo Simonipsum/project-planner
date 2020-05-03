@@ -145,7 +145,7 @@ public class Project {
     }
 
     public Activity getActivity(String n) {
-        return activities.stream().filter(a -> a.getName().equals(n)).findFirst().get();
+        return this.activities.stream().filter(a -> a.getName().equals(n)).findFirst().get();
     }
 
     public Employee getPm() {
@@ -156,7 +156,7 @@ public class Project {
         return this.name;
     }
 
-    public boolean isPm(String username) {
-        return pm.getUsername().equals(username);
+    public boolean isPm(Employee e) {
+        return this.pm.equals(e);
     }
 }

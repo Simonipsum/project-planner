@@ -15,4 +15,4 @@ Feature: Assistant registers worktime
 
   Scenario: Unsuccessful
     When the employee "jan" sets worktime of 7.5 hours to "Activity1" on date 20200420 on project 200001
-    Then the error message "Insufficient Permissions: User is not assigned to that project or is a helper on that activity" is given
+    Then the error message "Insufficient Permissions: User is not assigned to that project or is an assistant on that activity" is given

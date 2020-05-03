@@ -21,7 +21,7 @@ public class Activity {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getEnd() {
@@ -80,6 +80,7 @@ public class Activity {
     public void setName(String name) {
         this.name = name;
     }
+
     public void setEnd(int end) {
         this.end = end;
     }
