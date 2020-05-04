@@ -24,3 +24,10 @@ Feature: Register Worktime
     Then "Activity1" on project 200001 on date 20200420 has 7.5 hours from "emil"
     And "Activity1" on project 200001 on date 20200420 has 7.5 hours from "jens"
     And project 200001 has total worktime of 15 hours
+
+  Scenario: Employee enters invalid date
+    Given the ProjectApp contains a new Employee "jens"
+    And "jens" is on project 200001
+    When the user sets worktime of 7.5 hours to "Activity1" on date -2 on project 200001
+    Then the error message "Error: Date not valid!" is given
+    And project 200001 has total worktime of 0 hours

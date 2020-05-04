@@ -21,7 +21,9 @@ public class ProjectApp {
     /* Alter ProjectApp */
 
     public void registerAbsence(int start, int end) throws OperationNotAllowedException {
-        if (start > end) {
+        if (!isDateValid(start) || !isDateValid(end)) {
+            throw new OperationNotAllowedException("Error: Date not valid!");
+        } else if (start > end) {
             throw new OperationNotAllowedException("Start date must be before end date.");
         }
 
@@ -143,7 +145,7 @@ public class ProjectApp {
         Project p = getProject(id);
 
         if (!isDateValid(date)) {
-            throw new OperationNotAllowedException("Date not valid!");
+            throw new OperationNotAllowedException("Error: Date not valid!");
         }
 
         if(p.hasEmployee(user) || p.hasAssistant(user, name)) {
@@ -260,7 +262,7 @@ public class ProjectApp {
     private boolean isDateValid(int d) {
         int month = (d%10000)/100;
         int date = d%100;
-        return month < 12 && ((month % 2 + date) > 31) && !(month == 2 && date > 28);
+        return (month % 2 + 30) >= date && d >= 0 && month <= 12 && !(month == 2 && date > 28);
     }
 
     public void addObserver(PropertyChangeListener listener) {
