@@ -1,10 +1,8 @@
 package app.model;
 
 import app.OperationNotAllowedException;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 import java.util.*;
 
 public class ProjectApp {
@@ -144,6 +142,10 @@ public class ProjectApp {
     public void setWorktime(int date, float time, int id, String name) throws OperationNotAllowedException {
         Project p = getProject(id);
 
+        if (!isDateValid(date)) {
+            throw new OperationNotAllowedException("Date not valid!");
+        }
+
         if(p.hasEmployee(user) || p.hasAssistant(user, name)) {
             p.getActivity(name).setTime(user, time, date);
         } else {
@@ -253,6 +255,12 @@ public class ProjectApp {
             count += p.getStartYear() == year ? 1 : 0;
         }
         return (year % 100) * 10000 + count;
+    }
+
+    private boolean isDateValid(int d) {
+        int month = (d%10000)/100;
+        int date = d%100;
+        return month < 12 && ((month % 2 + date) > 31) && !(month == 2 && date > 28);
     }
 
     public void addObserver(PropertyChangeListener listener) {

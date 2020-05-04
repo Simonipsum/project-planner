@@ -49,8 +49,8 @@ public class inputHelper {
 
         // Get day of month
         if (month == 2) {
-            System.out.print("Enter day of month (1-29): ");
-            day = getInt(1, 29);
+            System.out.print("Enter day of month (1-28): ");
+            day = getInt(1, 28);
         } else if (month % 2 == 0){
             System.out.print("Enter day of month (1-30): ");
             day = getInt(1, 30);
