@@ -19,7 +19,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-        app.derpHelper(); // Initialize some data to ease testing
+    //    app.derpHelper(); // Initialize some data to ease testing
 
         // Run program
         while(true) {
