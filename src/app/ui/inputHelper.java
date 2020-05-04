@@ -41,7 +41,7 @@ public class inputHelper {
     int getDate() {
         int year, month, day;
         System.out.print("Enter year: ");
-        year = getInt();
+        year = getPosInt();
 
         // Get month
         System.out.print("Enter month (1-12): ");
