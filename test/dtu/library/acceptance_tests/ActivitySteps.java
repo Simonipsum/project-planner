@@ -137,7 +137,7 @@ public class ActivitySteps {
 
         while(!current.after(last)) {
             date = current.get(Calendar.YEAR) * 10000 + current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
-            current.set(Calendar.DATE,current.get(Calendar.DATE) + 1);
+            current.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
             userIsAbsent(date);
         }
     }

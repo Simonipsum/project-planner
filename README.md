@@ -11,7 +11,7 @@ This is a project planner made in 02161 Software Engineering 1 @ DTU 2020 for th
 # Pre requirements
 Environment, tested on Window.
 
-* Java 8 update 202, 64-bit JDK or later updates.
+* Java 11.0.5, 64-bit JDK or later updates.
 
 ## Week 6 + 7: Report 1
 - Requirements: Glossary, use case diagrams, detailed use cases.
