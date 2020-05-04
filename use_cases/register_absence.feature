@@ -16,5 +16,6 @@ Feature: Register Absence
     When the user registers absence from date 20200131 to date 20200101
     Then the error message "Start date must be before end date." is given
 
-  #Scenario: Employee unsuccessfully registers absence
-  # can't register absence if already assigned time to other activities that day
+  Scenario: Input invalid date
+    When the user registers absence from date 0 to date 0
+    Then the error message "Error: Date not valid!" is given

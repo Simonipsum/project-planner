@@ -262,7 +262,7 @@ public class ProjectApp {
     private boolean isDateValid(int d) {
         int month = (d%10000)/100;
         int date = d%100;
-        return (month % 2 + 30) >= date && d >= 0 && month <= 12 && !(month == 2 && date > 28);
+        return (month % 2 + 30) >= date && d > 0 && month <= 12 && !(month == 2 && date > 28);
     }
 
     public void addObserver(PropertyChangeListener listener) {
