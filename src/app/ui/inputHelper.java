@@ -155,4 +155,15 @@ public class inputHelper {
         System.out.println("");
         return name;
     }
+
+    float getWorkHours() {
+        float hours = getPosFloat();
+        while (hours > 24) {
+            System.out.printf("Error: Can't work %.1f hours on a single day.\n" +
+                    "Please enter a number below 24: ", hours);
+            hours = getPosFloat();
+        }
+        return hours;
+    }
+
 }

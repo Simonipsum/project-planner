@@ -19,7 +19,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-//        app.derpHelper(); // Initialize some data to ease testing
+        app.derpHelper(); // Initialize some data to ease testing
 
         // Run program
         while(true) {
@@ -90,7 +90,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         int date = in.getDate();
 
         System.out.print("Enter worktime of activity: ");
-        float wt = in.getPosFloat();
+        float wt = in.getWorkHours();
 
         app.setWorktime(date, wt, id, name);
     }
