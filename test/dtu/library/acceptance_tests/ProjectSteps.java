@@ -177,6 +177,6 @@ public class ProjectSteps {
     @Then("the user will have overlap of {int} activity days for the period {int} to {int}")
     public void userWillHaveOverlap(int overlap, int start, int end) {
         int[] dates = {start, end};
-        assertEquals(10, (int) app.getActivityOverlap(dates).get(app.getUser()));
+        assertEquals(overlap, (int) app.getActivityOverlap(dates).get(app.getUser()));
     }
 }
