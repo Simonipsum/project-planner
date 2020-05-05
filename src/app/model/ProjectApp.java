@@ -21,10 +21,7 @@ public class ProjectApp {
     }
 
     public static ProjectApp getInstance() {
-        if (instance == null) {
-            instance = new ProjectApp();
-        }
-        return instance;
+        return instance == null ? new ProjectApp() : instance;
     }
 
     /* Alter ProjectApp */
