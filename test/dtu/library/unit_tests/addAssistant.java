@@ -37,6 +37,7 @@ public class addAssistant {
             errorMessage.setErrorMessage(e.getMessage());
         }
         assertEquals("Error: Project already has Employee.", errorMessage.getErrorMessage());
+        assertFalse(app.getProject(project_id).hasAssistant(app.getEmployee(employee_name), activity_name1));
     }
 
     @Test

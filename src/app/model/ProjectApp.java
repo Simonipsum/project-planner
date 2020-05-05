@@ -72,6 +72,8 @@ public class ProjectApp {
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()){
             throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
+        } else if (year < 0) {
+            throw new OperationNotAllowedException("Error: Year is below 0.");
         }
         int id = calculateID(year);
         if (name.equals("N")) {
@@ -256,7 +258,7 @@ public class ProjectApp {
     private boolean isDateValid(int d) {
         int month = (d%10000)/100;
         int date = d%100;
-        return (month % 2 + 30) >= date && d > 0 && month <= 12 && !(month == 2 && date > 28);
+        return (month % 2 + 30) >= date&& date > 0 && month > 0 && month <= 12 && !(month == 2 && date > 28);
     }
 
     public void addObserver(PropertyChangeListener listener) {

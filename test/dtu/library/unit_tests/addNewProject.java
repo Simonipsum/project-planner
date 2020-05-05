@@ -5,9 +5,6 @@ import app.model.Employee;
 import app.model.ProjectApp;
 import dtu.library.acceptance_tests.ErrorMessageHolder;
 import org.junit.Test;
-
-import java.util.Collections;
-
 import static org.junit.Assert.*;
 
 public class addNewProject {
@@ -17,8 +14,6 @@ public class addNewProject {
     // Use this for all tests
     String ceo_name = "huba";
     String employee_name = "derp";
-    String activity_name1 = "ac1";
-    String activity_name2 = "ac2";
     String project_name = "someName";
     int project_id = 200001;
 
