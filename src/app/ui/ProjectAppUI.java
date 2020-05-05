@@ -149,8 +149,16 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void registerAbsence() throws OperationNotAllowedException {
         int[] dates = in.getDates();
         app.registerAbsence(dates[0], dates[1]);
-        System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n",
-                app.getUser().getUsername(), dates[0], dates[1]);
+        System.out.println(dates[0]);
+        if (dates[0] / 1000000 > 0) {
+            System.out.printf("Successfully set absence for %s in period: %d to %d\n\n",
+                    app.getUser().getUsername(), dates[0], dates[1]);
+        } else {
+            System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n",
+                    app.getUser().getUsername(), dates[0], dates[1]);
+        }
+
+
     }
 
     private void addProject() throws OperationNotAllowedException {
@@ -169,7 +177,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     // Add employee to Project App
     private void addEmployee() throws OperationNotAllowedException {
         System.out.print("Initials of new Employee: ");
-        String username = in.getInitials(4);
+        String username = in.getInitials();
         app.addNewEmployee(new Employee(username));
         System.out.print("Employee " + username + " was successfully added to the ProjectApp.\n\n");
     }
@@ -280,11 +288,11 @@ public class ProjectAppUI implements PropertyChangeListener {
     private String pickEmployee() {
         display.employeeList();
         System.out.print("Please input username of employee: ");
-        String username = in.getInitials(4);
+        String username = in.getInitials();
 
         while (!app.hasEmployee(username)) {
             System.out.print("Input is not an employee, please enter new: ");
-            username = in.getInitials(4);
+            username = in.getInitials();
         }
         System.out.println("");
         return username;
@@ -293,10 +301,10 @@ public class ProjectAppUI implements PropertyChangeListener {
     private int pickProject() {
         display.projectList();
         System.out.print("Enter ID of project: ");
-        int pick = in.getInt();
+        int pick = in.getPosInt();
         while(!app.hasProject(pick)) {
             System.out.print("ID is not associated with any project. Please enter new: ");
-            pick = in.getInt();
+            pick = in.getPosInt();
         }
         System.out.println("");
         return pick;
@@ -305,11 +313,11 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void userLogin() throws OperationNotAllowedException {
         String username;
         System.out.print("Please input username to login: ");
-        username = in.getInitials(4);
+        username = in.getInitials();
 
         while (!app.hasEmployee(username)) {
             System.out.print("Input is not an employee, please enter new: ");
-            username = in.getInitials(4);
+            username = in.getInitials();
         }
         app.login(app.getEmployee(username));
         System.out.print("");

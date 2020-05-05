@@ -48,8 +48,8 @@ public class inputHelper {
 
     int getDate() {
         int year, month, day;
-        System.out.print("Enter year: ");
-        year = getPosInt();
+        System.out.print("Enter year (2000-2099): ");
+        year = getInt(2000, 2099);
 
         // Get month
         System.out.print("Enter month (1-12): ");
@@ -73,7 +73,7 @@ public class inputHelper {
     int getInt(int min, int max) {
         int input = getInt();
         while (input > max || input < min) {
-            System.out.printf("Error: Input %d in range %d-%d.\n" +
+            System.out.printf("Error: Input %d not in range %d-%d.\n" +
                     "Please input integer in range: ", input, min, max);
             input = getInt();
         }
@@ -90,7 +90,7 @@ public class inputHelper {
         return input;
     }
 
-    private int getPosInt() {
+    int getPosInt() {
         int input = getInt();
         while (input < 0) {
             System.out.print("Error: Input integer has to be positive.\n" +
@@ -110,7 +110,7 @@ public class inputHelper {
     }
 
     int getInt() {
-        while (!consoleIn.hasNextInt()) {
+        while(!consoleIn.hasNextInt()) {
             consoleIn.next();
             System.out.print("Error: Input must be an integer.\n" +
                     "Please enter an integer: ");
@@ -129,17 +129,17 @@ public class inputHelper {
         return ch.equals("y");
     }
 
-    String getInitials(int maxLength) {
-        String input = "";
+    String getInitials() {
+        String input;
 
         while (true) {
             input = consoleIn.next().toLowerCase();
 
-            if (input.length() <= maxLength) {
+            if (input.length() <= 4) {
                 return input;
             }
             System.out.printf("Error: String '%s' too long.\n" +
-                    "Please enter a string of maximum %d length:", input, maxLength);
+                    "Please enter a string of maximum %d length:", input, 4);
         }
     }
 
