@@ -5,11 +5,19 @@ import app.model.ProjectApp;
 import java.util.Scanner;
 
 public class inputHelper {
+    private static inputHelper instance;
     private Scanner consoleIn = new Scanner(System.in);
     private ProjectApp app;
 
-    public inputHelper(ProjectApp app) {
-        this.app = app;
+    private inputHelper() {
+        this.app = ProjectApp.getInstance();
+    }
+
+    public static inputHelper getInstance() {
+        if (instance == null) {
+            instance = new inputHelper();
+        }
+        return instance;
     }
 
     int pickItem(int maxPick) {

@@ -42,13 +42,13 @@ public class EmployeeSteps {
     @Given("the user is CEO")
     public void userIsCEO() {
         app.setCEO(user);
-        assertTrue(app.currentUserIsCEO());
+        assertTrue(app.isCurrentUserCeo());
     }
 
     @Given("the user is not CEO")
     public void userIsNotCEO() {
         app.setCEO(new Employee("derp"));
-        assertFalse(app.currentUserIsCEO());
+        assertFalse(app.isCurrentUserCeo());
     }
 
     @Given("the ProjectApp contains a new Employee {string}")

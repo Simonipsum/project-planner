@@ -6,6 +6,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 public class ProjectApp {
+    private static ProjectApp instance;
+
     private PropertyChangeSupport sup = new PropertyChangeSupport(this);
     private List<Employee> employees = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
@@ -16,6 +18,13 @@ public class ProjectApp {
     public ProjectApp() {
         ceo = new Employee("huba");
         employees.add(ceo);
+    }
+
+    public static ProjectApp getInstance() {
+        if (instance == null) {
+            instance = new ProjectApp();
+        }
+        return instance;
     }
 
     /* Alter ProjectApp */
@@ -42,7 +51,7 @@ public class ProjectApp {
 
     // Add new Employee to ProjectApp
     public void addNewEmployee(Employee e) throws OperationNotAllowedException {
-        if (!currentUserIsCEO()) {
+        if (!isCurrentUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         if (!hasEmployee(e.getUsername())) {
@@ -54,14 +63,14 @@ public class ProjectApp {
 
     // Removes an Employee from ProjectApp
     public void removeEmployee(String username) throws OperationNotAllowedException {
-        if (!currentUserIsCEO()) {
+        if (!isCurrentUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         employees.remove(getEmployee(username));
     }
 
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
-        if (!currentUserIsCEO()){
+        if (!isCurrentUserCeo()){
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         int id = calculateID(year);
@@ -91,7 +100,7 @@ public class ProjectApp {
         if (p.hasEmployee(user)) {
             p.addAssistant(assistant, name);
         } else {
-            throw new OperationNotAllowedException("User is not on that project.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not assigned to that project.");
         }
     }
 
@@ -115,7 +124,7 @@ public class ProjectApp {
 
     // Set PM of project with id
     public void setPM(String username, int id) throws OperationNotAllowedException {
-        if (!currentUserIsCEO()) {
+        if (!isCurrentUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
         }
         if (!hasEmployee(username)) {
@@ -188,7 +197,7 @@ public class ProjectApp {
         return getProject(id).isPm(user);
     }
 
-    public boolean currentUserIsCEO() {
+    public boolean isCurrentUserCeo() {
         return user.equals(ceo);
     }
 
@@ -228,7 +237,7 @@ public class ProjectApp {
 
     /* MISC */
 
-    public Map<Employee, Integer> getActivityOverlap(int[] dates) {
+    public Map<Employee, Integer> getOverlapOfEmployees(int[] dates) {
         int overlap;
         Map<Employee, Integer> acOverlap = new HashMap<>();
 

@@ -7,15 +7,24 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ProjectAppUI implements PropertyChangeListener {
+    private static ProjectAppUI instance;
+
     private ProjectApp app;
     private menuHelper display;
     private inputHelper in;
 
-    public ProjectAppUI(ProjectApp app) {
-        this.app = app;
-        display = new menuHelper(app);
-        in = new inputHelper(app);
+    private ProjectAppUI() {
+        app = ProjectApp.getInstance();
+        display = menuHelper.getInstance();
+        in = inputHelper.getInstance();
         app.addObserver(this);
+    }
+
+    public static ProjectAppUI getInstance() {
+        if (instance == null) {
+            instance = new ProjectAppUI();
+        }
+        return instance;
     }
 
     public void mainLoop() throws OperationNotAllowedException {
@@ -95,8 +104,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         app.setWorktime(date, wt, id, name);
     }
 
-
-    private void getAssistance() {
+    private void getAssistance() throws OperationNotAllowedException {
         int id;
         try {
             id = userPickProjectWithActivity();
@@ -113,13 +121,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         String name = in.pickActivity(id);
 
         String un = pickEmployee();
-
-        try {
-            app.addAssistance(app.getEmployee(un), name, id);
-        } catch (OperationNotAllowedException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
+        app.addAssistance(app.getEmployee(un), name, id);
         System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, name, id);
     }
 
@@ -152,7 +154,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void addProject() throws OperationNotAllowedException {
-        if (!app.currentUserIsCEO()) {
+        if (!app.isCurrentUserCeo()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }
@@ -173,7 +175,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     private void setPM() throws OperationNotAllowedException {
-        if (!app.currentUserIsCEO()) {
+        if (!app.isCurrentUserCeo()) {
             System.out.println("Insufficient Permissions. User is not CEO.");
             return;
         }

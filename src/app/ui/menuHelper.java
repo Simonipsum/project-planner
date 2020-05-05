@@ -11,10 +11,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class menuHelper {
+    private static menuHelper instance;
     private ProjectApp app;
 
-    public menuHelper(ProjectApp app) {
-        this.app = app;
+    private menuHelper() {
+        app = ProjectApp.getInstance();
+    }
+
+    public static menuHelper getInstance() {
+        if (instance == null) {
+            instance = new menuHelper();
+        }
+        return instance;
     }
 
     private static String sep = "-------------------------------------";
@@ -230,7 +238,7 @@ public class menuHelper {
         if (app.getEmployees().size() == 0) {
             output = "No employees in ProjectApp yet.";
         } else {
-            Map<Employee, Integer> sortedAvailability = app.getActivityOverlap(dates).entrySet()
+            Map<Employee, Integer> sortedAvailability = app.getOverlapOfEmployees(dates).entrySet()
                     .stream()
                     .sorted((Map.Entry.<Employee, Integer>comparingByValue()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
