@@ -20,8 +20,7 @@ Feature: Get assistance for an existing activity
   Scenario: user on project asks for assistance on invalid activity
     Given the user is on project 200001
     When the user ask for assistance on activity "Activity3" in project 200001 from employee "jan"
-    Then the activity with name "Activity3" in project 200001 does not have an assistant "jan"
-    And the error message "Error: Project does not have an Activity with that name." is given
+    Then the error message "Error: Project does not have an Activity with that name." is given
 
   Scenario: user on project asks for assistance form a user that already on the project
     Given "jan" is on project 200001
