@@ -166,10 +166,11 @@ public class ProjectApp {
         sup.firePropertyChange(NotificationType.LOGOUT,null, null);
     }
 
-    public void login(Employee e) {
-        if (this.user == null) {
-            this.user = e;
+    public void login(Employee e) throws OperationNotAllowedException {
+        if (this.user != null) {
+            throw new OperationNotAllowedException("Error: Another user is already logged in.");
         }
+        this.user = e;
         sup.firePropertyChange(NotificationType.LOGIN, null, null);
     }
 
