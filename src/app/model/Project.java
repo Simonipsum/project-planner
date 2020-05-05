@@ -73,7 +73,7 @@ public class Project {
 
     public void removeEmployee(Employee e) throws OperationNotAllowedException {
         if (!hasEmployee(e)) {
-            throw new OperationNotAllowedException("Project does not contain employee");
+            throw new OperationNotAllowedException("Error: Project does not contain employee");
         }
         employees.remove(e);
     }
