@@ -58,30 +58,24 @@ public class Project {
         getActivity(aName).setTime(e, time, date);
     }
 
-    public void setActivityDates(String acName, int start, int end) throws OperationNotAllowedException {
-        if (start < end) {
-            Activity ac = getActivity(acName);
-            ac.setStart(start);
-            ac.setEnd(end);
-        } else {
-            throw new OperationNotAllowedException("Start date must be before end date");
-        }
+    public void setActivityDates(String acName, int start, int end) {
+        Activity ac = getActivity(acName);
+        ac.setStart(start);
+        ac.setEnd(end);
     }
 
     public void setActivityName(String acName, String newname) throws OperationNotAllowedException {
-        if (hasActivity(acName)) {
-            getActivity(acName).setName(newname);
-        } else {
-            throw new OperationNotAllowedException("Project does not contain activity");
+        if(!hasActivity(name)) {
+            throw new OperationNotAllowedException("Error: Project does not contain activity with that name.");
         }
+        getActivity(acName).setName(newname);
     }
 
     public void removeEmployee(Employee e) throws OperationNotAllowedException {
-        if (hasEmployee(e)) {
-            employees.remove(e);
-        } else {
+        if (!hasEmployee(e)) {
             throw new OperationNotAllowedException("Project does not contain employee");
         }
+        employees.remove(e);
     }
 
     public boolean hasEmployee(String un) {
@@ -139,7 +133,9 @@ public class Project {
     }
 
     public void setPm(Employee e) {
-        addEmployee(e);
+        if (!hasEmployee(e)) {
+            addEmployee(e);
+        }
         this.pm = e;
     }
 

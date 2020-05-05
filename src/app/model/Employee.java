@@ -10,5 +10,4 @@ public class Employee {
     public String getUsername() {
         return username;
     }
-
 }

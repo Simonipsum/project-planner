@@ -52,26 +52,26 @@ public class ProjectApp {
     // Add new Employee to ProjectApp
     public void addNewEmployee(Employee e) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
+        } else if (e.getUsername().length() > 4) {
+            throw new OperationNotAllowedException("Error: Username of Employee can't be longer than four initials.");
+        } else if(hasEmployee(e.getUsername())) {
+            throw new OperationNotAllowedException("Error: Employee with that username already registered.");
         }
-        if (!hasEmployee(e.getUsername())) {
-            employees.add(e);
-        } else {
-            throw new OperationNotAllowedException("Employee with that username already registered");
-        }
+        employees.add(e);
     }
 
     // Removes an Employee from ProjectApp
     public void removeEmployee(String username) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
         }
         employees.remove(getEmployee(username));
     }
 
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()){
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
         }
         int id = calculateID(year);
         if (name.equals("N")) {
@@ -97,11 +97,10 @@ public class ProjectApp {
     // Add assistance to Project
     public void addAssistance(Employee assistant, String name, int id) throws OperationNotAllowedException {
         Project p = getProject(id);
-        if (p.hasEmployee(user)) {
-            p.addAssistant(assistant, name);
-        } else {
+        if (!p.hasEmployee(user)) {
             throw new OperationNotAllowedException("Insufficient Permissions: User is not assigned to that project.");
         }
+        p.addAssistant(assistant, name);
     }
 
     // Add Activity to Project
@@ -111,13 +110,16 @@ public class ProjectApp {
 
     // Set dates of project activity
     public void setDates(int id, String name, int start, int end) throws OperationNotAllowedException {
+        if (start > end) {
+            throw new OperationNotAllowedException("Error: Start date must be before end date");
+        }
         accessProject(id).setActivityDates(name, start, end);
     }
 
     public Project accessProject(int id) throws OperationNotAllowedException {
         Project project = getProject(id);
         if (!project.isPm(user)) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not PM.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not PM.");
         }
         return project;
     }
@@ -125,15 +127,11 @@ public class ProjectApp {
     // Set PM of project with id
     public void setPM(String username, int id) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()) {
-            throw new OperationNotAllowedException("Insufficient Permissions. User is not CEO.");
-        }
-        if (!hasEmployee(username)) {
-            throw new OperationNotAllowedException("Username is not an Employee.");
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
+        } else if (!hasEmployee(username)) {
+            throw new OperationNotAllowedException("Insufficient Permissions: User is not an Employee.");
         }
         Project p = getProject(id);
-        if (!p.hasEmployee(username)) {
-            p.addEmployee(getEmployee(username));       // Add pm to the project if he was not on it
-        }
         p.setPm(getEmployee(username));
     }
 
@@ -152,17 +150,13 @@ public class ProjectApp {
     // Set worktime of one date
     public void setWorktime(int date, float time, int id, String name) throws OperationNotAllowedException {
         Project p = getProject(id);
-
         if (!isDateValid(date)) {
             throw new OperationNotAllowedException("Error: Date not valid!");
-        }
-
-        if(p.hasEmployee(user) || p.hasAssistant(user, name)) {
-            p.setActivityWorktime(name, user, time, date);
-        } else {
+        } else if (!p.hasEmployee(user) && !p.hasAssistant(user, name)) {
             throw new OperationNotAllowedException("Insufficient Permissions: " +
                     "User is not assigned to that project or is an assistant on that activity");
         }
+        p.setActivityWorktime(name, user, time, date);
     }
 
     /* Login and logout*/
@@ -172,7 +166,7 @@ public class ProjectApp {
         sup.firePropertyChange(NotificationType.LOGOUT,null, null);
     }
 
-    public void login(Employee e) throws OperationNotAllowedException {
+    public void login(Employee e) {
         if (this.user == null) {
             this.user = e;
         }
