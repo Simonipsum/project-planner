@@ -9,6 +9,11 @@ Feature: Add Employee to ProjectApp
     Then the ProjectApp now contains an Employee "jan"
     And the error message "" is given
 
+  Scenario: CEO adds new Employee
+    Given the user is CEO
+    When the user adds a new Employee "simon"
+    Then the error message "Error: Username of Employee can't be longer than four initials." is given
+
   Scenario: Employee tries to add Employee
     Given the user is not CEO
     When the user adds a new Employee "jan"
