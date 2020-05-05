@@ -112,6 +112,8 @@ public class Project {
 
         if (hasEmployee(e)) {
             throw new OperationNotAllowedException("Error: Project already has Employee.");
+        } else if (!hasActivity(acName)) {
+            throw new OperationNotAllowedException("Error: Project does not have an Activity with that name.");
         }
 
         if (hasAssistant(e)) {
