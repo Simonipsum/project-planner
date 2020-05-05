@@ -20,13 +20,9 @@ public class ProjectSteps {
         this.errorMessage = errorMessage;
     }
 
-    public void setUser(Employee emp) {
+    public void setUser(Employee e) {
         app.logout();
-        try {
-            app.login(emp);
-        } catch (OperationNotAllowedException e) {
-            System.out.println(e.getMessage());
-        }
+        app.login(e);
     }
 
     @Given("{string} is on project {int}")

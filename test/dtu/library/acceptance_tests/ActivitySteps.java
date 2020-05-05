@@ -23,13 +23,9 @@ public class ActivitySteps {
         this.errorMessage = errorMessage;
     }
 
-    public void setUser(Employee emp) {
+    public void setUser(Employee e) {
         app.logout();
-        try {
-            app.login(emp);
-        } catch (OperationNotAllowedException e) {
-            System.out.println(e.getMessage());
-        }
+        app.login(e);
     }
 
     @Given("project {int} contains activity {string}")

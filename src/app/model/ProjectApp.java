@@ -166,7 +166,7 @@ public class ProjectApp {
         sup.firePropertyChange(NotificationType.LOGOUT,null, null);
     }
 
-    public void login(Employee e) throws OperationNotAllowedException {
+    public void login(Employee e) {
         if (this.user == null) {
             this.user = e;
         }
