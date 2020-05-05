@@ -65,7 +65,7 @@ public class Project {
     }
 
     public void setActivityName(String acName, String newname) throws OperationNotAllowedException {
-        if(!hasActivity(name)) {
+        if(!hasActivity(acName)) {
             throw new OperationNotAllowedException("Error: Project does not contain an activity with that name.");
         }
         getActivity(acName).setName(newname);
