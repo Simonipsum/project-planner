@@ -5,7 +5,6 @@ import app.model.Employee;
 import app.model.ProjectApp;
 import dtu.library.acceptance_tests.ErrorMessageHolder;
 import org.junit.Test;
-import org.mockito.NotExtensible;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +36,7 @@ public class addAssistant {
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
-        assertEquals(errorMessage.getErrorMessage(), "Error: Project already has Employee.");
+        assertEquals("Error: Project already has Employee.", errorMessage.getErrorMessage());
     }
 
     @Test
