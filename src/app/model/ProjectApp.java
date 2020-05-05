@@ -149,7 +149,7 @@ public class ProjectApp {
         }
 
         if(p.hasEmployee(user) || p.hasAssistant(user, name)) {
-            p.getActivity(name).setTime(user, time, date);
+            p.setActivityWorktime(name, user, time, date);
         } else {
             throw new OperationNotAllowedException("Insufficient Permissions: " +
                     "User is not assigned to that project or is an assistant on that activity");
@@ -229,22 +229,13 @@ public class ProjectApp {
     /* MISC */
 
     public Map<Employee, Integer> getActivityOverlap(int[] dates) {
-        int overlap, start, end;
+        int overlap;
         Map<Employee, Integer> acOverlap = new HashMap<>();
 
         for (Employee e : employees) {
             overlap = 0;
             for (Project p : projects) {
-                if (p.hasEmployee(e)) {
-                    for (Activity a : p.getActivities()) {
-                        start = a.getStart();
-                        end = a.getEnd();
-
-                        if (end >= dates[0] && start <= dates[1]) {
-                            overlap += Math.min(end, dates[1]) - Math.max(start, dates[0]) + 1;
-                        }
-                    }
-                }
+                overlap += p.computeOverlap(e, dates);
             }
             acOverlap.put(e, overlap);
         }

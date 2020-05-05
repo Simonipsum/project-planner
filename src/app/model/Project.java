@@ -27,6 +27,21 @@ public class Project {
         this.startYear = startYear;
     }
 
+    public int computeOverlap(Employee e, int[] dates) {
+        int start, end, overlap = 0;
+        if (hasEmployee(e)) {
+            for (Activity a : activities) {
+                start = a.getStart();
+                end = a.getEnd();
+
+                if (end >= dates[0] && start <= dates[1]) {
+                    overlap += Math.min(end, dates[1]) - Math.max(start, dates[0]) + 1;
+                }
+            }
+        }
+        return overlap;
+    }
+
     public float getWorkedTime() {
         float wt = 0;
         for (Activity a : activities) wt += a.getWorkedTime();
@@ -37,6 +52,10 @@ public class Project {
         float rwt = 0;
         for (Activity a : activities) rwt += a.getRemainingWT();
         return rwt;
+    }
+
+    public void setActivityWorktime(String aName, Employee e, float time, int date ) {
+        getActivity(aName).setTime(e, time, date);
     }
 
     public void setActivityDates(String acName, int start, int end) throws OperationNotAllowedException {
