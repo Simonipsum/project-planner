@@ -14,6 +14,6 @@ Feature: Remove Employee from Project
   Scenario: Remove employee that is not on project
     Given the user is PM of the project with ID 200001
     When the user removes the employee "jan" from project 200001
-    Then the error message "Project does not contain employee" is given
+    Then the error message "Error: Project does not contain employee" is given
     And the employee list of project 200001 does not contain the employee "jan"
 

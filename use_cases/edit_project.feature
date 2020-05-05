@@ -13,4 +13,4 @@ Feature: Change name of existing project
   Scenario: Employee changes name of project
     Given the user is not PM of the project with ID 200001
     When the user changes the name of the project with ID 200001 to "newName"
-    Then the error message "Insufficient Permissions. User is not PM." is given
+    Then the error message "Insufficient Permissions: User is not PM." is given

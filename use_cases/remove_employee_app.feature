@@ -13,4 +13,4 @@ Feature: Remove Employee from ProjectApp
     Given the user is not CEO
     When the user removes the Employee with username "jan"
     Then the ProjectApp now contains an Employee "jan"
-    And the error message "Insufficient Permissions. User is not CEO." is given
+    And the error message "Insufficient Permissions: User is not CEO." is given
