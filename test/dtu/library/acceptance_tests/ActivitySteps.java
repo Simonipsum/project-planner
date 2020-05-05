@@ -54,6 +54,14 @@ public class ActivitySteps {
         }
     }
 
+    @When("the employee {string} sets worktime of {float} hours to {string} on date {int} on project {int}")
+    public void employeeSetsWorktimeOfActivity(String un, float time, String name, int date, int id) {
+        Employee temp = app.getUser();
+        setUser(app.getEmployee(un));
+        userSetsWorktimeOfActivity(time, name, date, id);
+        setUser(temp);
+    }
+
     @When("the user sets worktime of {float} hours to {string} on date {int} on project {int}")
     public void userSetsWorktimeOfActivity(float time, String name, int date, int id) {
         try {
@@ -61,14 +69,6 @@ public class ActivitySteps {
         } catch (OperationNotAllowedException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
-    }
-
-    @When("the employee {string} sets worktime of {float} hours to {string} on date {int} on project {int}")
-    public void employeeSetsWorktimeOfActivity(String un, float time, String name, int date, int id) {
-        Employee temp = app.getUser();
-        setUser(app.getEmployee(un));
-        userSetsWorktimeOfActivity(time, name, date, id);
-        setUser(temp);
     }
 
     @When("the user sets the expected worktime of {string} from project {int} to {float}")
@@ -149,14 +149,14 @@ public class ActivitySteps {
         assertEquals(app.getProject(id).getActivity(name).getWorkTime().get(app.getUser()).get(date), time, 0.0);
     }
 
-    @Then("{string} on project {int} on date {int} has {float} hours from {string}")
-    public void activityHasWorktimeFromEmployee(String name, int id, int date, float time, String un) {
-        assertEquals(app.getProject(id).getActivity(name).getWorkTime().get(app.getEmployee(un)).get(date), time, 0.0);
-    }
-
     @Then("{string} of project {int} has expected worktime {float}")
     public void activityHasExpectedWorktime(String name, int id, float time) {
         assertEquals(app.getProject(id).getActivity(name).getExpectedWorkTime(), time, 0.0);
+    }
+
+    @Then("{string} on project {int} on date {int} has {float} hours from {string}")
+    public void activityHasWorktimeFromEmployee(String name, int id, int date, float time, String un) {
+        assertEquals(app.getProject(id).getActivity(name).getWorkTime().get(app.getEmployee(un)).get(date), time, 0.0);
     }
 
     @Then("the activity with name {string} in project {int} has an assistant {string}")

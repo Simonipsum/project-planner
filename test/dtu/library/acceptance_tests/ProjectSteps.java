@@ -150,14 +150,14 @@ public class ProjectSteps {
         assertNull(app.getProject(id).getName());
     }
 
-    @Then("the employee list of project {int} contains the employee {string}")
-    public void projectContainsEmployee(int id, String username) {
-        assertTrue(app.getProject(id).hasEmployee(username));
-    }
-
     @Then("the employee list of project {int} does not contain the employee {string}")
     public void projectDoesNotContainEmployee(int id, String username) {
         assertFalse(app.getProject(id).hasEmployee(username));
+    }
+
+    @Then("the employee list of project {int} contains the employee {string}")
+    public void projectContainsEmployee(int id, String username) {
+        assertTrue(app.getProject(id).hasEmployee(username));
     }
 
     @Then("project {int} has total worktime of {float} hours")

@@ -12,6 +12,13 @@ Feature: Add Project
     Then a project with name "Project1" and project ID 200001 exists in the ProjectApp.
     And the error message "" is given
 
+  Scenario: CEO adds new Project to ProjectApp with invalid year
+    Given the user is CEO
+    And the ProjectApp does not contain any projects
+    When the user adds a project named "Project1" in the year -2020
+    Then the ProjectApp does not contain any projects
+    And the error message "Error: Year is below 0." is given
+
   Scenario: Failed creation of new project
     Given the user is not CEO
     And the ProjectApp does not contain any projects
