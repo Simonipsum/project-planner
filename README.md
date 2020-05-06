@@ -9,7 +9,7 @@ This is a project planner made in 02161 Software Engineering 1 @ DTU 2020 for th
 [Emil Skov Rasmussen](https://github.com/Emil252), s173402
 
 # Pre requirements
-Environment, tested on Window.
+Environment, tested on Window in the IntelliJ IDE.
 
 * Java 11.0.5, 64-bit JDK or later updates.
 
