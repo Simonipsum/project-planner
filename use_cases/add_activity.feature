@@ -13,3 +13,4 @@ Feature: Add Activity to Project
     Given the user is not PM of the project with ID 200001
     When the user adds an activity with name "Activity1" to the project with ID 200001
     Then the error message "Insufficient Permissions: User is not PM." is given
+    And the project with ID 200001 does not contain an activity with name "Activity1"

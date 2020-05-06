@@ -14,3 +14,4 @@ Feature: Change name of existing project
     Given the user is not PM of the project with ID 200001
     When the user changes the name of the project with ID 200001 to "newName"
     Then the error message "Insufficient Permissions: User is not PM." is given
+    And a project with name "project1" and project ID 200001 exists in the ProjectApp.
