@@ -13,19 +13,5 @@ Environment, tested on Window.
 
 * Java 11.0.5, 64-bit JDK or later updates.
 
-## Week 6 + 7: Report 1
-- Requirements: Glossary, use case diagrams, detailed use cases.
-- Draft design: Class & sequence diagrams
-
-## Week 8: Feedback report 1
-- Peer review of report 1
-
-## Week 9 - 12: Implementation
-- Not bound by design from week 6 + 7!
-- Report: Concerned about systematic tests and design by contract.
-
-## Week 13: Report 2, Source code
-- 10 min demonstrations of the tests for TA's. 
-
 # Licence 
 Just take it w/e brooo..
