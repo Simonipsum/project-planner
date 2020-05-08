@@ -69,6 +69,25 @@ public class addAssistant {
     }
 
     @Test
+    public void nonExistentActivity() {
+        app = new ProjectApp();
+        errorMessage = new ErrorMessageHolder();
+        app.login(app.getEmployee(ceo_name));
+
+        try {
+            app.addNewProject(2020, project_name);
+            app.addNewEmployee(new Employee(employee_name));
+            app.setPM(ceo_name, project_id);
+            app.addAssistance(app.getEmployee(employee_name), activity_name1, project_id);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+        assertEquals("Error: Project does not have an Activity with that name.", errorMessage.getErrorMessage());
+        assertFalse(app.getProject(project_id).hasAssistant(app.getEmployee(employee_name), activity_name1));
+    }
+
+
+    @Test
     public void employeeIsAssistantOnOtherActivity() {
         employeeAddedAsAssistant();
 

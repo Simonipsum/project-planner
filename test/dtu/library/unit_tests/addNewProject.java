@@ -42,6 +42,20 @@ public class addNewProject {
     }
 
     @Test
+    public void invalidYear() {
+        app = new ProjectApp();
+        errorMessage = new ErrorMessageHolder();
+        app.login(app.getEmployee(ceo_name));
+
+        try {
+            app.addNewProject(-2020, project_name);
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+        assertEquals("Error: Year is below 0.", errorMessage.getErrorMessage());
+    }
+
+    @Test
     public void ceoAddsUnnamedProject() {
         app = new ProjectApp();
         errorMessage = new ErrorMessageHolder();
