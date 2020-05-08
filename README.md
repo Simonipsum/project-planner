@@ -14,7 +14,7 @@ This is a project planner made in 02161 Software Engineering 1 @ DTU 2020 for th
 # Pre requirements
 Environment, tested on Window in the IntelliJ IDE.
 
-* Java 11.0.5, 64-bit JDK or later updates.
+* Java 11, 64-bit JDK or later updates.
 
 # Licence 
 Just take it w/e brooo..
