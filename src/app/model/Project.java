@@ -119,8 +119,8 @@ public class Project {
         } else if (!hasActivity(acName)) {
             throw new OperationNotAllowedException("Error: Project does not have an Activity with that name.");
         }
-        assert !hasEmployee(e)       : "Precondition: does not Employee";
-        assert hasActivity(acName)   : "Precondition: has Activity with name acName";
+
+        assert !hasEmployee(e) && hasActivity(acName) : "Preconditions for addAssistant";
 
         if (hasAssistant(e)) {
             if (assistants.get(e).stream().noneMatch(a -> a.getName().equals(acName))) {
@@ -132,7 +132,7 @@ public class Project {
             temp.add(getActivity(acName));
             assistants.put(e, temp);
         }
-        assert hasAssistant(e, acName) : "Postcondition: the activity now has an assistant";
+        assert hasAssistant(e, acName) : "Postcondition for addAssistant";
     }
 
     public void addActivity(Activity a) {

@@ -39,9 +39,8 @@ public class ProjectApp {
         } else if (start > end) {
             throw new OperationNotAllowedException("Start date must be before end date.");
         }
-        assert !(!isDateValid(start) || !isDateValid(end)) : "Precondition: the current user is CEO";
-        assert start <= end                                : "Precondition: must be a valid year";
-        assert hasEmployee(getUser().getUsername())        : "Precondition: the user is an employee";
+
+        assert hasEmployee(getUser().getUsername()) && start <= end && (!(!isDateValid(start) || !isDateValid(end))) : "Preconditions for registerAbsence";
 
         // Start is first day of absence, end is last day of absence
         Calendar current = new GregorianCalendar(start/10000, (start%10000)/100, (start%100));
@@ -53,7 +52,7 @@ public class ProjectApp {
                     current.get(Calendar.MONTH)  * 100 + current.get(Calendar.DATE) ;
             current.set(Calendar.DATE, current.get(Calendar.DATE) + 1);
             absence.setTime(user, 8, date);
-            assert getAbsence().getWorkTime().get(getUser()).get(date) == 8 : "Postcondition: absence for the date(s) is now set to 8";
+            assert getAbsence().getWorkTime().get(getUser()).get(date) == 8 : "Postcondition for registerAbsence";
         }
     }
 
@@ -84,8 +83,7 @@ public class ProjectApp {
             throw new OperationNotAllowedException("Error: Year is below 0.");
         }
 
-        assert isCurrentUserCeo() : "Precondition: the current user is CEO";
-        assert year >= 0          : "Precondition: must be a valid year";
+        assert isCurrentUserCeo() && year >= 0 : "Preconditions for addNewProject";
 
         int id = calculateID(year);
         if (name.equals("N")) {
@@ -94,7 +92,7 @@ public class ProjectApp {
             projects.add(new Project(id, year, name));
         }
         getProject(id).addEmployee(ceo); // Lets always have CEO on the project
-        assert hasProject(id) : "Postcondition: a project with a unique id now exists";
+        assert hasProject(id) : "Postcondition for addNewProject";
     }
 
     /* Alter Projects & Activities */
@@ -171,14 +169,12 @@ public class ProjectApp {
             throw new OperationNotAllowedException("Insufficient Permissions: " +
                     "User is not assigned to that project or is an assistant on that activity");
         }
-        assert isDateValid(date)                                 : "Precondition: must be a valid date";
-        assert p.hasEmployee(user) || p.hasAssistant(user, name) : "Precondition: Current  user  is in  the list of employees or in the list of assistants of the project";
-        assert p.hasActivity(name)                               : "Precondition: name is the name of an activity on the project";
-        assert time <= 24.0 && time >= 0.0                       : "Precondition: valid time";
+
+        assert isDateValid(date) &&  p.hasActivity(name) && time <= 24.0 && time >= 0.0 && (p.hasEmployee(user) || p.hasAssistant(user, name)) : "Preconditions for setWorktime";
 
         p.setActivityWorktime(name, user, time, date);
 
-        assert getProject(id).getActivity(name).getWorkTime().get(getUser()).get(date).equals(time) : "Postcondition: worktimeon for activity on the project contains keye with value key date and value time ";
+        assert getProject(id).getActivity(name).getWorkTime().get(getUser()).get(date).equals(time) : "Postcondition for setWorktime";
     }
 
     /* Login and logout*/
