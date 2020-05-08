@@ -178,7 +178,9 @@ public class ProjectApp {
 
         p.setActivityWorktime(name, user, time, date);
 
-        assert getProject(id).getActivity(name).getWorkTime().get(getUser()).get(date).equals(time) : "Postcondition: worktimeon for activity on the project contains keye with value key date and value time ";
+        assert getProject(id).getActivity(name).getWorkTime().get(getUser()).get(date).equals(time) :
+                "Postcondition: worktimeon for activity on the project contains " +
+                        "key e with value key date and value time ";
     }
 
     /* Login and logout*/
