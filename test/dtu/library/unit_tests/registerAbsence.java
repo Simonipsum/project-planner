@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Janus Ivert Johansen
+ */
+
 package dtu.library.unit_tests;
 
 import app.OperationNotAllowedException;

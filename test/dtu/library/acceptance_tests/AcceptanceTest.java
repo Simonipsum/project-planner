@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Emil Skov Andersen
+ */
+
 package dtu.library.acceptance_tests;
 
 import org.junit.runner.RunWith;

@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Janus Ivert Johansen
+ */
+
 package app.model;
 
 import app.OperationNotAllowedException;

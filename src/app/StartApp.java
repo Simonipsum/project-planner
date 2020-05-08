@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Emil Skov Andersen
+ */
+
 package app;
 import app.ui.ProjectAppUI;
 

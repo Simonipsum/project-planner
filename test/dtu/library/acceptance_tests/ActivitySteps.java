@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Simon Amtoft Pedersen
+ */
+
 package dtu.library.acceptance_tests;
 
 import app.model.Activity;

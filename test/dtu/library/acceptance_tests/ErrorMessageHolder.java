@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Emil Skov Andersen
+ */
+
 package dtu.library.acceptance_tests;
 
 public class ErrorMessageHolder {

@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Emil Skov Andersen
+ */
+
 package dtu.library.unit_tests;
 
 import app.OperationNotAllowedException;

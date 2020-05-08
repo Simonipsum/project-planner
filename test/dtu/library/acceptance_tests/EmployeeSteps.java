@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Janus Ivert Johansen
+ */
+
 package dtu.library.acceptance_tests;
 
 import app.model.Employee;

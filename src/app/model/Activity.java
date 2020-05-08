@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Marc Sun Bøg
+ */
+
 package app.model;
 
 import java.util.*;

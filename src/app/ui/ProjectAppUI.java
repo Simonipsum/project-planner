@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Simon Amtoft Pedersen
+ */
+
 package app.ui;
 
 import app.OperationNotAllowedException;

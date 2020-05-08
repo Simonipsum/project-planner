@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Marc Sun Bøg
+ */
+
 package dtu.library.acceptance_tests;
 
 import app.model.Employee;

@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Simon Amtoft Pedersen
+ */
+
 package dtu.library.unit_tests;
 
 import app.OperationNotAllowedException;

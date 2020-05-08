@@ -1,7 +1,9 @@
+/**
+ * Main responsible: Janus Ivert Johansen
+ */
+
 package app.ui;
-
 import app.model.ProjectApp;
-
 import java.util.Scanner;
 
 public class inputHelper {

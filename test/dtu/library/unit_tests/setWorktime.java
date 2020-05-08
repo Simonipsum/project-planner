@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Marc Sun Bøg
+ */
+
 package dtu.library.unit_tests;
 
 import app.OperationNotAllowedException;

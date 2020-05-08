@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Emil Skov Rasmussen
+ */
+
 package app.model;
 
 public class Employee {

@@ -1,3 +1,7 @@
+/**
+ * Main responsible: Marc Sun Bøg
+ */
+
 package app.ui;
 
 import app.model.Activity;
