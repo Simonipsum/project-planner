@@ -148,33 +148,34 @@ public class ProjectApp {
         p.setPm(getEmployee(username));
     }
 
-    public void setActivityName(String name, int id, String newname) throws OperationNotAllowedException {
-        accessProject(id).setActivityName(name, newname);
+    public void setActivityName(String acName, int id, String newname) throws OperationNotAllowedException {
+        accessProject(id).setActivityName(acName, newname);
     }
 
     public void setProjectName(int id, String newname) throws OperationNotAllowedException {
         accessProject(id).setName(newname);
     }
 
-    public void setExpectedWt(int id, String name, float time) throws OperationNotAllowedException {
-        accessProject(id).getActivity(name).setExpectedWT(time);
+    public void setExpectedWt(int id, String acName, float time) throws OperationNotAllowedException {
+        accessProject(id).getActivity(acName).setExpectedWT(time);
     }
 
     // Set worktime of one date
-    public void setWorktime(int date, float time, int id, String name) throws OperationNotAllowedException {
+    public void setWorktime(int date, float time, int id, String acName) throws OperationNotAllowedException {
         Project p = getProject(id);
         if (!isDateValid(date)) {
             throw new OperationNotAllowedException("Error: Date not valid!");
-        } else if (!p.hasEmployee(user) && !p.hasAssistant(user, name)) {
+        } else if (!p.hasEmployee(user) && !p.hasAssistant(user, acName)) {
             throw new OperationNotAllowedException("Insufficient Permissions: " +
                     "User is not assigned to that project or is an assistant on that activity");
         }
 
-        assert isDateValid(date) &&  p.hasActivity(name) && time <= 24.0 && time >= 0.0 && (p.hasEmployee(user) || p.hasAssistant(user, name)) : "Preconditions for setWorktime";
+        assert isDateValid(date) &&  p.hasActivity(acName) && time <= 24.0 && time >= 0.0 && (p.hasEmployee(user)
+                || p.hasAssistant(user, acName)) : "Preconditions for setWorktime";
 
-        p.setActivityWorktime(name, user, time, date);
+        p.setActivityWorktime(acName, user, time, date);
 
-        assert getProject(id).getActivity(name).getWorkTime().get(getUser()).get(date).equals(time) : "Postcondition for setWorktime";
+        assert getProject(id).getActivity(acName).getWorkTime().get(getUser()).get(date).equals(time) : "Postcondition for setWorktime";
     }
 
     /* Login and logout*/
@@ -281,7 +282,7 @@ public class ProjectApp {
         sup.addPropertyChangeListener(listener); }
 
     // Initialize app with some data
-/*    public void derpHelper() throws OperationNotAllowedException {
+    public void derpHelper() throws OperationNotAllowedException {
         user = ceo;
         employees.add(new Employee("jan"));
         employees.add(new Employee("sim"));
@@ -329,5 +330,5 @@ public class ProjectApp {
         getProject(200005).getActivity("ac1").setEnd(200330);
 
         user = null;
-    }*/
+    }
 }

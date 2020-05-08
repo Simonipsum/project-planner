@@ -168,8 +168,8 @@ public class Project {
         return this.assistants.get(e);
     }
 
-    public Activity getActivity(String n) {
-        return this.activities.stream().filter(a -> a.getName().equals(n)).findFirst().get();
+    public Activity getActivity(String acName) {
+        return this.activities.stream().filter(a -> a.getName().equals(acName)).findFirst().get();
     }
 
     public Employee getPm() {

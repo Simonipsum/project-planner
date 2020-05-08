@@ -154,15 +154,15 @@ public class inputHelper {
 
     String pickActivity(int id) {
         System.out.print("Enter name of activity: ");
-        String name = getString();
+        String acName = getString();
 
-        while(!app.getProject(id).hasActivity(name)) {
+        while(!app.getProject(id).hasActivity(acName)) {
             System.out.printf("Error: Activity %s is not on project %d.\n" +
-                    "Please pick one of the listed activities: ", name, id);
-            name = getString();
+                    "Please pick one of the listed activities: ", acName, id);
+            acName = getString();
         }
         System.out.println("");
-        return name;
+        return acName;
     }
 
     float getWorkHours() {

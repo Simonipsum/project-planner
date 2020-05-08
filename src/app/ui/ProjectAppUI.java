@@ -97,7 +97,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         }
 
         display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
+        String acName = in.pickActivity(id);
 
         System.out.print("Date of work. ");
         int date = in.getDate();
@@ -105,7 +105,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         System.out.print("Enter worktime of activity: ");
         float wt = in.getWorkHours();
 
-        app.setWorktime(date, wt, id, name);
+        app.setWorktime(date, wt, id, acName);
     }
 
     private void getAssistance() throws OperationNotAllowedException {
@@ -122,11 +122,11 @@ public class ProjectAppUI implements PropertyChangeListener {
         }
 
         display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
+        String acName = in.pickActivity(id);
 
         String un = pickEmployee();
-        app.addAssistance(app.getEmployee(un), name, id);
-        System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, name, id);
+        app.addAssistance(app.getEmployee(un), acName, id);
+        System.out.printf("%s successfully added as an assistant to activity %s on project %d\n\n", un, acName, id);
     }
 
     private int userPickProjectWithActivity() throws OperationNotAllowedException {
@@ -241,10 +241,10 @@ public class ProjectAppUI implements PropertyChangeListener {
             return;
         }
         display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
+        String acName = in.pickActivity(id);
         System.out.print("Enter new name of activity: ");
         String newname = in.getString();
-        app.setActivityName(name, id, newname);
+        app.setActivityName(acName, id, newname);
     }
 
     private void addProjectEmployee(int id) throws OperationNotAllowedException {
@@ -259,9 +259,9 @@ public class ProjectAppUI implements PropertyChangeListener {
 
     private void addProjectActivity(int id) throws OperationNotAllowedException {
         System.out.print("Enter name of new activity: ");
-        String name = in.getString();
-        app.addNewActivity(name, id);
-        System.out.printf("Activity %s successfully added to %d.\n\n", name, id);
+        String acName = in.getString();
+        app.addNewActivity(acName, id);
+        System.out.printf("Activity %s successfully added to %d.\n\n", acName, id);
     }
 
     private void editActivityDates(int id) throws OperationNotAllowedException {
@@ -270,10 +270,10 @@ public class ProjectAppUI implements PropertyChangeListener {
             return;
         }
         display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
+        String acName = in.pickActivity(id);
         int[] dates = in.getDates();
-        app.setDates(id, name, dates[0], dates[1]);
-        System.out.printf("Dates of %s successfully changed to %06d %06d\n\n", name, dates[0], dates[1]);
+        app.setDates(id, acName, dates[0], dates[1]);
+        System.out.printf("Dates of %s successfully changed to %06d %06d\n\n", acName, dates[0], dates[1]);
     }
 
     private void editActivityWt(int id) throws OperationNotAllowedException {
@@ -282,11 +282,11 @@ public class ProjectAppUI implements PropertyChangeListener {
             return;
         }
         display.activityList(app.getProject(id));
-        String name = in.pickActivity(id);
+        String acName = in.pickActivity(id);
         System.out.print("Enter expected worktime of activity: ");
         float wt = in.getPosFloat();
-        app.setExpectedWt(id, name, wt);
-        System.out.printf("Worktime of %s has successfully been set to %.1f.\n\n", name, wt);
+        app.setExpectedWt(id, acName, wt);
+        System.out.printf("Worktime of %s has successfully been set to %.1f.\n\n", acName, wt);
     }
 
     private String pickEmployee() {
