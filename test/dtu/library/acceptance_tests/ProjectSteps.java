@@ -141,7 +141,12 @@ public class ProjectSteps {
 
     @Then("the PM of the project with ID {int} is {string}")
     public void usernameIsPmOfProject(int id, String username) {
-        assertEquals(app.getProject(id).getPm(), app.getEmployee(username));
+        assertEquals(username, app.getProject(id).getPm().getUsername());
+    }
+
+    @Then("the project with ID {int} doesn't have a PM")
+    public void noPmOfProject(int id) {
+        assertEquals("", app.getProject(id).getPm().getUsername());
     }
 
     @Then("a project with name {string} and project ID {int} exists in the ProjectApp.")

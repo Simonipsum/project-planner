@@ -72,8 +72,23 @@ public class ProjectApp {
     public void removeEmployee(String username) throws OperationNotAllowedException {
         if (!isCurrentUserCeo()) {
             throw new OperationNotAllowedException("Insufficient Permissions: User is not CEO.");
+        } else if (user.getUsername().equals(username)) {
+            throw new OperationNotAllowedException("Error: User can't be removed from app.");
         }
-        employees.remove(getEmployee(username));
+        Employee e = getEmployee(username);
+
+        // Remove employee from all assigned projects
+        for (Project p : projects) {
+            if (p.hasEmployee(e)) {
+                p.removeEmployee(e);
+                if (p.getPm().equals(e)) {
+                    p.setPm(new Employee(""));
+                }
+            }
+        }
+
+        // Remove employee from app
+        employees.remove(e);
     }
 
     public void addNewProject(int year, String name) throws OperationNotAllowedException {
@@ -282,53 +297,53 @@ public class ProjectApp {
         sup.addPropertyChangeListener(listener); }
 
     // Initialize app with some data
-    public void derpHelper() throws OperationNotAllowedException {
-        user = ceo;
-        employees.add(new Employee("jan"));
-        employees.add(new Employee("sim"));
-        employees.add(new Employee("joe"));
-        employees.add(new Employee("kim"));
-
-        addNewProject(2020, "Project1");
-        addNewProject(2020, "Project2");
-        addNewProject(2020, "Project3");
-        addNewProject(2020, "Project4");
-        addNewProject(2020, "Project5");
-
-        getProject(200001).addActivity(new Activity("ac1"));
-        getProject(200001).addActivity(new Activity("ac2"));
-        getProject(200002).addActivity(new Activity("ac1"));
-        getProject(200002).addActivity(new Activity("ac2"));
-        getProject(200003).addActivity(new Activity("ac1"));
-        getProject(200003).addActivity(new Activity("ac2"));
-        getProject(200004).addActivity(new Activity("ac1"));
-        getProject(200004).addActivity(new Activity("ac2"));
-        getProject(200005).addActivity(new Activity("ac1"));
-        getProject(200005).addActivity(new Activity("ac2"));
-
-        setPM("jan", 200001);
-        setPM("sim", 200002);
-        setPM("kim", 200003);
-        setPM("joe", 200005);
-
-        addAssistance(getEmployee("sim"),"ac1", 200001);
-
-        // Set some start and end dates
-        getProject(200001).getActivity("ac1").setStart(200101);
-        getProject(200001).getActivity("ac1").setEnd(200201);
-
-        getProject(200002).getActivity("ac1").setStart(200301);
-        getProject(200002).getActivity("ac1").setEnd(200401);
-
-        getProject(200003).getActivity("ac1").setStart(200115);
-        getProject(200003).getActivity("ac1").setEnd(200220);
-
-        getProject(200004).getActivity("ac1").setStart(200120);
-        getProject(200004).getActivity("ac1").setEnd(200205);
-
-        getProject(200005).getActivity("ac1").setStart(200220);
-        getProject(200005).getActivity("ac1").setEnd(200330);
-
-        user = null;
-    }
+//    public void derpHelper() throws OperationNotAllowedException {
+//        user = ceo;
+//        employees.add(new Employee("jan"));
+//        employees.add(new Employee("sim"));
+//        employees.add(new Employee("joe"));
+//        employees.add(new Employee("kim"));
+//
+//        addNewProject(2020, "Project1");
+//        addNewProject(2020, "Project2");
+//        addNewProject(2020, "Project3");
+//        addNewProject(2020, "Project4");
+//        addNewProject(2020, "Project5");
+//
+//        getProject(200001).addActivity(new Activity("ac1"));
+//        getProject(200001).addActivity(new Activity("ac2"));
+//        getProject(200002).addActivity(new Activity("ac1"));
+//        getProject(200002).addActivity(new Activity("ac2"));
+//        getProject(200003).addActivity(new Activity("ac1"));
+//        getProject(200003).addActivity(new Activity("ac2"));
+//        getProject(200004).addActivity(new Activity("ac1"));
+//        getProject(200004).addActivity(new Activity("ac2"));
+//        getProject(200005).addActivity(new Activity("ac1"));
+//        getProject(200005).addActivity(new Activity("ac2"));
+//
+//        setPM("jan", 200001);
+//        setPM("sim", 200002);
+//        setPM("kim", 200003);
+//        setPM("joe", 200005);
+//
+//        addAssistance(getEmployee("sim"),"ac1", 200001);
+//
+//        // Set some start and end dates
+//        getProject(200001).getActivity("ac1").setStart(200101);
+//        getProject(200001).getActivity("ac1").setEnd(200201);
+//
+//        getProject(200002).getActivity("ac1").setStart(200301);
+//        getProject(200002).getActivity("ac1").setEnd(200401);
+//
+//        getProject(200003).getActivity("ac1").setStart(200115);
+//        getProject(200003).getActivity("ac1").setEnd(200220);
+//
+//        getProject(200004).getActivity("ac1").setStart(200120);
+//        getProject(200004).getActivity("ac1").setEnd(200205);
+//
+//        getProject(200005).getActivity("ac1").setStart(200220);
+//        getProject(200005).getActivity("ac1").setEnd(200330);
+//
+//        user = null;
+//    }
 }

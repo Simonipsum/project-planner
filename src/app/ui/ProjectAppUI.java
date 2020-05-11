@@ -9,6 +9,7 @@ import app.model.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 
 public class ProjectAppUI implements PropertyChangeListener {
     private static ProjectAppUI instance;
@@ -32,19 +33,24 @@ public class ProjectAppUI implements PropertyChangeListener {
     }
 
     public void mainLoop() throws OperationNotAllowedException {
-    //    app.derpHelper(); // Initialize some data to ease testing
+        // app.derpHelper(); // Initialize some data to ease testing
 
         // Run program
         while(true) {
             if (app.getUser() == null) {
                 userLogin();
             }
-            display.mainMenu();
-            processChoiceMain(in.pickItem(13));
+            processChoiceMain(in.pickItem(display.mainMenu()));
         }
     }
 
     private void processChoiceMain(int pick) throws OperationNotAllowedException {
+        int[] ceo_options = {7, 8, 9, 10, 13, 14};
+        if (!app.getUser().equals(app.getCEO()) && Arrays.stream(ceo_options).anyMatch(i -> i == pick)) {
+            System.out.println("Insufficient Permissions: User is not CEO.\n");
+            return;
+        }
+
         switch(pick) {
             case 0: app.logout();                   break;
 
@@ -69,21 +75,8 @@ public class ProjectAppUI implements PropertyChangeListener {
             case 12: display.employeeList();        break;
 
             // CEO
-            case 13: exitApp();                     break;
-        }
-    }
-
-    private void exitApp() {
-        if (!app.getUser().equals(app.getCEO())) {
-            System.out.println("Insufficient Permissions: User is not CEO.\n");
-            return;
-        }
-        System.out.println("Exiting ProjectApp. All data will be lost.");
-        if (in.getConfirmation()) {
-            System.out.println("ProjectApp exiting...");
-            System.exit(0);
-        } else {
-            System.out.println("ProjectApp will continue running.\n");
+            case 13: removeEmployee();              break;
+            case 14: exitApp();                     break;
         }
     }
 
@@ -131,7 +124,7 @@ public class ProjectAppUI implements PropertyChangeListener {
 
     private int userPickProjectWithActivity() throws OperationNotAllowedException {
         if (app.getProjects().size() == 0) {
-            throw new OperationNotAllowedException("No projects added to ProjectApp yet.");
+            throw new OperationNotAllowedException("No projects added to project-planner yet.");
         }
         int id = pickProject();
         if (!app.isUserOnProject(id) && !app.getProject(id).hasAssistant(app.getUser())) {
@@ -161,49 +154,11 @@ public class ProjectAppUI implements PropertyChangeListener {
             System.out.printf("Successfully set absence for %s in period: %06d to %06d\n\n",
                     app.getUser().getUsername(), dates[0], dates[1]);
         }
-
-
-    }
-
-    private void addProject() throws OperationNotAllowedException {
-        if (!app.isCurrentUserCeo()) {
-            System.out.println("Insufficient Permissions. User is not CEO.");
-            return;
-        }
-        System.out.print("Enter year of project start: ");
-        int year = in.getInt(1900, 2999);
-        System.out.print("Enter name of project (type 'N' to skip naming): ");
-        String name = in.getString();
-        app.addNewProject(year, name);
-        System.out.printf("Project %d was successfully added to the ProjectApp.\n\n", app.calculateID(year));
-    }
-
-    // Add employee to Project App
-    private void addEmployee() throws OperationNotAllowedException {
-        System.out.print("Initials of new Employee: ");
-        String username = in.getInitials();
-        app.addNewEmployee(new Employee(username));
-        System.out.print("Employee " + username + " was successfully added to the ProjectApp.\n\n");
-    }
-
-    private void setPM() throws OperationNotAllowedException {
-        if (!app.isCurrentUserCeo()) {
-            System.out.println("Insufficient Permissions. User is not CEO.");
-            return;
-        }
-        if (app.getProjects().size() == 0) {
-            System.out.println("No projects added to ProjectApp yet.");
-            return;
-        }
-        int id = pickProject();
-        String username = pickEmployee();
-        app.setPM(username, id);
-        System.out.print("PM of " + id + " was successfully set to " + username + "\n\n");
     }
 
     private void projectMenu() throws OperationNotAllowedException {
         if (app.getProjects().size() == 0) {
-            System.out.println("No projects added to ProjectApp yet.");
+            System.out.println("No projects added to project-planner yet.");
             return;
         }
         int id = pickProject();
@@ -216,18 +171,96 @@ public class ProjectAppUI implements PropertyChangeListener {
         processChoiceProject(in.pickItem(maxPick), id);
     }
 
+    /* CEO options */
+    private void removeEmployee() throws OperationNotAllowedException {
+        System.out.print("Enter initials of employee: ");
+        String username = in.getInitials();
+        if (!app.hasEmployee(username)) {
+            System.out.printf("Error: App does not contain an employee with initials %s.\n\n", username);
+            return;
+        } else if (app.getUser().getUsername().equals(username)) {
+            System.out.println("Error: Can't remove yourself from project-planner.");
+            return;
+        }
+        app.removeEmployee(username);
+        System.out.printf("Employee %s was successfully removed from the project-planner.\n\n", username);
+    }
+
+    private void exitApp() {
+        System.out.println("Exiting project-planner. All data will be lost.");
+        if (in.getConfirmation()) {
+            System.out.println("project-planner exiting...");
+            System.exit(0);
+        } else {
+            System.out.println("project-planner will continue running.\n");
+        }
+    }
+
+    private void setPM() throws OperationNotAllowedException {
+        if (app.getProjects().size() == 0) {
+            System.out.println("No projects added to the project-planner yet.");
+            return;
+        }
+        int id = pickProject();
+        String username = pickEmployee();
+        app.setPM(username, id);
+        System.out.print("PM of " + id + " was successfully set to " + username + "\n\n");
+    }
+
+    private void addProject() throws OperationNotAllowedException {
+        System.out.print("Enter year of project start: ");
+        int year = in.getInt(1900, 2999);
+        System.out.print("Enter name of project (type 'N' to skip naming): ");
+        String name = in.getString();
+        app.addNewProject(year, name);
+        System.out.printf("Project %d was successfully added to the project-planner.\n\n", app.calculateID(year));
+    }
+
+    private void addEmployee() throws OperationNotAllowedException {
+        System.out.print("Initials of new Employee: ");
+        String username = in.getInitials();
+        if (app.hasEmployee(username)) {
+            System.out.printf("App already has an Employee with initials %s.\n\n", username);
+            return;
+        }
+        app.addNewEmployee(new Employee(username));
+        System.out.print("Employee " + username + " was successfully added to the project-planner.\n\n");
+    }
+
+    /* */
+
     private void processChoiceProject(int pick, int id) throws OperationNotAllowedException {
         switch (pick) {
             case 0: return;
-                case 1: addProjectEmployee(id); break;
-                case 2: addProjectActivity(id); break;
-                case 3: editActivityDates(id);  break;
-                case 4: editActivityWt(id);     break;
-                case 5: display.timeTable(id);  break;
-                case 6: editProjectName(id);    break;
-                case 7: editActivityName(id);    break;
+            case 1: addProjectEmployee(id); break;
+            case 2: addProjectActivity(id); break;
+            case 3: editActivityDates(id);  break;
+            case 4: editActivityWt(id);     break;
+            case 5: display.timeTable(id);  break;
+            case 6: editProjectName(id);    break;
+            case 7: editActivityName(id);   break;
+            case 8: removeProjectEmployee(id); break;
         }
     }
+
+    private void removeProjectEmployee(int id) throws OperationNotAllowedException {
+        String username = pickEmployee();
+        Project p = app.getProject(id);
+        if (!p.hasEmployee(username)) {
+            System.out.printf("Error: %s is not on the project %d.\n\n", username, id);
+            return;
+        } else if (app.getCEO().getUsername().equals(username)) {
+            System.out.println("Error: Can't remove ceo from project.");
+            return;
+        } else if (p.getPm().getUsername().equals(username)) {
+            System.out.println("Error: Can't remove yourself (pm) from project.");
+            return;
+        }
+
+        app.removeEmployee(username, id);
+        System.out.printf("Employee %s successfully removed from %d.\n\n", username, id);
+    }
+
 
     private void editProjectName(int id) throws OperationNotAllowedException {
         System.out.print("Enter new name of project");
@@ -250,7 +283,7 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void addProjectEmployee(int id) throws OperationNotAllowedException {
         String username = pickEmployee();
         if (app.getProject(id).hasEmployee(username)) {
-            System.out.printf("%s is already on project %d\n\n", username, id);
+            System.out.printf("Error: %s is already on project %d\n\n", username, id);
             return;
         }
         app.addEmployee(username, id);
@@ -260,6 +293,10 @@ public class ProjectAppUI implements PropertyChangeListener {
     private void addProjectActivity(int id) throws OperationNotAllowedException {
         System.out.print("Enter name of new activity: ");
         String acName = in.getString();
+        if (app.getProject(id).hasActivity(acName)) {
+            System.out.printf("Error: Project already has activity with name %s.\n\n", acName);
+            return;
+        }
         app.addNewActivity(acName, id);
         System.out.printf("Activity %s successfully added to %d.\n\n", acName, id);
     }
@@ -314,7 +351,7 @@ public class ProjectAppUI implements PropertyChangeListener {
         return pick;
     }
 
-    private void userLogin() throws OperationNotAllowedException {
+    private void userLogin() {
         String username;
         System.out.print("Please input username to login: ");
         username = in.getInitials();

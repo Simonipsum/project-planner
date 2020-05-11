@@ -60,6 +60,15 @@ public class EmployeeSteps {
         hasNewEmployee(username);
     }
 
+    @When("the user removes themselves")
+    public void userRemovesThemselves() {
+        try {
+            app.removeEmployee(app.getUser().getUsername());
+        } catch (OperationNotAllowedException e) {
+            errorMessage.setErrorMessage(e.getMessage());
+        }
+    }
+
     @When("the ProjectApp does not contain an Employee {string}")
     public void hasNoEmployee(String username) {
         assertFalse(app.hasEmployee(username));

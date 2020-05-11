@@ -48,7 +48,9 @@ public class menuHelper {
             // more options for employees
             "List assigned projects",
             "List all employees",
-            "Exit ProjectApp",
+            // CEO options
+            "Remove employee",
+            "Exit app",
     };
     private static String[] projectMenuOptions = {
             // PM options
@@ -60,6 +62,7 @@ public class menuHelper {
             "See timetable of project",
             "Edit name of project",
             "Edit name of activity",
+            "Remove employee",
     };
 
     private void listMenu(String[] menu) {
